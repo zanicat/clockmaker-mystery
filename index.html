@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Clockmaker's Secret</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <section id="screen-title" class="screen">
+    <div id="title-art"></div>
+    <div id="title-card">
+      <h1>The Clockmaker&rsquo;s Secret</h1>
+      <p class="subtitle">Chapter One &mdash; The Silent Shop</p>
+      <div class="title-buttons">
+        <button id="btn-new" class="btn">New Game</button>
+        <button id="btn-continue" class="btn hidden">Continue</button>
+      </div>
+      <p class="title-note">A point-and-click mystery</p>
+    </div>
+  </section>
+
+  <section id="screen-end" class="screen hidden">
+    <div id="end-art"></div>
+    <div id="end-card">
+      <p class="end-kicker">Chapter One Complete</p>
+      <h1>The Silent Shop</h1>
+      <p class="end-body">Edmund Thornfield &mdash; found, three days below his own floorboards.
+      Victor Grimsby &mdash; answering to the Yard for a letter he wishes he had never sealed.
+      And the Meridian ticks on, safe beneath Harrow Lane.</p>
+      <p class="end-tease">Chapter Two: The Meridian&rsquo;s Secret &mdash; coming soon</p>
+      <div class="title-buttons">
+        <button id="btn-end-title" class="btn">Return to Title</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="screen-game" class="screen hidden">
+    <header id="topbar">
+      <button id="btn-menu" class="chip" title="Menu">&#9776; Menu</button>
+      <div id="scene-name"></div>
+      <button id="btn-hint" class="chip" title="Get a hint">&#128161; Hint</button>
+    </header>
+
+    <div id="stage-outer">
+      <div id="stage">
+        <div id="scene-bg"></div>
+        <div id="scene-hotspots"></div>
+
+        <div id="zoom" class="hidden">
+          <div id="zoom-panel">
+            <div id="zoom-head">
+              <span id="zoom-title"></span>
+              <button id="zoom-close" class="chip" title="Back">&#10005;</button>
+            </div>
+            <div id="zoom-stage">
+              <div id="zoom-bg"></div>
+              <div id="zoom-hotspots"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="dialogue-catcher" class="hidden"></div>
+        <div id="dialogue" class="hidden">
+          <div id="dialogue-who"></div>
+          <div id="dialogue-text"></div>
+          <div id="dialogue-more">&#9662;</div>
+        </div>
+
+        <div id="puzzle" class="hidden">
+          <div id="puzzle-panel">
+            <div id="puzzle-head">
+              <span id="puzzle-title"></span>
+              <button id="puzzle-close" class="chip" title="Step away">&#10005;</button>
+            </div>
+            <div id="puzzle-body"></div>
+          </div>
+        </div>
+
+        <div id="modal" class="hidden">
+          <div id="modal-panel">
+            <h2 id="modal-title"></h2>
+            <p id="modal-text"></p>
+            <div id="modal-buttons"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer id="inventory">
+      <span id="inv-label">Inventory</span>
+      <div id="inv-slots"></div>
+      <span id="inv-status"></span>
+    </footer>
+  </section>
+
+</div>
+<script src="js/art.js"></script>
+<script src="js/data.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
