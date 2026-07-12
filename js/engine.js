@@ -141,6 +141,10 @@ const Game = (() => {
       renderScene();
       renderZoom();
       renderInventory();
+      const st = $('#stage');
+      st.classList.remove('scene-enter');
+      void st.offsetWidth; // restart the one-shot fade
+      st.classList.add('scene-enter');
       const sc = C.scenes[id];
       if (sc.onEnter) sc.onEnter(g);
     },
