@@ -79,6 +79,79 @@ const COMBOS = {
   },
 };
 
+/* Casebook entries: everything plot-relevant Quinn reads or observes,
+   reviewable at any time even after the physical item is put away. */
+const CLUES = {
+  shopHours: {
+    title: 'The front door',
+    text: [
+      "Bolted from the inside — nobody left this way.",
+      "Under the CLOSED card, a brass plate: 'OPEN NINE UNTIL SIX.'",
+    ],
+  },
+  stationClock: {
+    title: 'A quarter past seven',
+    text: [
+      "Every clock in the shop is stopped at 7:15. Whatever happened here happened at a quarter past seven — or someone wants it to look that way.",
+    ],
+  },
+  ledger: {
+    title: 'The sales ledger',
+    text: [
+      "'MONDAY — V.G. again. Refused him again. The Meridian is not for sale, at any price.'",
+      "'TUESDAY — V.G. He does not ask politely anymore. If he calls again, I shall be ready for him.'",
+      "Tuesday — the day Edmund vanished. So: what is the Meridian, and who is V.G.?",
+    ],
+  },
+  plaque: {
+    title: 'The grandfather’s plaque',
+    text: [
+      "Engraved by hand: 'To E.T. — time keeps what we hide. — M.'",
+      "M. Not Clara. Edmund had a friend we haven't met yet.",
+    ],
+  },
+  note: {
+    title: 'Edmund’s hidden note',
+    text: [
+      "'M — He watches the shop at night, so I am going below with it. I have pulled the teeth from the office lock and scattered them where only a clockmaker's patience will find them.'",
+      "'If you must follow: the door keeps my hour. You of all people know it. Burn this. — E.T.'",
+    ],
+  },
+  tradeCard: {
+    title: 'Edmund’s trade card',
+    text: [
+      "In copperplate: 'A clock needs two hands and an honest face.' A whole creed in nine words.",
+    ],
+  },
+  claraPhoto: {
+    title: 'The photograph',
+    text: [
+      "A sepia photograph: a small girl perched on the shop counter, boots swinging. The mount reads — 'Clara, nine years old. Her first day at Harrow Lane.'",
+    ],
+  },
+  certificate: {
+    title: 'Certificate of registry',
+    text: [
+      "'THORNFIELD & SONS, Clockmakers, Harrow Lane. Proprietor: E. Thornfield. Partners: NONE.'",
+      "'& Sons.' The sign promises what the registry denies.",
+    ],
+  },
+  mabelLetter: {
+    title: 'Mabel’s letter',
+    text: [
+      "'E — since you lose numbers the way other men lose buttons, I have set your combination to things you cannot lose:'",
+      "'the sons the sign promises; the hands a clock truly needs; the chimes at closing; and the age Clara came to you. In that order.'",
+    ],
+  },
+  grimsbyLetter: {
+    title: 'Grimsby’s letter',
+    text: [
+      "'THORNFIELD — Name your price or I shall name it for you. The Meridian leaves that shop with me, sold or otherwise. You have until Tuesday. — V. GRIMSBY.'",
+      "A threat in his own hand. Evidence enough for the Yard.",
+    ],
+  },
+};
+
 // Seat any recovered gear on the office lock's bare arbors.
 function seatGear(g, itemId) {
   g.removeItem(itemId);
@@ -104,6 +177,7 @@ const SCENES = {
         id: 'frontDoor', rect: [60, 160, 235, 548], label: 'Front door',
         onClick: g => {
           g.setFlag('hoursSeen');
+          g.addClue('shopHours');
           g.narrate("The front door, bolted from the inside — nobody left this way. Under the CLOSED card, a brass plate: 'OPEN NINE UNTIL SIX.'");
         },
       },
@@ -121,7 +195,10 @@ const SCENES = {
       },
       {
         id: 'wallClock', rect: [1188, 254, 132, 132], label: 'Station clock',
-        onClick: g => g.narrate("The station clock. 7:15, the same as all the rest. Whatever happened here happened at a quarter past seven."),
+        onClick: g => {
+          g.addClue('stationClock');
+          g.narrate("The station clock. 7:15, the same as all the rest. Whatever happened here happened at a quarter past seven.");
+        },
       },
       {
         id: 'rug', rect: [140, 765, 580, 190], label: 'Rug',
@@ -151,6 +228,8 @@ const SCENES = {
               return;
             }
             g.setFlag('workshopUnlocked');
+            g.sfx('unlock');
+            g.retireItem('brassKey');
             g.say([
               { text: "The brass key turns with a heavy, satisfying clunk. The workshop door swings open." },
               { who: 'Quinn', text: "Let's see what you were working on, Mr. Thornfield." },
@@ -180,6 +259,8 @@ const SCENES = {
               tinyKey: g => {
                 if (g.flag('drawerOpened')) { g.narrate("It's already open."); return; }
                 g.setFlag('drawerOpened');
+                g.sfx('unlock');
+                if (g.flag('pendOpened')) g.retireItem('tinyKey');
                 g.narrate("The tiny key fits the register too — of course it does. The drawer rolls open on brass wheels.");
               },
             },
@@ -200,7 +281,7 @@ const SCENES = {
               { text: "'MONDAY — V.G. again. Refused him again. The Meridian is not for sale, at any price.'" },
               { text: "'TUESDAY — V.G. He does not ask politely anymore. If he calls again, I shall be ready for him.'" },
               { who: 'Quinn', text: "Tuesday — the day Edmund vanished. So: what is the Meridian... and who is V.G.?" },
-            ]),
+            ], g2 => g2.addClue('ledger')),
           },
           {
             id: 'bell', rect: [1012, 470, 156, 110], label: 'Counter bell',
@@ -231,7 +312,7 @@ const SCENES = {
             onClick: g => g.say([
               { text: "A brass plaque, engraved by hand: 'To E.T. — time keeps what we hide. — M.'" },
               { who: 'Quinn', text: "M. Not Clara, then. Edmund had a friend we haven't met yet." },
-            ]),
+            ], g2 => g2.addClue('plaque')),
           },
           {
             id: 'pendulumDoor', rect: [470, 642, 260, 142], label: 'Pendulum door',
@@ -244,6 +325,8 @@ const SCENES = {
               tinyKey: g => {
                 if (g.flag('pendOpened')) { g.narrate("It's already open."); return; }
                 g.setFlag('pendOpened');
+                g.sfx('unlock');
+                if (g.flag('drawerOpened')) g.retireItem('tinyKey');
                 g.narrate("The tiny key turns twice and the weight door swings wide.");
               },
             },
@@ -254,6 +337,7 @@ const SCENES = {
             onClick: g => {
               g.setFlag('noteTaken');
               g.addItem('note');
+              g.addClue('note');
               g.say([
                 { text: "A folded note, tucked where only someone winding the clock would ever find it. Edmund's hand — steadier here than in the ledger." },
                 { text: "'M — He watches the shop at night, so I am going below with it. I have pulled the teeth from the office lock and scattered them where only a clockmaker's patience will find them.'" },
@@ -354,6 +438,7 @@ const SCENES = {
           screwdriver: g => {
             if (g.flag('cratePried')) { g.narrate("Already open."); return; }
             g.setFlag('cratePried');
+            g.retireItem('screwdriver');
             g.narrate("The flat blade walks the nails out one by one, and the top crate gives. The bottom one holds nothing but packing straw.");
           },
         },
@@ -535,6 +620,7 @@ const SCENES = {
         id: 'tradeCard', rect: [535, 498, 105, 66], label: 'Trade card',
         onClick: g => {
           g.setFlag('cardSeen');
+          g.addClue('tradeCard');
           g.narrate("Edmund's trade card, in copperplate: 'A clock needs two hands and an honest face.' A whole creed in nine words.");
         },
       },
@@ -542,6 +628,7 @@ const SCENES = {
         id: 'photo', rect: [610, 230, 160, 160], label: 'Framed photograph',
         onClick: g => {
           g.setFlag('photoSeen');
+          g.addClue('claraPhoto');
           g.narrate("A sepia photograph: a small girl perched on the shop counter, boots swinging. The mount reads — 'Clara, nine years old. Her first day at Harrow Lane.'");
         },
       },
@@ -549,6 +636,7 @@ const SCENES = {
         id: 'certificate', rect: [1075, 215, 160, 170], label: 'Framed certificate',
         onClick: g => {
           g.setFlag('certSeen');
+          g.addClue('certificate');
           g.say([
             { text: "A framed Certificate of Registry, gone amber with age: 'THORNFIELD & SONS, Clockmakers, Harrow Lane. Proprietor: E. Thornfield. Partners: NONE.'" },
             { who: 'Quinn', text: "'& Sons.' The sign promises what the registry denies. The old man's sign was always half a wish." },
@@ -568,6 +656,7 @@ const SCENES = {
           }
           g.setFlag('mabelLetterFound');
           g.addItem('mabelLetter');
+          g.addClue('mabelLetter');
           g.say([
             { text: "Under the scattered invoices: a letter in a woman's hand, creased soft with age." },
             { text: "'E — since you lose numbers the way other men lose buttons, I have set your combination to things you cannot lose:'" },
@@ -590,6 +679,7 @@ const SCENES = {
         onClick: g => {
           g.setFlag('grimsbyTaken');
           g.addItem('grimsbyLetter');
+          g.addClue('grimsbyLetter');
           g.say([
             { text: "A letter under red wax, the seal split by an angry thumb." },
             { text: "'THORNFIELD — Name your price or I shall name it for you. The Meridian leaves that shop with me, sold or otherwise. You have until Tuesday. — V. GRIMSBY.'" },
@@ -617,6 +707,8 @@ const SCENES = {
             if (g.flag('trapdoorOpened')) { g.narrate("It stands open."); return; }
             g.setFlag('trapdoorUnlocked');
             g.setFlag('trapdoorOpened');
+            g.sfx('unlock');
+            g.retireItem('padlockKey');
             g.narrate("The iron key throws the padlock, and the hatch swings up on hinges somebody has kept lovingly oiled.");
           },
           brassKey: g => g.narrate("Wrong metal, wrong size."),
@@ -676,6 +768,8 @@ const SCENES = {
           crank: g => {
             if (g.flag('hiddenOpen')) return;
             g.setFlag('hiddenOpen');
+            g.sfx('success');
+            g.retireItem('crank');
             g.say([
               { text: "The crank bites into the socket. I wind — and the WALL winds with it: brick and timber pivoting on a hidden axle, smooth as a stage set." },
               { text: "Warm lamplight spills through the gap. And a voice, cracked from three days of whispering—" },
@@ -760,6 +854,8 @@ const PUZZLES = {
         // turn the crank
         if (h === 7 && m === 15) {
           g.setFlag('officeUnlocked');
+          g.sfx('success');
+          if (g.hasItem('note')) g.retireItem('note');
           g.closePuzzle();
           g.closeZoom();
           g.say([
@@ -803,6 +899,8 @@ const PUZZLES = {
           const code = [1, 2, 3, 4].map(i => g.getFlag('safe' + i) || 0).join('');
           if (code === '0269') {
             g.setFlag('safeOpened');
+            g.sfx('unlock');
+            if (g.hasItem('mabelLetter')) g.retireItem('mabelLetter');
             g.closePuzzle();
             g.say([
               { text: "The last dial clicks like a knuckle, and the handle throws. The Miller & Sons swings open." },
@@ -836,6 +934,7 @@ CHAPTERS.ch1 = {
   combos: COMBOS,
   scenes: SCENES,
   puzzles: PUZZLES,
+  clues: CLUES,
   startScene: 'shopfront',
 
   intro: [
