@@ -15,12 +15,16 @@ const Game = (() => {
   let puzzleId = null;    // open puzzle overlay id, or null
   let queue = [];         // pending dialogue lines
   let afterQueue = null;  // callback once the dialogue queue empties
+  let dialogueLog = [];   // this session's spoken lines (journal backlog)
+  let journalTab = null;  // 'clues' | 'log' when journal open, else null
+  let statusTimer = null; // pending flash-status reset
+  let lastAdded = null;   // item id to pulse in the inventory bar
 
   const chapterList = () =>
     Object.values(CHAPTERS).sort((a, b) => a.order - b.order);
 
   function defaultState() {
-    return { scene: C.startScene, inventory: [], flags: {}, selected: null };
+    return { scene: C.startScene, inventory: [], flags: {}, clues: [], selected: null };
   }
 
   // ---------- persistence ----------
@@ -30,7 +34,7 @@ const Game = (() => {
   function save() {
     try {
       localStorage.setItem(saveKey(C.id), JSON.stringify({
-        scene: S.scene, inventory: S.inventory, flags: S.flags,
+        scene: S.scene, inventory: S.inventory, flags: S.flags, clues: S.clues,
       }));
     } catch (e) { /* storage unavailable — play on without saves */ }
   }
@@ -41,7 +45,7 @@ const Game = (() => {
       if (!raw) return null;
       const d = JSON.parse(raw);
       if (!CHAPTERS[chId].scenes[d.scene]) return null;
-      return { scene: d.scene, inventory: d.inventory || [], flags: d.flags || {}, selected: null };
+      return { scene: d.scene, inventory: d.inventory || [], flags: d.flags || {}, clues: d.clues || [], selected: null };
     } catch (e) {
       return null;
     }
@@ -94,8 +98,11 @@ const Game = (() => {
     addItem(id) {
       if (!S.inventory.includes(id)) {
         S.inventory.push(id);
+        lastAdded = id;
         save();
         renderInventory();
+        Sfx.play('pickup');
+        flashStatus('Picked up — ' + C.items[id].name);
       }
     },
     removeItem(id) {
@@ -105,6 +112,25 @@ const Game = (() => {
       save();
       renderInventory();
     },
+    /* Retire a tool that has served its purpose: it leaves the
+       inventory with a small acknowledgement, so the bar only ever
+       holds things that still matter. */
+    retireItem(id) {
+      if (!S.inventory.includes(id)) return;
+      const name = C.items[id].name;
+      g.removeItem(id);
+      Sfx.play('stow');
+      flashStatus(name + ' put away — it has done its work.');
+    },
+    addClue(id) {
+      if (S.clues.includes(id)) return;
+      S.clues.push(id);
+      save();
+      Sfx.play('page');
+      flashStatus('Casebook updated — ' + ((C.clues || {})[id] || {}).title);
+    },
+    hasClue: id => S.clues.includes(id),
+    sfx: name => Sfx.play(name),
     say,
     narrate: (text, after) => say([{ text }], after),
     goTo(id) {
@@ -145,6 +171,8 @@ const Game = (() => {
       return;
     }
     const line = queue.shift();
+    dialogueLog.push(line);
+    if (dialogueLog.length > 200) dialogueLog.shift();
     $('#dialogue-who').textContent = line.who || '';
     $('#dialogue-who').classList.toggle('hidden', !line.who);
     $('#dialogue-text').textContent = line.text;
@@ -172,13 +200,17 @@ const Game = (() => {
   }
 
   function onHotspot(h) {
+    Sfx.play('click');
     if (S.selected) {
       const id = S.selected;
       const fn = h.use && h.use[id];
       S.selected = null;
       renderInventory();
       if (fn) fn(g, id);
-      else say([{ text: `The ${C.items[id].name.toLowerCase()} doesn't do anything there.` }]);
+      else {
+        Sfx.play('error');
+        say([{ text: `The ${C.items[id].name.toLowerCase()} doesn't do anything there.` }]);
+      }
       return;
     }
     if (h.onClick) h.onClick(g);
@@ -206,6 +238,31 @@ const Game = (() => {
     buildHotspots($('#zoom-hotspots'), z.hotspots, 1200, 800);
   }
 
+  function baseStatus() {
+    return S.selected
+      ? `Using ${C.items[S.selected].name} — click a target, or another item to combine (click again to cancel)`
+      : '';
+  }
+
+  /* Show a transient acknowledgement in the inventory status line
+     (picked up / put away / casebook updated), then fall back to the
+     usual usage hint. */
+  function flashStatus(text) {
+    const el = $('#inv-status');
+    el.textContent = text;
+    el.classList.add('flash');
+    clearTimeout(statusTimer);
+    statusTimer = setTimeout(() => {
+      el.classList.remove('flash');
+      el.textContent = baseStatus();
+    }, 2400);
+  }
+
+  function examineItem(it) {
+    Sfx.play('page');
+    g.narrate(it.desc);
+  }
+
   function renderInventory() {
     const bar = $('#inv-slots');
     bar.innerHTML = '';
@@ -213,17 +270,47 @@ const Game = (() => {
       const it = C.items[id];
       const el = document.createElement('button');
       el.className = 'inv-slot' + (S.selected === id ? ' selected' : '');
+      if (id === lastAdded) el.className += ' inv-new';
       el.innerHTML = it.icon;
-      el.title = it.name + ' (right-click to examine)';
+      el.title = it.name + ' (right-click or press-and-hold to examine)';
       el.setAttribute('aria-label', it.name);
+
+      // Press-and-hold examine — the touch counterpart of right-click.
+      let pressTimer = null;
+      let pressFired = false;
+      let pressX = 0, pressY = 0;
+      el.addEventListener('pointerdown', e => {
+        pressFired = false;
+        pressX = e.clientX;
+        pressY = e.clientY;
+        clearTimeout(pressTimer);
+        pressTimer = setTimeout(() => {
+          pressFired = true;
+          examineItem(it);
+        }, 500);
+      });
+      el.addEventListener('pointermove', e => {
+        if (Math.abs(e.clientX - pressX) > 8 || Math.abs(e.clientY - pressY) > 8) {
+          clearTimeout(pressTimer);
+        }
+      });
+      const cancelPress = () => clearTimeout(pressTimer);
+      el.addEventListener('pointerup', cancelPress);
+      el.addEventListener('pointercancel', cancelPress);
+      el.addEventListener('pointerleave', cancelPress);
+
       el.addEventListener('click', () => {
+        if (pressFired) { pressFired = false; return; }
         if (S.selected && S.selected !== id) {
           const key = [S.selected, id].sort().join('+');
           const fn = C.combos[key];
           S.selected = null;
           renderInventory();
           if (fn) fn(g);
-          else g.narrate('Those don\'t go together.');
+          else {
+            Sfx.play('error');
+            g.narrate('Those don\'t go together.');
+          }
           return;
         }
         S.selected = (S.selected === id) ? null : id;
@@ -231,13 +318,12 @@ const Game = (() => {
       });
       el.addEventListener('contextmenu', e => {
         e.preventDefault();
-        g.narrate(it.desc);
+        examineItem(it);
       });
       bar.appendChild(el);
     }
-    $('#inv-status').textContent = S.selected
-      ? `Using ${C.items[S.selected].name} — click a target, or another item to combine (click again to cancel)`
-      : '';
+    lastAdded = null;
+    $('#inv-status').textContent = baseStatus();
   }
 
   function renderPuzzle() {
@@ -248,6 +334,7 @@ const Game = (() => {
     }
     const p = C.puzzles[puzzleId];
     wrap.classList.remove('hidden');
+    $('#puzzle-panel').classList.toggle('wide', !!p.wide);
     $('#puzzle-title').textContent = p.title;
     const body = $('#puzzle-body');
     body.innerHTML = p.render(g);
@@ -259,6 +346,89 @@ const Game = (() => {
     renderZoom();
     renderPuzzle();
     renderInventory();
+    renderJournal();
+  }
+
+  // ---------- casebook / dialogue backlog ----------
+
+  function openJournal(tab) {
+    journalTab = tab || 'clues';
+    renderJournal();
+  }
+
+  function closeJournal() {
+    journalTab = null;
+    renderJournal();
+  }
+
+  function renderJournal() {
+    const wrap = $('#journal');
+    if (!journalTab) {
+      wrap.classList.add('hidden');
+      return;
+    }
+    wrap.classList.remove('hidden');
+    $('#tab-clues').classList.toggle('active', journalTab === 'clues');
+    $('#tab-log').classList.toggle('active', journalTab === 'log');
+    const body = $('#journal-body');
+    body.innerHTML = '';
+
+    if (journalTab === 'clues') {
+      const clues = C.clues || {};
+      if (S.clues.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'journal-empty';
+        p.textContent = 'Nothing in the casebook yet. Look closer at everything.';
+        body.appendChild(p);
+      }
+      for (const id of S.clues) {
+        const c = clues[id];
+        if (!c) continue;
+        const entry = document.createElement('div');
+        entry.className = 'clue-entry';
+        const h = document.createElement('h3');
+        h.textContent = c.title;
+        entry.appendChild(h);
+        for (const para of c.text) {
+          const p = document.createElement('p');
+          p.textContent = para;
+          entry.appendChild(p);
+        }
+        body.appendChild(entry);
+      }
+    } else {
+      if (dialogueLog.length === 0) {
+        const p = document.createElement('p');
+        p.className = 'journal-empty';
+        p.textContent = 'Nothing said yet this session.';
+        body.appendChild(p);
+      }
+      for (const line of dialogueLog) {
+        const row = document.createElement('div');
+        row.className = 'log-line';
+        if (line.who) {
+          const who = document.createElement('span');
+          who.className = 'log-who';
+          who.textContent = line.who;
+          row.appendChild(who);
+        }
+        const txt = document.createElement('span');
+        txt.textContent = line.text;
+        row.appendChild(txt);
+        body.appendChild(row);
+      }
+      body.scrollTop = body.scrollHeight;
+    }
+  }
+
+  // ---------- hotspot reveal ----------
+
+  let spotsTimer = null;
+  function revealHotspots() {
+    const stage = $('#stage');
+    stage.classList.add('show-hotspots');
+    clearTimeout(spotsTimer);
+    spotsTimer = setTimeout(() => stage.classList.remove('show-hotspots'), 2500);
   }
 
   // ---------- modal (menu / hints) ----------
@@ -307,6 +477,7 @@ const Game = (() => {
   function showMenu() {
     openModal('Menu', '', [
       { label: 'Resume' },
+      { label: 'Sound: ' + (Sfx.isMuted() ? 'Off' : 'On'), action: () => { Sfx.toggleMute(); showMenu(); } },
       {
         label: 'Restart chapter',
         action: () => openModal('Restart the chapter?', 'Your progress so far will be lost.', [
@@ -374,6 +545,7 @@ const Game = (() => {
   }
 
   function showEnd() {
+    Sfx.play('chime');
     markCompleted(C.id);
     clearSave(C.id);
     $('#end-kicker').textContent = C.end.kicker;
@@ -393,6 +565,8 @@ const Game = (() => {
     puzzleId = null;
     queue = [];
     afterQueue = null;
+    dialogueLog = [];
+    journalTab = null;
     showScreen('game');
     renderAll();
   }
@@ -426,6 +600,14 @@ const Game = (() => {
     });
     $('#btn-menu').addEventListener('click', showMenu);
     $('#btn-hint').addEventListener('click', showHint);
+    $('#btn-journal').addEventListener('click', () => openJournal('clues'));
+    $('#btn-spots').addEventListener('click', revealHotspots);
+    $('#tab-clues').addEventListener('click', () => openJournal('clues'));
+    $('#tab-log').addEventListener('click', () => openJournal('log'));
+    $('#journal-close').addEventListener('click', closeJournal);
+    $('#journal').addEventListener('click', e => {
+      if (e.target === $('#journal')) closeJournal();
+    });
     $('#dialogue-catcher').addEventListener('click', showNext);
     $('#zoom-close').addEventListener('click', () => g.closeZoom());
     $('#zoom').addEventListener('click', e => {
@@ -437,6 +619,25 @@ const Game = (() => {
     });
     $('#modal').addEventListener('click', e => {
       if (e.target === $('#modal')) closeModal();
+    });
+
+    // Keyboard: Space/Enter advances dialogue, Escape closes the
+    // topmost overlay (modal, then puzzle, then casebook, then zoom).
+    document.addEventListener('keydown', e => {
+      if (!S) return;
+      if (e.key === ' ' || e.key === 'Enter') {
+        if (!$('#dialogue-catcher').classList.contains('hidden')) {
+          e.preventDefault();
+          showNext();
+        }
+        return;
+      }
+      if (e.key === 'Escape') {
+        if (!$('#modal').classList.contains('hidden')) closeModal();
+        else if (puzzleId) g.closePuzzle();
+        else if (journalTab) closeJournal();
+        else if (zoomId) g.closeZoom();
+      }
     });
   }
 

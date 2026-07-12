@@ -37,7 +37,11 @@
     <header id="topbar">
       <button id="btn-menu" class="chip" title="Menu">&#9776; Menu</button>
       <div id="scene-name"></div>
-      <button id="btn-hint" class="chip" title="Get a hint">&#128161; Hint</button>
+      <div id="topbar-right">
+        <button id="btn-spots" class="chip" title="Briefly highlight everything you can interact with">&#128065; Spots</button>
+        <button id="btn-journal" class="chip" title="Review clues and past dialogue">&#128214; Casebook</button>
+        <button id="btn-hint" class="chip" title="Get a hint">&#128161; Hint</button>
+      </div>
     </header>
 
     <div id="stage-outer">
@@ -75,6 +79,19 @@
           </div>
         </div>
 
+        <div id="journal" class="hidden">
+          <div id="journal-panel">
+            <div id="journal-head">
+              <div id="journal-tabs">
+                <button id="tab-clues" class="chip">Clues</button>
+                <button id="tab-log" class="chip">Dialogue</button>
+              </div>
+              <button id="journal-close" class="chip" title="Close">&#10005;</button>
+            </div>
+            <div id="journal-body"></div>
+          </div>
+        </div>
+
         <div id="modal" class="hidden">
           <div id="modal-panel">
             <h2 id="modal-title"></h2>
@@ -94,6 +111,7 @@
 
 </div>
 <script src="js/art.js"></script>
+<script src="js/sfx.js"></script>
 <script src="js/data-ch1.js"></script>
 <script src="js/engine.js"></script>
 <script src="js/main.js"></script>

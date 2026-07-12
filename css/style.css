@@ -8,7 +8,7 @@ html, body {
   font-family: Georgia, 'Palatino Linotype', 'Times New Roman', serif;
 }
 
-button { font: inherit; cursor: pointer; }
+button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .hidden { display: none !important; }
 
 #app { height: 100%; display: flex; flex-direction: column; }
@@ -131,6 +131,7 @@ button { font: inherit; cursor: pointer; }
   min-height: 48px;
 }
 #scene-name { color: #b9ab8a; font-style: italic; letter-spacing: 0.5px; }
+#topbar-right { display: flex; gap: 8px; }
 
 .chip {
   background: #1c2029;
@@ -177,6 +178,16 @@ button { font: inherit; cursor: pointer; }
   outline: none;
   box-shadow: inset 0 0 0 2px rgba(230, 197, 104, 0.5), 0 0 18px rgba(230, 197, 104, 0.15);
   background: radial-gradient(closest-side, rgba(230, 197, 104, 0.1), transparent);
+}
+
+/* "Spots" button: briefly reveal every interactive area */
+.show-hotspots .hotspot {
+  box-shadow: inset 0 0 0 2px rgba(230, 197, 104, 0.55);
+  animation: spot-pulse 1.2s ease-in-out infinite;
+}
+@keyframes spot-pulse {
+  0%, 100% { background: radial-gradient(closest-side, rgba(230, 197, 104, 0.05), transparent); }
+  50% { background: radial-gradient(closest-side, rgba(230, 197, 104, 0.18), transparent); }
 }
 
 /* ---------- zoom view ---------- */
@@ -256,6 +267,7 @@ button { font: inherit; cursor: pointer; }
   border-radius: 12px;
   padding: 14px 18px 18px;
 }
+#puzzle-panel.wide { width: min(94%, 680px); }
 #puzzle-head {
   display: flex;
   justify-content: space-between;
@@ -304,7 +316,7 @@ button { font: inherit; cursor: pointer; }
   min-height: 72px;
 }
 #inv-label { color: #8a7f66; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; }
-#inv-slots { display: flex; gap: 8px; }
+#inv-slots { display: flex; gap: 8px; flex-wrap: wrap; max-height: 124px; overflow-y: auto; }
 .inv-slot {
   width: 52px;
   height: 52px;
@@ -316,4 +328,62 @@ button { font: inherit; cursor: pointer; }
 .inv-slot svg { width: 100%; height: 100%; display: block; }
 .inv-slot:hover { border-color: #8a6a30; }
 .inv-slot.selected { border-color: #e6c568; box-shadow: 0 0 12px rgba(230, 197, 104, 0.35); }
+.inv-slot.inv-new { animation: inv-glow 1.2s ease-out; }
+@keyframes inv-glow {
+  0% { border-color: #e6c568; box-shadow: 0 0 16px rgba(230, 197, 104, 0.7); }
+  100% { border-color: #3a4152; box-shadow: none; }
+}
 #inv-status { color: #b9ab8a; font-style: italic; font-size: 14px; }
+#inv-status.flash { color: #e6c568; }
+
+/* ---------- casebook / dialogue backlog ---------- */
+
+#journal {
+  position: absolute;
+  inset: 0;
+  z-index: 28;
+  background: rgba(5, 6, 10, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#journal-panel {
+  width: min(92%, 640px);
+  max-height: 86%;
+  display: flex;
+  flex-direction: column;
+  background: #171a22;
+  border: 1px solid #8a6a30;
+  border-radius: 12px;
+  padding: 12px 16px 16px;
+}
+#journal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+#journal-tabs { display: flex; gap: 8px; }
+#journal-tabs .chip.active { border-color: #8a6a30; color: #e6c568; background: #2a2416; }
+#journal-body { overflow-y: auto; text-align: left; padding: 2px 6px; }
+.journal-empty { color: #8a7f66; font-style: italic; text-align: center; }
+.clue-entry { border-bottom: 1px solid #2a2f3c; padding: 10px 2px 12px; }
+.clue-entry:last-child { border-bottom: 0; }
+.clue-entry h3 { margin: 0 0 6px; color: #e6c568; font-weight: normal; font-size: 17px; letter-spacing: 0.5px; }
+.clue-entry p { margin: 0 0 6px; line-height: 1.5; color: #d8cfae; font-size: 15px; }
+.log-line { padding: 5px 2px; line-height: 1.45; font-size: 15px; color: #d8cfae; }
+.log-line + .log-line { border-top: 1px solid #1e222c; }
+.log-who { color: #e6c568; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-right: 8px; }
+
+/* ---------- small screens ---------- */
+
+@media (max-width: 700px) {
+  #topbar { padding: 6px 8px; min-height: 40px; flex-wrap: wrap; gap: 4px; }
+  .chip { padding: 5px 10px; font-size: 13px; }
+  #scene-name { font-size: 13px; }
+  #inventory { padding: 6px 10px; min-height: 60px; gap: 8px; }
+  #inv-label { display: none; }
+  .inv-slot { width: 44px; height: 44px; }
+  #inv-status { font-size: 12px; }
+  #modal-buttons .btn { min-width: 120px; }
+}
