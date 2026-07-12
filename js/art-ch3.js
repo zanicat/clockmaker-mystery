@@ -608,6 +608,23 @@ Art.ch3 = (() => {
       ${night ? nightLife(760, 480) : butterflies(820, 460)}
       ${centre}
 
+      <!-- the way back: gravel path off-frame and a fingerpost -->
+      <g>
+        <path d="M 300 1000 Q 220 880 60 830 L 0 820 L 0 1000 Z" fill="${night ? '#3a352c' : '#b9a97e'}" stroke="${night ? '#2a261f' : '#8a7a5e'}" stroke-width="4"/>
+        <g fill="${night ? '#4a4438' : '#a08d6e'}">
+          <ellipse cx="150" cy="900" rx="10" ry="5"/><ellipse cx="200" cy="930" rx="9" ry="4"/>
+          <ellipse cx="110" cy="870" rx="8" ry="4"/><ellipse cx="230" cy="960" rx="10" ry="5"/>
+        </g>
+        <rect x="160" y="700" width="16" height="180" fill="#5a4a35" stroke="#3a2f22" stroke-width="3"/>
+        <g>
+          <path d="M 60 720 L 232 720 L 232 762 L 60 762 L 34 741 Z" fill="#7a5a3d" stroke="#3a2f22" stroke-width="3"/>
+          <text x="140" y="748" text-anchor="middle" font-size="17" font-family="Georgia, serif" fill="#efe6cf" letter-spacing="1">GLASSHOUSE</text>
+        </g>
+        ${night ? `<circle cx="168" cy="690" r="9" fill="#9fffcf" opacity="0.7">
+          <animate attributeName="opacity" values="0.55;0.85;0.55" dur="3.6s" repeatCount="indefinite"/>
+        </circle>` : ''}
+      </g>
+
       <rect width="1600" height="1000" fill="url(#mzvig)"/>
     </svg>`;
   }

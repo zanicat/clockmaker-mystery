@@ -83,7 +83,7 @@ assert(!isHidden('puzzle'), 'maze puzzle open');
 puzzleAct('mv-e');                                  // sad path: ejected
 assert(!isHidden('puzzle'), 'wrong turn resets, puzzle stays open');
 puzzleAct('mv-w'); puzzleAct('mv-n'); puzzleAct('mv-n');
-puzzleAct('mv-s'); puzzleAct('mv-e'); adv();        // solved
+puzzleAct('mv-e'); puzzleAct('mv-s'); puzzleAct('mv-e'); adv(); // solved
 hotspot('The maze entrance');                       // -> maze heart zoom
 hotspot('The sundial'); adv();                      // clue: sundialKey
 invClick('Hand Trowel');

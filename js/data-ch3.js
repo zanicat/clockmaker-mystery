@@ -92,7 +92,7 @@ const CLUES = {
     title: 'The garden journal',
     text: [
       '"To whoever reads gardens: let mine choose. What I have hidden, I have hidden in plain bed."',
-      'The maze riddle: "Widdershins first at the laurel; then twice to midnight; sunward once at the yew; last, toward the morning — and take tea with the gnomon."',
+      'The maze riddle: "Widdershins first at the laurel; then twice to midnight; toward the morning at the yew; sunward but once; then morning again — and take tea with the gnomon."',
       'The margins are annotated in Latin, in a hand too small for my patience. Petronella\'s the botanist.',
     ],
   },
@@ -460,7 +460,7 @@ const SCENES = {
               g.addClue('journal');
               g.say([
                 { text: 'In the drawer: Digby\'s garden journal, green cloth, much thumbed. The flyleaf: "To whoever reads gardens: let mine choose. What I have hidden, I have hidden in plain bed."' },
-                { text: 'One page is all riddle: "Widdershins first at the laurel; then twice to midnight; sunward once at the yew; last, toward the morning — and take tea with the gnomon."' },
+                { text: 'One page is all riddle: "Widdershins first at the laurel; then twice to midnight; toward the morning at the yew; sunward but once; then morning again — and take tea with the gnomon."' },
                 { who: 'Quinn', text: 'And the margins are in Latin, in a hand too small for my patience. I know an earnest botanist who\'d enjoy showing off.' },
               ]);
             },
@@ -573,7 +573,7 @@ const SCENES = {
     },
     hotspots: [
       {
-        id: 'wayBack', rect: [0, 740, 280, 260], label: 'Back to the glasshouse',
+        id: 'wayBack', rect: [10, 690, 270, 300], label: 'Back to the glasshouse',
         onClick: g => g.goTo('glasshouse'),
       },
       {
@@ -753,8 +753,10 @@ const PUZZLES = {
     title: 'The Hedge Maze',
     wide: true,
     /* Correct walk, from the journal riddle + Hoskins's compass:
-       widdershins (W), twice to midnight (N, N), sunward once (S),
-       toward the morning (E). */
+       widdershins (W), twice to midnight (N, N), toward the morning
+       at the yew (E), sunward but once (S), morning again (E).
+       The route never immediately reverses, so the mini-map trail
+       never retraces itself. */
     render(g) {
       const path = g.getFlag('mazePath') || [];
       const STEP = { w: [-52, 0], n: [0, -40], s: [0, 40], e: [52, 0] };
@@ -770,7 +772,8 @@ const PUZZLES = {
         'A long alley; a robin supervises.',
         'Deeper. The hedges swallow the birdsong.',
         'Deeper still. Somebody clipped a yew into a suggestion of a duchess.',
-        'A turn past the yew; the gravel goes silver.',
+        'Past the yew, the alley narrows; the duchess watches me go.',
+        'A last turn; the gravel goes silver.',
       ];
       return `
         <div class="puzzle-clock">
@@ -794,7 +797,7 @@ const PUZZLES = {
         </div>`;
     },
     wire(g, root, rerender) {
-      const SOLUTION = ['w', 'n', 'n', 's', 'e'];
+      const SOLUTION = ['w', 'n', 'n', 'e', 's', 'e'];
       const QUIPS = [
         'A dead end wearing a smirk of topiary. The hedges usher me, courteously, back to the laurel.',
         'Ten confident strides and I am outside the maze again. The robin says nothing. Loudly.',
@@ -821,7 +824,7 @@ const PUZZLES = {
           g.sfx('success');
           g.closePuzzle();
           g.say([
-            { text: 'Widdershins at the laurel; twice to midnight; sunward once at the yew; then toward the morning — and the hedges open onto a green room with a sundial at its heart.' },
+            { text: 'Widdershins at the laurel; twice to midnight; toward the morning at the yew; once sunward; morning again — and the hedges open onto a green room with a sundial at its heart.' },
             { who: 'Quinn', text: 'Tea with the gnomon it is.' },
           ]);
         } else {
@@ -965,7 +968,7 @@ CHAPTERS.ch3 = {
     {
       when: g => !g.flag('mazeSolved'),
       nudge: '"Widdershins first at the laurel..." — the journal\'s riddle walks the hedge maze, if you walk it word by word.',
-      more: 'West at the laurel; north twice to midnight; south once at the yew; east toward the morning. Then tea with the gnomon.',
+      more: 'West at the laurel; north twice to midnight; east at the yew; south once; east again to the gnomon.',
     },
     {
       when: g => !g.flag('dugTin'),
