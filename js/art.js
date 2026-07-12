@@ -93,6 +93,32 @@ const Art = (() => {
     </g>`;
   }
 
+  // A terracotta flower pot, base sitting at y, with an optional plant slot.
+  function potGlyph(cx, y, w, color = '#9c6a4a', inner = '') {
+    const h = w * 0.72;
+    const rimH = h * 0.24;
+    return `<g>
+      ${inner}
+      <path d="M ${(cx - w * 0.42).toFixed(1)} ${(y - h + rimH).toFixed(1)} L ${(cx - w * 0.3).toFixed(1)} ${y} L ${(cx + w * 0.3).toFixed(1)} ${y} L ${(cx + w * 0.42).toFixed(1)} ${(y - h + rimH).toFixed(1)} Z" fill="${color}" stroke="#241608" stroke-width="3"/>
+      <rect x="${(cx - w / 2).toFixed(1)}" y="${(y - h).toFixed(1)}" width="${w}" height="${rimH.toFixed(1)}" rx="3" fill="${color}" stroke="#241608" stroke-width="3"/>
+    </g>`;
+  }
+
+  // A spray of leaves fanning up from (cx, y).
+  function leafSpray(cx, y, size, color = '#4e7a3a', n = 5) {
+    let leaves = '';
+    for (let i = 0; i < n; i++) {
+      const a = -90 + (i - (n - 1) / 2) * (110 / Math.max(1, n - 1));
+      const rad = a * Math.PI / 180;
+      const tx = cx + size * Math.cos(rad);
+      const ty = y + size * Math.sin(rad);
+      const mx = cx + size * 0.5 * Math.cos(rad - 0.35);
+      const my = y + size * 0.5 * Math.sin(rad - 0.35);
+      leaves += `<path d="M ${cx} ${y} Q ${mx.toFixed(1)} ${my.toFixed(1)} ${tx.toFixed(1)} ${ty.toFixed(1)} Q ${(cx + size * 0.5 * Math.cos(rad + 0.35)).toFixed(1)} ${(y + size * 0.5 * Math.sin(rad + 0.35)).toFixed(1)} ${cx} ${y} Z" fill="${color}" stroke="#2b3f22" stroke-width="2"/>`;
+    }
+    return `<g>${leaves}</g>`;
+  }
+
   // A sheet of ruled paper.
   function paperSheet(x, y, w, h, rot = 0, ink = '#8a7f66') {
     let lines = '';
@@ -1211,5 +1237,6 @@ const Art = (() => {
     title, shopfront, counterZoom, grandfatherZoom, workshop,
     benchZoom, shelfZoom, clockLockZoom, office, cellar, hiddenRoom,
     icons, clockFace, hand, gearGlyph, stars, jarGlyph, bottleGlyph, paperSheet,
+    potGlyph, leafSpray,
   };
 })();

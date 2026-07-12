@@ -16,13 +16,13 @@ from py_mini_racer import MiniRacer
 HERE = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.dirname(HERE)
 
-ALL_TESTS = ['walkthrough-ch1.js', 'walkthrough-ch2.js', 'test-migration.js', 'test-cross-chapter.js', 'test-jar-labels.js']
+ALL_TESTS = ['walkthrough-ch1.js', 'walkthrough-ch2.js', 'walkthrough-ch3.js', 'test-migration.js', 'test-cross-chapter.js', 'test-jar-labels.js']
 
 
 def run_one(name):
     ctx = MiniRacer()
     ctx.eval(open(os.path.join(HERE, 'dom-stub.js')).read())
-    for js in ['art.js', 'art-ch2.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'engine.js']:
+    for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'engine.js']:
         path = os.path.join(GAME, 'js', js)
         if os.path.exists(path):
             ctx.eval(open(path).read())

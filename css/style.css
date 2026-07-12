@@ -17,6 +17,13 @@ body[data-chapter="ch2"] {
   --btn-bg: #1e2a1c;
   --btn-bg-hover: #2a3a26;
 }
+body[data-chapter="ch3"] {
+  --accent: #a8cbe8;          /* glasshouse sky blue */
+  --accent-deep: #4a6d8c;
+  --accent-rgb: 168, 203, 232;
+  --btn-bg: #1a2430;
+  --btn-bg-hover: #24344a;
+}
 
 html, body {
   margin: 0;
@@ -130,6 +137,15 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   border-color: var(--accent);
   box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
 }
+
+/* ---------- seed cabinet & planting map (ch3) ---------- */
+
+.seed-plant { font-size: 13px; letter-spacing: 1px; color: #b9ab8a; }
+.safe-dials .safe-dial .btn { min-width: 110px; }
+.map-row { display: flex; gap: 6px; justify-content: center; align-items: center; margin: 4px 0; }
+.map-rowname { width: 84px; text-align: right; font-size: 13px; letter-spacing: 1px; color: #b9ab8a; margin-right: 6px; }
+.map-cell { display: inline-block; width: 52px; min-width: 0; margin: 0; padding: 7px 0; font-size: 14px; }
+.map-cell.on { border-color: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35); }
 
 /* ---------- safe dials ---------- */
 

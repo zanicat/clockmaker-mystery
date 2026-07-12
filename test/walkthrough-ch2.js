@@ -116,7 +116,8 @@ adv();                                             // finale -> end screen
 
 assert(!isHidden('screen-end'), 'end screen shown');
 assert(__els['end-title'].textContent === "The Apothecary's Ledger", 'ch2 end title');
-assert(isHidden('btn-end-next'), 'no next chapter after ch2');
+assert(!isHidden('btn-end-next'), 'ch2 end offers Chapter Three');
+assert(__els['btn-end-next'].textContent === 'Begin Chapter Three', 'button labelled from ch3 subtitle');
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch2 === true, 'ch2 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch2') === null, 'ch2 save cleared');

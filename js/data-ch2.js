@@ -1120,7 +1120,7 @@ CHAPTERS.ch2 = {
     body: 'Silas Marsh — held for four murders, convicted by the very findings he signed. ' +
       'Josiah Blackwood — cleared, mourned, and right about everything. ' +
       'And on Wren Lane, Blackwood & Daughter opens at nine sharp, under new and steadier management.',
-    next: null,
+    next: 'ch3',
   },
 };
 

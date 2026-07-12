@@ -18,8 +18,17 @@ var fullS = {
     cabinetOpen: true, gallsTaken: true, pageTaken: true, scrapingsTaken: true,
     vitriolTaken: true, brushTaken: true, gateOpen: true, developerMade: true,
     studyUnlocked: true, bookcaseOpen: true, tonicTaken: true, proofDone: true,
+    // ch3
+    ivyCut: true, gladstoneMoved: true, bloomed: true, clockFixed: true,
+    journalTaken: true, secateursTaken: true, winderTaken: true, trowelTaken: true,
+    canTaken: true, lettuceTaken: true, mazeSolved: true, dugTin: true,
+    fragmentUsed: true, herbariumTaken: true, leafMatched: true,
   },
 };
+
+var nightS = { flags: {} };
+Object.keys(fullS.flags).forEach(function (k) { nightS.flags[k] = fullS.flags[k]; });
+nightS.flags.night = true;
 
 var ch1Painters = ['title', 'shopfront', 'counterZoom', 'grandfatherZoom', 'workshop',
   'benchZoom', 'shelfZoom', 'clockLockZoom', 'office', 'cellar', 'hiddenRoom'];
@@ -35,8 +44,17 @@ for (var i = 0; i < ch2Painters.length; i++) {
   out.push({ name: 'ch2.' + n + '.empty', svg: Art.ch2[n](emptyS) });
   out.push({ name: 'ch2.' + n + '.full', svg: Art.ch2[n](fullS) });
 }
+var ch3Painters = ['glasshouse', 'bloomClockZoom', 'pottingShed', 'seedDrawersZoom',
+  'orchidWing', 'maze', 'mazeHeartZoom', 'gardenOffice'];
+for (var i = 0; i < ch3Painters.length; i++) {
+  var n = ch3Painters[i];
+  out.push({ name: 'ch3.' + n + '.empty', svg: Art.ch3[n](emptyS) });
+  out.push({ name: 'ch3.' + n + '.full', svg: Art.ch3[n](fullS) });
+  out.push({ name: 'ch3.' + n + '.night', svg: Art.ch3[n](nightS) });
+}
 Object.keys(Art.icons).forEach(function (k) { out.push({ name: 'icon.' + k, svg: Art.icons[k] }); });
 Object.keys(Art.ch2.icons).forEach(function (k) { out.push({ name: 'icon2.' + k, svg: Art.ch2.icons[k] }); });
+Object.keys(Art.ch3.icons).forEach(function (k) { out.push({ name: 'icon3.' + k, svg: Art.ch3.icons[k] }); });
 
 // puzzle renders (need a fake g)
 var flags = {};
@@ -46,7 +64,7 @@ var fakeG = {
   hasClue: function () { return true; },
   hasItem: function () { return true; },
 };
-['ch1', 'ch2'].forEach(function (ch) {
+['ch1', 'ch2', 'ch3'].forEach(function (ch) {
   var puzzles = CHAPTERS[ch].puzzles;
   Object.keys(puzzles).forEach(function (k) {
     out.push({ name: ch + '.puzzle.' + k, svg: '<div>' + puzzles[k].render(fakeG) + '</div>' });
