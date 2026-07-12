@@ -1025,7 +1025,94 @@ CHAPTERS.ch2 = {
     { who: 'Quinn', text: 'Books don\'t lie on their own, Miss Blackwood — someone always holds the pen. Show me where it sleeps.' },
   ],
 
-  hints: [],
+  /* Ordered, two-tier hints: first entry whose when(g) is true wins.
+     `nudge` points at the goal, `more` gets specific without solving. */
+  hints: [
+    {
+      when: g => !g.hasClue('victims'),
+      nudge: 'Your client is standing right there, and she knows this shop better than anyone alive.',
+      more: 'Talk to Mercy Blackwood before you touch anything else.',
+    },
+    {
+      when: g => !g.flag('magnifierTaken'),
+      nudge: 'Mercy said her father kept his reading glass close by the prescription book.',
+      more: 'Go to the ledger stand on the counter and look beneath it.',
+    },
+    {
+      when: g => !g.flag('alteredSeen'),
+      nudge: 'Fresh ink on an old page deserves more than a glance.',
+      more: 'Use the brass magnifier on the prescription book.',
+    },
+    {
+      when: g => !g.flag('cabinetOpen'),
+      nudge: 'Whatever poisoned three hearts came from somewhere. The dispensary keeps its dangerous stock behind a lock with no keyhole.',
+      more: g => g.hasClue('riddle')
+        ? 'Seven, and one, and five — weigh his measure. And mind the smaller line: a proper chemist DOUBLES his drachms, so thirteen has only one spelling.'
+        : 'Read the brass plate on the poison cabinet. Josiah liked his locks to ask questions.',
+    },
+    {
+      when: g => g.flag('cabinetOpen') && !g.flag('scrapingsTaken'),
+      nudge: 'The digitalis jar is empty — but not quite clean.',
+      more: 'There is residue on the jar\'s shoulder. Scrape it into something chemist-clean; there was a stray vial on the remedy shelves.',
+    },
+    {
+      when: g => !g.flag('pageTaken'),
+      nudge: 'Josiah locked more than poisons behind his balance riddle.',
+      more: 'Take the folded page from the poison cabinet, blank or not. No chemist locks up blank paper.',
+    },
+    {
+      when: g => !g.flag('gateOpen'),
+      nudge: 'The dispensary has a way down, if you can make it turn.',
+      more: 'The cellar gate\'s winch drum wants a handle — there is one hanging behind the shop counter.',
+    },
+    {
+      when: g => !g.flag('developerMade'),
+      nudge: 'A page written with no ink wants chemistry, and Josiah\'s cellar was built for exactly that.',
+      more: g => {
+        if (!g.hasClue('inkRecipe')) return 'Read the stained recipe card on the reagent shelf in the cellar.';
+        if (!g.hasItem('gallNuts')) return 'The recipe wants oak galls. You saw a bowl of them — locked in with the poisons.';
+        if (!g.hasItem('greenVitriol')) return 'The recipe wants green vitriol. There is a jar of it on the dispensary workbench.';
+        return 'Brew at the alembic, and honour the card: rainwater, vitriol, galls, gentle warmth — and never a boil.';
+      },
+    },
+    {
+      when: g => !g.flag('messageRevealed'),
+      nudge: 'You have the developer. Now it needs a way onto the paper — evenly.',
+      more: g => g.hasItem('inkedBrush')
+        ? 'Use the loaded brush on the blank notebook page.'
+        : 'Combine the camel-hair brush with the developer, then brush the blank page.',
+    },
+    {
+      when: g => !g.flag('studyUnlocked'),
+      nudge: '"The third letter of each remedy, in the order I taught you them." The shop has been spelling the answer since you walked in.',
+      more: 'The five great jars, oldest lesson first: take the third letter of each. He made her name the key.',
+    },
+    {
+      when: g => !g.flag('ringTaken') && !g.flag('bookcaseOpen'),
+      nudge: '"Below, behind the books, is my proof." But bookcases that are doors need keys that aren\'t keys.',
+      more: 'The desk drawer holds Josiah\'s seal ring, and the bookcase crest holds a recess exactly its shape.',
+    },
+    {
+      when: g => !g.flag('tonicTaken'),
+      nudge: 'The proof will need something of the poisoner\'s to test. Think about what Marsh GAVE, not what he took.',
+      more: 'The gift bottle of tonic on the study side table — "with gratitude for your discretion."',
+    },
+    {
+      when: g => !g.flag('bookcaseOpen'),
+      nudge: 'You carry the seal of the man who built this room. Somewhere down here is a lock that misses it.',
+      more: 'Press the seal ring into the recess on the bookcase crest.',
+    },
+    {
+      when: g => !g.flag('recipeSeen'),
+      nudge: 'Josiah left instructions for whoever finished his work. Detectives read instructions.',
+      more: 'The method card on the study desk, dated the week he died.',
+    },
+    {
+      when: () => true,
+      nudge: 'Everything is on the proof bench: the scrapings, the acid, the flame, and the gift that killed him.',
+      more: 'Follow the method card exactly: scrapings, three drops of acid, warm until it blushes, then the tonic. Green is your verdict.',
+    },
+  ],
 
   end: {
     kicker: 'Chapter Two Complete',
