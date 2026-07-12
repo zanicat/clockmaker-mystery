@@ -104,6 +104,15 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .end-body { margin: 0 0 20px; line-height: 1.6; color: #d8cfae; }
 .end-tease { margin: 0 0 8px; color: #8a7f66; font-style: italic; }
 
+/* ---------- balance-lock weight chips ---------- */
+
+.weight-chip { opacity: 0.75; }
+.weight-chip.on {
+  opacity: 1;
+  border-color: #e6c568;
+  box-shadow: 0 0 10px rgba(230, 197, 104, 0.35);
+}
+
 /* ---------- safe dials ---------- */
 
 .safe-dials { display: flex; gap: 14px; justify-content: center; margin: 10px 0 4px; }

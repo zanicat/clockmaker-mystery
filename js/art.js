@@ -57,6 +57,42 @@ const Art = (() => {
     return list.map(([x, y, r]) => `<circle cx="${x}" cy="${y}" r="${r}" fill="${color}" opacity="0.8"/>`).join('');
   }
 
+  // An apothecary jar with a cream label band, base sitting at y.
+  function jarGlyph(cx, y, w, h, color, label) {
+    const x = cx - w / 2;
+    const lidW = w * 0.72;
+    const labelText = label ? `<text x="${cx}" y="${(y - h * 0.42).toFixed(1)}" text-anchor="middle" font-size="${Math.max(10, w * 0.19).toFixed(0)}" font-family="Georgia, serif" fill="#4a3d2a" letter-spacing="0.5">${label}</text>` : '';
+    return `<g>
+      <path d="M ${x} ${y} L ${x} ${(y - h * 0.78).toFixed(1)} Q ${x} ${(y - h * 0.92).toFixed(1)} ${(x + w * 0.18).toFixed(1)} ${(y - h * 0.94).toFixed(1)} L ${(x + w * 0.82).toFixed(1)} ${(y - h * 0.94).toFixed(1)} Q ${x + w} ${(y - h * 0.92).toFixed(1)} ${x + w} ${(y - h * 0.78).toFixed(1)} L ${x + w} ${y} Z" fill="${color}" stroke="#241608" stroke-width="3"/>
+      <rect x="${(cx - lidW / 2).toFixed(1)}" y="${(y - h * 1.06).toFixed(1)}" width="${lidW.toFixed(1)}" height="${(h * 0.14).toFixed(1)}" rx="4" fill="${color}" stroke="#241608" stroke-width="3"/>
+      <rect x="${(cx - lidW * 0.28).toFixed(1)}" y="${(y - h * 1.18).toFixed(1)}" width="${(lidW * 0.56).toFixed(1)}" height="${(h * 0.13).toFixed(1)}" rx="4" fill="${color}" stroke="#241608" stroke-width="3"/>
+      <rect x="${(x + w * 0.1).toFixed(1)}" y="${(y - h * 0.58).toFixed(1)}" width="${(w * 0.8).toFixed(1)}" height="${(h * 0.26).toFixed(1)}" rx="3" fill="#efe6cf" stroke="#b9a97e" stroke-width="2"/>
+      ${labelText}
+    </g>`;
+  }
+
+  // A slim chemist's bottle, base sitting at y.
+  function bottleGlyph(cx, y, w, h, color, stopper = '#8a6a30') {
+    const x = cx - w / 2;
+    return `<g>
+      <path d="M ${x} ${y} L ${x} ${(y - h * 0.62).toFixed(1)} L ${(cx - w * 0.16).toFixed(1)} ${(y - h * 0.8).toFixed(1)} L ${(cx - w * 0.16).toFixed(1)} ${(y - h).toFixed(1)} L ${(cx + w * 0.16).toFixed(1)} ${(y - h).toFixed(1)} L ${(cx + w * 0.16).toFixed(1)} ${(y - h * 0.8).toFixed(1)} L ${x + w} ${(y - h * 0.62).toFixed(1)} L ${x + w} ${y} Z" fill="${color}" stroke="#241608" stroke-width="3"/>
+      <rect x="${(cx - w * 0.2).toFixed(1)}" y="${(y - h * 1.1).toFixed(1)}" width="${(w * 0.4).toFixed(1)}" height="${(h * 0.12).toFixed(1)}" rx="3" fill="${stopper}" stroke="#241608" stroke-width="2"/>
+    </g>`;
+  }
+
+  // A sheet of ruled paper.
+  function paperSheet(x, y, w, h, rot = 0, ink = '#8a7f66') {
+    let lines = '';
+    const n = Math.max(2, Math.floor(h / 16));
+    for (let i = 1; i <= n; i++) {
+      lines += `<line x1="${(x + w * 0.1).toFixed(1)}" y1="${(y + (h * i) / (n + 1)).toFixed(1)}" x2="${(x + w * (i === n ? 0.66 : 0.9)).toFixed(1)}" y2="${(y + (h * i) / (n + 1)).toFixed(1)}" stroke="${ink}" stroke-width="2"/>`;
+    }
+    return `<g ${rot ? `transform="rotate(${rot} ${x + w / 2} ${y + h / 2})"` : ''}>
+      <rect x="${x}" y="${y}" width="${w}" height="${h}" fill="#efe6cf" stroke="#b9a97e" stroke-width="2"/>
+      ${lines}
+    </g>`;
+  }
+
   // ---------- title screen ----------
 
   function title() {
@@ -1156,6 +1192,6 @@ const Art = (() => {
   return {
     title, shopfront, counterZoom, grandfatherZoom, workshop,
     benchZoom, shelfZoom, clockLockZoom, office, cellar, hiddenRoom,
-    icons, clockFace, hand, gearGlyph,
+    icons, clockFace, hand, gearGlyph, stars, jarGlyph, bottleGlyph, paperSheet,
   };
 })();
