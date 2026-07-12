@@ -58,10 +58,23 @@ const Art = (() => {
   }
 
   // An apothecary jar with a cream label band, base sitting at y.
+  // The label auto-fits its band: the font shrinks for long words, and
+  // textLength clamps the glyphs as a backstop so text never overflows.
   function jarGlyph(cx, y, w, h, color, label) {
     const x = cx - w / 2;
     const lidW = w * 0.72;
-    const labelText = label ? `<text x="${cx}" y="${(y - h * 0.42).toFixed(1)}" text-anchor="middle" font-size="${Math.max(10, w * 0.19).toFixed(0)}" font-family="Georgia, serif" fill="#4a3d2a" letter-spacing="0.5">${label}</text>` : '';
+    let labelText = '';
+    if (label) {
+      const maxW = w * 0.8 - w * 0.1;                  // band minus padding
+      const perChar = 0.66;                            // Georgia caps, approx em/char
+      let fs = Math.max(10, w * 0.19);
+      if (label.length * fs * perChar > maxW) fs = Math.max(9, maxW / (label.length * perChar));
+      const clamp = label.length * fs * perChar > maxW
+        ? ` textLength="${maxW.toFixed(1)}" lengthAdjust="spacingAndGlyphs"`
+        : '';
+      const baseline = y - h * 0.45 + fs * 0.36;       // centered in the band
+      labelText = `<text x="${cx}" y="${baseline.toFixed(1)}" text-anchor="middle" font-size="${fs.toFixed(1)}"${clamp} font-family="Georgia, serif" fill="#4a3d2a">${label}</text>`;
+    }
     return `<g>
       <path d="M ${x} ${y} L ${x} ${(y - h * 0.78).toFixed(1)} Q ${x} ${(y - h * 0.92).toFixed(1)} ${(x + w * 0.18).toFixed(1)} ${(y - h * 0.94).toFixed(1)} L ${(x + w * 0.82).toFixed(1)} ${(y - h * 0.94).toFixed(1)} Q ${x + w} ${(y - h * 0.92).toFixed(1)} ${x + w} ${(y - h * 0.78).toFixed(1)} L ${x + w} ${y} Z" fill="${color}" stroke="#241608" stroke-width="3"/>
       <rect x="${(cx - lidW / 2).toFixed(1)}" y="${(y - h * 1.06).toFixed(1)}" width="${lidW.toFixed(1)}" height="${(h * 0.14).toFixed(1)}" rx="4" fill="${color}" stroke="#241608" stroke-width="3"/>

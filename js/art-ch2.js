@@ -77,8 +77,8 @@ Art.ch2 = (() => {
         ${stars([[130, 230, 1.6], [210, 214, 1.8], [176, 300, 1.4]])}
         <g transform="rotate(3 175 300)">
           <rect x="120" y="272" width="110" height="58" rx="4" fill="#efe6cf" stroke="#7a5a3d" stroke-width="3"/>
-          <text x="175" y="298" text-anchor="middle" font-size="17" font-family="Georgia, serif" fill="#553a27" letter-spacing="1">BLACKWOOD</text>
-          <text x="175" y="318" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="#553a27" letter-spacing="1">&amp; DAUGHTER</text>
+          <text x="175" y="298" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="#553a27">BLACKWOOD</text>
+          <text x="175" y="318" text-anchor="middle" font-size="12" font-family="Georgia, serif" fill="#553a27">&amp; DAUGHTER</text>
         </g>
         <rect x="104" y="404" width="146" height="120" fill="#1f3329" stroke="#16281f" stroke-width="2"/>
         <rect x="104" y="548" width="146" height="118" fill="#1f3329" stroke="#16281f" stroke-width="2"/>
@@ -434,9 +434,9 @@ Art.ch2 = (() => {
     const plate = `
       <g>
         <rect x="330" y="694" width="540" height="86" rx="8" fill="#c9a544" stroke="#8a6a30" stroke-width="4"/>
-        <text x="600" y="726" text-anchor="middle" font-size="17" font-family="Georgia, serif" fill="#5f4718" font-style="italic">Seven years an apprentice; one daughter raised;</text>
-        <text x="600" y="750" text-anchor="middle" font-size="17" font-family="Georgia, serif" fill="#5f4718" font-style="italic">five shops refused me. Weigh my measure, and be trusted.</text>
-        <text x="600" y="772" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="#5f4718">&mdash; J.B. &mdash; a proper chemist doubles his drachms</text>
+        <text x="600" y="726" text-anchor="middle" font-size="15" font-family="Georgia, serif" fill="#5f4718" font-style="italic">Seven years an apprentice; one daughter raised;</text>
+        <text x="600" y="748" text-anchor="middle" font-size="15" font-family="Georgia, serif" fill="#5f4718" font-style="italic">five shops refused me. Weigh my measure, and be trusted.</text>
+        <text x="600" y="770" text-anchor="middle" font-size="12" font-family="Georgia, serif" fill="#5f4718">&mdash; J.B. &mdash; a proper chemist doubles his drachms</text>
       </g>`;
 
     return `<svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -489,7 +489,7 @@ Art.ch2 = (() => {
 
       <!-- green vitriol jar -->
       ${S.flags.vitriolTaken ? '' : `<g>
-        ${jarGlyph(880, 380, 96, 130, '#3f6b4f', 'GREEN VITRIOL')}
+        ${jarGlyph(880, 380, 96, 130, '#3f6b4f', 'VITRIOL')}
         <ellipse cx="880" cy="330" rx="26" ry="8" fill="#8fae5c" opacity="0.7"/>
       </g>`}
 

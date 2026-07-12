@@ -16,7 +16,7 @@ from py_mini_racer import MiniRacer
 HERE = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.dirname(HERE)
 
-ALL_TESTS = ['walkthrough-ch1.js', 'walkthrough-ch2.js', 'test-migration.js', 'test-cross-chapter.js']
+ALL_TESTS = ['walkthrough-ch1.js', 'walkthrough-ch2.js', 'test-migration.js', 'test-cross-chapter.js', 'test-jar-labels.js']
 
 
 def run_one(name):
