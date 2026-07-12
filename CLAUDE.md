@@ -34,6 +34,10 @@ HTML/CSS/JS globals — no build step, no dependencies, no npm. Script order in
 - **Hotspots**: rects are `[x, y, w, h]` in art viewBox coords — scenes
   1600×1000, zooms 1200×800. Overlapping hotspots: later in the list renders
   on top. Keep `label` text stable; tests click hotspots by aria-label.
+  Every hotspot must sit on something *painted* — scene exits especially
+  (a door, path, or signpost), never a bare patch of background.
+- **Maze/route puzzles**: a solution walk must never immediately reverse
+  direction (the trail would retrace itself and read as an error).
 - Hints are an ordered ladder: first entry whose `when(g)` is true wins;
   `nudge`/`more` may be functions of `g`.
 
