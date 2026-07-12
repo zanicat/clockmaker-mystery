@@ -1,46 +1,82 @@
 /* Engine: game state, rendering, dialogue, inventory, zoom views,
-   hints, and localStorage save. Scene content lives in data.js. */
+   hints, and localStorage save. Chapter content lives in data-ch*.js,
+   registered on the global CHAPTERS registry; the engine only ever
+   talks to the active chapter `C`. */
 
 const Game = (() => {
-  const SAVE_KEY = 'clockmakers-secret-save-v1';
+  const SAVE_PREFIX = 'clockmakers-secret-save-';
+  const LEGACY_SAVE_KEY = 'clockmakers-secret-save-v1';
+  const META_KEY = 'clockmakers-secret-meta';
   const $ = s => document.querySelector(s);
 
+  let C = null;           // active chapter (entry in CHAPTERS)
   let S = null;           // current game state
   let zoomId = null;      // open zoom view id, or null
   let puzzleId = null;    // open puzzle overlay id, or null
   let queue = [];         // pending dialogue lines
   let afterQueue = null;  // callback once the dialogue queue empties
 
+  const chapterList = () =>
+    Object.values(CHAPTERS).sort((a, b) => a.order - b.order);
+
   function defaultState() {
-    return { scene: CHAPTER.startScene, inventory: [], flags: {}, selected: null };
+    return { scene: C.startScene, inventory: [], flags: {}, selected: null };
   }
 
   // ---------- persistence ----------
 
+  const saveKey = id => SAVE_PREFIX + id;
+
   function save() {
     try {
-      localStorage.setItem(SAVE_KEY, JSON.stringify({
+      localStorage.setItem(saveKey(C.id), JSON.stringify({
         scene: S.scene, inventory: S.inventory, flags: S.flags,
       }));
     } catch (e) { /* storage unavailable — play on without saves */ }
   }
 
-  function loadSave() {
+  function loadSave(chId) {
     try {
-      const raw = localStorage.getItem(SAVE_KEY);
+      const raw = localStorage.getItem(saveKey(chId));
       if (!raw) return null;
       const d = JSON.parse(raw);
-      if (!SCENES[d.scene]) return null;
+      if (!CHAPTERS[chId].scenes[d.scene]) return null;
       return { scene: d.scene, inventory: d.inventory || [], flags: d.flags || {}, selected: null };
     } catch (e) {
       return null;
     }
   }
 
-  function hasSave() { return loadSave() !== null; }
+  function hasSave(chId) { return loadSave(chId) !== null; }
 
-  function clearSave() {
-    try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* ignore */ }
+  function clearSave(chId) {
+    try { localStorage.removeItem(saveKey(chId)); } catch (e) { /* ignore */ }
+  }
+
+  /* Saves written before the chapter registry lived under one
+     unscoped key; adopt one as Chapter One's slot. */
+  function migrateLegacySave() {
+    try {
+      const old = localStorage.getItem(LEGACY_SAVE_KEY);
+      if (old && !localStorage.getItem(saveKey('ch1'))) {
+        localStorage.setItem(saveKey('ch1'), old);
+      }
+      if (old) localStorage.removeItem(LEGACY_SAVE_KEY);
+    } catch (e) { /* ignore */ }
+  }
+
+  function loadMeta() {
+    try { return JSON.parse(localStorage.getItem(META_KEY)) || {}; }
+    catch (e) { return {}; }
+  }
+
+  function markCompleted(chId) {
+    try {
+      const m = loadMeta();
+      m.completed = m.completed || {};
+      m.completed[chId] = true;
+      localStorage.setItem(META_KEY, JSON.stringify(m));
+    } catch (e) { /* ignore */ }
   }
 
   // ---------- API handed to scene scripts ----------
@@ -79,17 +115,14 @@ const Game = (() => {
       renderScene();
       renderZoom();
       renderInventory();
-      const sc = SCENES[id];
+      const sc = C.scenes[id];
       if (sc.onEnter) sc.onEnter(g);
     },
     openZoom(id) { zoomId = id; renderZoom(); },
     closeZoom() { zoomId = null; renderZoom(); },
     openPuzzle(id) { puzzleId = id; renderPuzzle(); },
     closePuzzle() { puzzleId = null; renderPuzzle(); },
-    endChapter() {
-      clearSave();
-      showScreen('end');
-    },
+    endChapter() { showEnd(); },
   };
 
   // ---------- dialogue ----------
@@ -145,7 +178,7 @@ const Game = (() => {
       S.selected = null;
       renderInventory();
       if (fn) fn(g, id);
-      else say([{ text: `The ${ITEMS[id].name.toLowerCase()} doesn't do anything there.` }]);
+      else say([{ text: `The ${C.items[id].name.toLowerCase()} doesn't do anything there.` }]);
       return;
     }
     if (h.onClick) h.onClick(g);
@@ -154,7 +187,7 @@ const Game = (() => {
   // ---------- rendering ----------
 
   function renderScene() {
-    const sc = SCENES[S.scene];
+    const sc = C.scenes[S.scene];
     $('#scene-name').textContent = sc.name;
     $('#scene-bg').innerHTML = sc.art(S);
     buildHotspots($('#scene-hotspots'), sc.hotspots, 1600, 1000);
@@ -166,7 +199,7 @@ const Game = (() => {
       wrap.classList.add('hidden');
       return;
     }
-    const z = SCENES[S.scene].zooms[zoomId];
+    const z = C.scenes[S.scene].zooms[zoomId];
     wrap.classList.remove('hidden');
     $('#zoom-title').textContent = z.title;
     $('#zoom-bg').innerHTML = z.art(S);
@@ -177,7 +210,7 @@ const Game = (() => {
     const bar = $('#inv-slots');
     bar.innerHTML = '';
     for (const id of S.inventory) {
-      const it = ITEMS[id];
+      const it = C.items[id];
       const el = document.createElement('button');
       el.className = 'inv-slot' + (S.selected === id ? ' selected' : '');
       el.innerHTML = it.icon;
@@ -186,7 +219,7 @@ const Game = (() => {
       el.addEventListener('click', () => {
         if (S.selected && S.selected !== id) {
           const key = [S.selected, id].sort().join('+');
-          const fn = COMBOS[key];
+          const fn = C.combos[key];
           S.selected = null;
           renderInventory();
           if (fn) fn(g);
@@ -203,7 +236,7 @@ const Game = (() => {
       bar.appendChild(el);
     }
     $('#inv-status').textContent = S.selected
-      ? `Using ${ITEMS[S.selected].name} — click a target, or another item to combine (click again to cancel)`
+      ? `Using ${C.items[S.selected].name} — click a target, or another item to combine (click again to cancel)`
       : '';
   }
 
@@ -213,7 +246,7 @@ const Game = (() => {
       wrap.classList.add('hidden');
       return;
     }
-    const p = PUZZLES[puzzleId];
+    const p = C.puzzles[puzzleId];
     wrap.classList.remove('hidden');
     $('#puzzle-title').textContent = p.title;
     const body = $('#puzzle-body');
@@ -251,7 +284,7 @@ const Game = (() => {
   function closeModal() { $('#modal').classList.add('hidden'); }
 
   function showHint() {
-    const h = CHAPTER.hints.find(x => x.when(g));
+    const h = C.hints.find(x => x.when(g));
     if (!h) {
       openModal('A Detective’s Instinct', 'Trust your eyes, detective.');
       return;
@@ -277,7 +310,7 @@ const Game = (() => {
       {
         label: 'Restart chapter',
         action: () => openModal('Restart the chapter?', 'Your progress so far will be lost.', [
-          { label: 'Restart', action: newGame },
+          { label: 'Restart', action: () => newGame(C.id) },
           { label: 'Cancel' },
         ]),
       },
@@ -293,41 +326,104 @@ const Game = (() => {
     $('#screen-end').classList.toggle('hidden', id !== 'end');
   }
 
-  function newGame() {
-    S = defaultState();
-    zoomId = null;
-    puzzleId = null;
-    queue = [];
-    afterQueue = null;
-    save();
-    showScreen('game');
-    renderAll();
-    say(CHAPTER.intro);
+  function renderTitle() {
+    const wrap = $('#chapter-list');
+    wrap.innerHTML = '';
+    const done = loadMeta().completed || {};
+    for (const ch of chapterList()) {
+      const card = document.createElement('div');
+      card.className = 'chapter-card';
+
+      const head = document.createElement('div');
+      head.className = 'chapter-head';
+      const title = document.createElement('div');
+      title.className = 'chapter-title';
+      title.textContent = ch.title;
+      head.appendChild(title);
+      if (done[ch.id]) {
+        const badge = document.createElement('span');
+        badge.className = 'chapter-badge';
+        badge.textContent = '✓ Solved';
+        head.appendChild(badge);
+      }
+      card.appendChild(head);
+
+      const sub = document.createElement('div');
+      sub.className = 'chapter-subtitle';
+      sub.textContent = ch.subtitle;
+      card.appendChild(sub);
+
+      const buttons = document.createElement('div');
+      buttons.className = 'chapter-buttons';
+      const btnNew = document.createElement('button');
+      btnNew.className = 'btn';
+      btnNew.textContent = 'New Game';
+      btnNew.addEventListener('click', () => newGame(ch.id));
+      buttons.appendChild(btnNew);
+      if (hasSave(ch.id)) {
+        const btnCont = document.createElement('button');
+        btnCont.className = 'btn';
+        btnCont.textContent = 'Continue';
+        btnCont.addEventListener('click', () => continueGame(ch.id));
+        buttons.appendChild(btnCont);
+      }
+      card.appendChild(buttons);
+
+      wrap.appendChild(card);
+    }
   }
 
-  function continueGame() {
-    S = loadSave() || defaultState();
+  function showEnd() {
+    markCompleted(C.id);
+    clearSave(C.id);
+    $('#end-kicker').textContent = C.end.kicker;
+    $('#end-title').textContent = C.end.title;
+    $('#end-body').textContent = C.end.body;
+    const next = C.end.next && CHAPTERS[C.end.next];
+    const btnNext = $('#btn-end-next');
+    btnNext.classList.toggle('hidden', !next);
+    if (next) btnNext.textContent = 'Begin ' + next.subtitle.split('—')[0].trim();
+    showScreen('end');
+  }
+
+  function startChapter(chId, state) {
+    C = CHAPTERS[chId];
+    S = state;
     zoomId = null;
     puzzleId = null;
     queue = [];
     afterQueue = null;
     showScreen('game');
     renderAll();
+  }
+
+  function newGame(chId) {
+    C = CHAPTERS[chId];
+    startChapter(chId, defaultState());
+    save();
+    say(C.intro);
+  }
+
+  function continueGame(chId) {
+    C = CHAPTERS[chId];
+    startChapter(chId, loadSave(chId) || defaultState());
   }
 
   function quitToTitle() {
+    renderTitle();
     showScreen('title');
-    $('#btn-continue').classList.toggle('hidden', !hasSave());
   }
 
   function init() {
+    migrateLegacySave();
     $('#title-art').innerHTML = Art.title();
     $('#end-art').innerHTML = Art.title();
-    $('#btn-continue').classList.toggle('hidden', !hasSave());
+    renderTitle();
 
-    $('#btn-new').addEventListener('click', newGame);
-    $('#btn-continue').addEventListener('click', continueGame);
     $('#btn-end-title').addEventListener('click', quitToTitle);
+    $('#btn-end-next').addEventListener('click', () => {
+      if (C.end.next && CHAPTERS[C.end.next]) newGame(C.end.next);
+    });
     $('#btn-menu').addEventListener('click', showMenu);
     $('#btn-hint').addEventListener('click', showHint);
     $('#dialogue-catcher').addEventListener('click', showNext);

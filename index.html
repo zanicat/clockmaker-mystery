@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Clockmaker's Secret</title>
+<title>The Ivy Quinn Mysteries</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="css/style.css">
 </head>
@@ -13,12 +13,9 @@
   <section id="screen-title" class="screen">
     <div id="title-art"></div>
     <div id="title-card">
-      <h1>The Clockmaker&rsquo;s Secret</h1>
-      <p class="subtitle">Chapter One &mdash; The Silent Shop</p>
-      <div class="title-buttons">
-        <button id="btn-new" class="btn">New Game</button>
-        <button id="btn-continue" class="btn hidden">Continue</button>
-      </div>
+      <h1>The Ivy Quinn Mysteries</h1>
+      <p class="subtitle">Point-and-click mysteries in two chapters</p>
+      <div id="chapter-list"></div>
       <p class="title-note">A point-and-click mystery</p>
     </div>
   </section>
@@ -26,13 +23,11 @@
   <section id="screen-end" class="screen hidden">
     <div id="end-art"></div>
     <div id="end-card">
-      <p class="end-kicker">Chapter One Complete</p>
-      <h1>The Silent Shop</h1>
-      <p class="end-body">Edmund Thornfield &mdash; found, three days below his own floorboards.
-      Victor Grimsby &mdash; answering to the Yard for a letter he wishes he had never sealed.
-      And the Meridian ticks on, safe beneath Harrow Lane.</p>
-      <p class="end-tease">Chapter Two: The Meridian&rsquo;s Secret &mdash; coming soon</p>
+      <p class="end-kicker" id="end-kicker"></p>
+      <h1 id="end-title"></h1>
+      <p class="end-body" id="end-body"></p>
       <div class="title-buttons">
+        <button id="btn-end-next" class="btn hidden">Begin the next chapter</button>
         <button id="btn-end-title" class="btn">Return to Title</button>
       </div>
     </div>
@@ -99,7 +94,7 @@
 
 </div>
 <script src="js/art.js"></script>
-<script src="js/data.js"></script>
+<script src="js/data-ch1.js"></script>
 <script src="js/engine.js"></script>
 <script src="js/main.js"></script>
 </body>

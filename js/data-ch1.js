@@ -3,7 +3,15 @@
 
    Hotspot rects are [x, y, w, h] in the art's viewBox coordinates
    (scenes 1600x1000, zooms 1200x800). Handlers receive the engine
-   API `g` (see engine.js). */
+   API `g` (see engine.js).
+
+   The whole chapter lives in an IIFE and registers itself on the
+   global CHAPTERS registry, so item/scene/puzzle names stay local
+   to the chapter. */
+
+window.CHAPTERS = window.CHAPTERS || {};
+
+(() => {
 
 const ITEMS = {
   brassKey: {
@@ -817,11 +825,17 @@ const PUZZLES = {
   },
 };
 
-// ---------- chapter script ----------
+// ---------- chapter registration ----------
 
-const CHAPTER = {
+CHAPTERS.ch1 = {
+  id: 'ch1',
+  order: 1,
   title: "The Clockmaker's Secret",
   subtitle: 'Chapter One — The Silent Shop',
+  items: ITEMS,
+  combos: COMBOS,
+  scenes: SCENES,
+  puzzles: PUZZLES,
   startScene: 'shopfront',
 
   intro: [
@@ -911,4 +925,15 @@ const CHAPTER = {
       more: "Step through.",
     },
   ],
+
+  end: {
+    kicker: 'Chapter One Complete',
+    title: 'The Silent Shop',
+    body: 'Edmund Thornfield — found, three days below his own floorboards. ' +
+      'Victor Grimsby — answering to the Yard for a letter he wishes he had never sealed. ' +
+      'And the Meridian ticks on, safe beneath Harrow Lane.',
+    next: 'ch2',
+  },
 };
+
+})();
