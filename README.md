@@ -46,3 +46,13 @@ python3 -m http.server 8000
   (`CHAPTERS.chN`): items, scenes, hotspots, puzzles, clues, hints.
 - `js/art.js`, `js/art-ch2.js` — SVG scene painters and inventory icons.
 - `js/sfx.js` — Web Audio synthesized sound effects.
+
+## Tests
+
+Headless regression tests (no browser needed):
+
+```
+pip install mini-racer
+python3 test/run_test.py    # full walkthroughs of both chapters, saves, sad paths
+python3 test/check_svg.py   # every scene/icon/puzzle render validated as XML
+```
