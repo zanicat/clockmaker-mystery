@@ -49,8 +49,8 @@ Art.ch2 = (() => {
           <stop offset="100%" stop-color="#000" stop-opacity="0.52"/>
         </radialGradient>
         <radialGradient id="aplamp" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffdf9e" stop-opacity="0.15"/>
-          <stop offset="100%" stop-color="#ffdf9e" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#d6ecd2" stop-opacity="0.14"/>
+          <stop offset="100%" stop-color="#d6ecd2" stop-opacity="0"/>
         </radialGradient>
       </defs>
 
@@ -65,7 +65,9 @@ Art.ch2 = (() => {
       <ellipse cx="760" cy="400" rx="560" ry="320" fill="url(#aplamp)"/>
       <g>
         <line x1="760" y1="0" x2="760" y2="80" stroke="#241608" stroke-width="6"/>
-        <circle cx="760" cy="128" r="46" fill="#efe6cf" opacity="0.85"/>
+        <circle cx="760" cy="128" r="46" fill="#e4f0dc" opacity="0.85">
+          <animate attributeName="opacity" values="0.78;0.9;0.78" dur="4.2s" repeatCount="indefinite"/>
+        </circle>
         <circle cx="760" cy="128" r="46" fill="none" stroke="#8a6a30" stroke-width="4"/>
       </g>
 
@@ -91,7 +93,9 @@ Art.ch2 = (() => {
         <rect x="330" y="190" width="250" height="380" fill="#16281f"/>
         <rect x="348" y="208" width="214" height="344" fill="#141d33"/>
         ${stars([[400, 250, 1.6], [520, 236, 1.5], [470, 320, 1.4]])}
-        <circle cx="455" cy="330" r="52" fill="#8fae5c" opacity="0.5"/>
+        <circle cx="455" cy="330" r="52" fill="#8fae5c" opacity="0.5">
+          <animate attributeName="opacity" values="0.42;0.58;0.42" dur="5.5s" repeatCount="indefinite"/>
+        </circle>
         <circle cx="455" cy="330" r="52" fill="none" stroke="#c9a544" stroke-width="4"/>
         <line x1="455" y1="208" x2="455" y2="278" stroke="#c9a544" stroke-width="3"/>
         <path d="M 402 460 A 54 30 0 0 0 508 460 L 496 430 L 414 430 Z" fill="#d8cfae" stroke="#a89a78" stroke-width="3"/>
@@ -301,8 +305,8 @@ Art.ch2 = (() => {
           <stop offset="100%" stop-color="#000" stop-opacity="0.56"/>
         </radialGradient>
         <radialGradient id="dplamp" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffdf9e" stop-opacity="0.16"/>
-          <stop offset="100%" stop-color="#ffdf9e" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#d6ecd2" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#d6ecd2" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <rect width="1600" height="700" fill="#3d4a42"/>
@@ -312,7 +316,9 @@ Art.ch2 = (() => {
       <ellipse cx="700" cy="440" rx="520" ry="310" fill="url(#dplamp)"/>
       <line x1="700" y1="0" x2="700" y2="180" stroke="#241608" stroke-width="5"/>
       <path d="M 664 180 L 736 180 L 756 228 L 644 228 Z" fill="#3f3d36" stroke="#241608" stroke-width="4"/>
-      <ellipse cx="700" cy="236" rx="54" ry="16" fill="#ffdf9e" opacity="0.5"/>
+      <ellipse cx="700" cy="236" rx="54" ry="16" fill="#dff0da" opacity="0.5">
+        <animate attributeName="opacity" values="0.42;0.55;0.42" dur="3.8s" repeatCount="indefinite"/>
+      </ellipse>
 
       <!-- door back to shop -->
       <g>
@@ -504,7 +510,9 @@ Art.ch2 = (() => {
       <g>
         <ellipse cx="700" cy="640" rx="54" ry="16" fill="#8a8f9c" stroke="#55524a" stroke-width="3"/>
         <rect x="682" y="576" width="36" height="52" rx="8" fill="#8a8f9c" stroke="#55524a" stroke-width="3"/>
-        <path d="M 700 556 q -14 -26 0 -44 q 14 18 0 44" fill="#ffdf9e" opacity="0.8"/>
+        <path d="M 700 556 q -14 -26 0 -44 q 14 18 0 44" fill="#cfe4f0" opacity="0.8">
+          <animate attributeName="opacity" values="0.65;0.9;0.72;0.88;0.65" dur="1.1s" repeatCount="indefinite"/>
+        </path>
       </g>
 
       <!-- pill roller and bottles -->
@@ -583,12 +591,34 @@ Art.ch2 = (() => {
       <g>
         <rect x="500" y="560" width="240" height="160" rx="10" fill="#4a3b33" stroke="#241d18" stroke-width="5"/>
         <rect x="540" y="600" width="160" height="80" rx="8" fill="#1c1208"/>
-        <path d="M 560 660 q 18 -34 40 0 q 20 -30 40 0 q 18 -26 36 0" fill="none" stroke="#e8843c" stroke-width="6" opacity="0.85"/>
+        <path d="M 560 660 q 18 -34 40 0 q 20 -30 40 0 q 18 -26 36 0" fill="none" stroke="#e8843c" stroke-width="6" opacity="0.85">
+          <animate attributeName="opacity" values="0.7;0.95;0.78;0.92;0.7" dur="1.6s" repeatCount="indefinite"/>
+        </path>
         <ellipse cx="620" cy="470" rx="96" ry="86" fill="#b08d3e" stroke="#8a6a30" stroke-width="5"/>
         <path d="M 596 396 L 596 340 Q 620 316 644 340 L 644 396" fill="#b08d3e" stroke="#8a6a30" stroke-width="5"/>
         <path d="M 644 356 Q 760 350 812 430 L 812 500" fill="none" stroke="#b08d3e" stroke-width="12"/>
         ${bottleGlyph(812, 560, 44, 62, '#385a63')}
         <ellipse cx="620" cy="470" rx="60" ry="50" fill="#8fae5c" opacity="${S.flags.developerMade ? '0.55' : '0.18'}"/>
+        <!-- the brew bubbles, gently -->
+        <g fill="#cfe8c8">
+          <circle cx="604" cy="495" r="5">
+            <animate attributeName="cy" values="495;438" dur="2.6s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.7;0" dur="2.6s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="624" cy="498" r="4">
+            <animate attributeName="cy" values="498;442" dur="3.3s" begin="1.1s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.6;0" dur="3.3s" begin="1.1s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="640" cy="492" r="3.5">
+            <animate attributeName="cy" values="492;440" dur="2.9s" begin="1.9s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.65;0" dur="2.9s" begin="1.9s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+        <!-- vapor wisp at the condenser -->
+        <ellipse cx="812" cy="486" rx="11" ry="7" fill="#cfe8c8" opacity="0">
+          <animate attributeName="cy" values="486;448" dur="4.4s" repeatCount="indefinite"/>
+          <animate attributeName="opacity" values="0;0.3;0" dur="4.4s" repeatCount="indefinite"/>
+        </ellipse>
       </g>
 
       <!-- reagent shelf with recipe card -->
@@ -641,8 +671,8 @@ Art.ch2 = (() => {
           <stop offset="100%" stop-color="#000" stop-opacity="0.58"/>
         </radialGradient>
         <radialGradient id="stylamp" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffdf9e" stop-opacity="0.22"/>
-          <stop offset="100%" stop-color="#ffdf9e" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#d6ecd2" stop-opacity="0.2"/>
+          <stop offset="100%" stop-color="#d6ecd2" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <rect width="1600" height="700" fill="#43323a"/>
@@ -668,7 +698,9 @@ Art.ch2 = (() => {
         <g>
           <rect x="500" y="430" width="14" height="80" fill="#2e2013"/>
           <path d="M 450 430 L 566 430 L 546 396 L 470 396 Z" fill="#2f6b4f" stroke="#1e4634" stroke-width="3"/>
-          <ellipse cx="508" cy="438" rx="56" ry="14" fill="#b8e6c8" opacity="0.35"/>
+          <ellipse cx="508" cy="438" rx="56" ry="14" fill="#b8e6c8" opacity="0.35">
+            <animate attributeName="opacity" values="0.28;0.4;0.28" dur="4.6s" repeatCount="indefinite"/>
+          </ellipse>
         </g>
         <!-- duplicate prescription book -->
         <g>
@@ -716,7 +748,9 @@ Art.ch2 = (() => {
     }
     const draught = S.flags.proofDone ? `
       <ellipse cx="800" cy="472" rx="26" ry="10" fill="#4fae5c" opacity="0.9"/>
-      <ellipse cx="800" cy="440" rx="40" ry="60" fill="#4fae5c" opacity="0.35"/>
+      <ellipse cx="800" cy="440" rx="40" ry="60" fill="#4fae5c" opacity="0.35">
+        <animate attributeName="opacity" values="0.25;0.45;0.25" dur="3s" repeatCount="indefinite"/>
+      </ellipse>
     ` : '';
 
     return `<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -726,8 +760,8 @@ Art.ch2 = (() => {
           <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
         </radialGradient>
         <radialGradient id="cprlamp" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stop-color="#ffdf9e" stop-opacity="0.3"/>
-          <stop offset="100%" stop-color="#ffdf9e" stop-opacity="0"/>
+          <stop offset="0%" stop-color="#d6ecd2" stop-opacity="0.28"/>
+          <stop offset="100%" stop-color="#d6ecd2" stop-opacity="0"/>
         </radialGradient>
       </defs>
       <rect width="1600" height="700" fill="#4a3a30"/>
@@ -741,7 +775,9 @@ Art.ch2 = (() => {
       <g>
         <line x1="420" y1="0" x2="420" y2="150" stroke="#241608" stroke-width="5"/>
         <rect x="390" y="150" width="60" height="70" rx="10" fill="#2a2416" stroke="#8a6a30" stroke-width="3"/>
-        <rect x="402" y="164" width="36" height="44" fill="#ffdf9e" opacity="0.7"/>
+        <rect x="402" y="164" width="36" height="44" fill="#e0f0d8" opacity="0.7">
+          <animate attributeName="opacity" values="0.6;0.78;0.6" dur="3.4s" repeatCount="indefinite"/>
+        </rect>
       </g>
 
       <!-- the proof bench -->
@@ -756,7 +792,9 @@ Art.ch2 = (() => {
         ${draught}
         <!-- burner -->
         <ellipse cx="800" cy="512" rx="34" ry="10" fill="#8a8f9c" stroke="#55524a" stroke-width="3"/>
-        <path d="M 800 500 q -10 -20 0 -34 q 10 14 0 34" fill="#8fb4e8" opacity="0.8"/>
+        <path d="M 800 500 q -10 -20 0 -34 q 10 14 0 34" fill="#8fb4e8" opacity="0.8">
+          <animate attributeName="opacity" values="0.62;0.92;0.7;0.88;0.62" dur="0.9s" repeatCount="indefinite"/>
+        </path>
         ${bottleGlyph(920, 516, 40, 88, '#8fae5c')}
         ${bottleGlyph(990, 516, 34, 72, '#6b2f36')}
         ${jarGlyph(1070, 516, 54, 66, '#46584c')}

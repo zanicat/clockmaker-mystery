@@ -46,6 +46,12 @@ HTML/CSS/JS globals — no build step, no dependencies, no npm. Script order in
   `bottleGlyph`, `paperSheet`, `stars`.
 - No external assets of any kind (fonts, images, audio files). SFX are
   synthesized in `js/sfx.js`; add new voices there and call via `g.sfx(name)`.
+- Ambient motion is inline SMIL (`<animate>`/`<animateTransform>` inside the
+  SVG strings) — subtle opacity/position loops only; never move hotspot
+  geometry.
+- UI chrome colors come from CSS variables (`--accent` etc. in style.css).
+  The engine stamps `data-chapter` on `<body>`; a new chapter tints its
+  frame by adding one `body[data-chapter="chN"]` override block.
 - Only use HTML entities listed in `test/check_svg.py`'s ENTITIES map (or
   numeric ones); anything else fails XML validation.
 
@@ -82,15 +88,20 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
 - **Mystery shape** — the structural twist type, not the plot. Unclaimed:
   impossible theft, alibi-breaking, guilty client, crime-that-never-was.
 - **Tone & stakes** — alternate the register between chapters.
-- **Sensory identity** — one palette, one recurring motif, one signature SFX.
+- **Art signature** — declare a palette structure, light source, line
+  language, signature ambient motion, and chrome accent (`--accent`
+  override). Available-but-unclaimed levers: feTurbulence paper-grain /
+  hand-inked wobble (needs in-browser tuning before committing); shape
+  grammar & camera changes (recomposition + hotspot re-derivation — big
+  enough to be a future chapter's founding identity, not a retrofit).
 - **Topology & cast** — both existing chapters are linear room-chains ending
   in a hidden room with a mostly-solo detective; the next should break that
   (hub-and-spoke, rooms that change state, interviewable suspects).
 - **One systemic novelty** — exactly one small meta-system per chapter.
 
-| Chapter | Verb | Twist type | Tone | Palette/motif | Topology | Novelty |
+| Chapter | Verb | Twist type | Tone | Art signature | Topology | Novelty |
 |---|---|---|---|---|---|---|
-| ch1 Clockmaker's Secret | wind/mechanism | staged disappearance, no real crime | cozy, warm | brass & browns / clocks stopped at 7:15 | linear chain → hidden room | four-gear clock-lock |
-| ch2 Apothecary's Ledger | weigh/brew/chemistry | frame-job; killer posed as a victim | dark, four murders | pharmacy greens & cream / labelled jars | linear chain → hidden room | evidence-chemistry chain |
+| ch1 Clockmaker's Secret | wind/mechanism | staged disappearance, no real crime | cozy, warm | warm brass lamplight; stopped-clock motif; deliberate stillness — the ticking Meridian in the finale is the chapter's only motion; brass chrome | linear chain → hidden room | four-gear clock-lock |
+| ch2 Apothecary's Ledger | weigh/brew/chemistry | frame-job; killer posed as a victim | dark, four murders | cold green gaslight pools (furnace the one warm note); labelled-jar motif; bubbling/flickering ambient motion; verdigris chrome | linear chain → hidden room | evidence-chemistry chain |
 
 Extend this table when a chapter ships.

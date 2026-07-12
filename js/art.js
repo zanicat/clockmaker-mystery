@@ -1129,8 +1129,13 @@ const Art = (() => {
         <rect x="1220" y="220" width="200" height="560" rx="10" fill="none" stroke="#c9a544" stroke-width="2" opacity="0.6"/>
         ${clockFace(1320, 310, 66, 9, 6, { face: '#f5ecd4', rim: '#c9a544' })}
         <rect x="1268" y="420" width="104" height="240" rx="12" fill="#0d0c0f" stroke="#c9a544" stroke-width="3"/>
-        <line x1="1320" y1="432" x2="1352" y2="600" stroke="#c9a544" stroke-width="4"/>
-        <circle cx="1352" cy="618" r="20" fill="#c9a544" stroke="#8a6a30" stroke-width="3"/>
+        <!-- the only thing that moves in Chapter One: the Meridian, still running -->
+        <g>
+          <animateTransform attributeName="transform" type="rotate"
+            values="-6 1320 432; 6 1320 432; -6 1320 432" dur="2s" repeatCount="indefinite"/>
+          <line x1="1320" y1="432" x2="1320" y2="600" stroke="#c9a544" stroke-width="4"/>
+          <circle cx="1320" cy="618" r="20" fill="#c9a544" stroke="#8a6a30" stroke-width="3"/>
+        </g>
         <rect x="1210" y="780" width="220" height="30" fill="#16141a" stroke="#0d0c0f" stroke-width="4"/>
       </g>
 
