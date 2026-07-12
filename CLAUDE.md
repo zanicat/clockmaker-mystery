@@ -84,9 +84,9 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
 
 - **Verb** — the physical thing the player's hands do all chapter; every
   set-piece puzzle speaks it. Unclaimed: align/aim (optics), listen/tune
-  (sound), navigate/plot (maps/tides), trace/follow (tracks, wires).
+  (sound), trace/follow (tracks, wires).
 - **Mystery shape** — the structural twist type, not the plot. Unclaimed:
-  impossible theft, alibi-breaking, guilty client, crime-that-never-was.
+  impossible theft, alibi-breaking, guilty client.
 - **Tone & stakes** — alternate the register between chapters.
 - **Art signature** — declare a palette structure, light source, line
   language, signature ambient motion, and chrome accent (`--accent`
@@ -94,14 +94,15 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
   hand-inked wobble (needs in-browser tuning before committing); shape
   grammar & camera changes (recomposition + hotspot re-derivation — big
   enough to be a future chapter's founding identity, not a retrofit).
-- **Topology & cast** — both existing chapters are linear room-chains ending
-  in a hidden room with a mostly-solo detective; the next should break that
-  (hub-and-spoke, rooms that change state, interviewable suspects).
+- **Topology & cast** — vary the map shape and NPC presence against the
+  table (ch1/ch2: linear chains into a hidden room, solo; ch3: hub-and-spoke
+  with interviewable characters and a finale back in the hub).
 - **One systemic novelty** — exactly one small meta-system per chapter.
 
 | Chapter | Verb | Twist type | Tone | Art signature | Topology | Novelty |
 |---|---|---|---|---|---|---|
 | ch1 Clockmaker's Secret | wind/mechanism | staged disappearance, no real crime | cozy, warm | warm brass lamplight; stopped-clock motif; deliberate stillness — the ticking Meridian in the finale is the chapter's only motion; brass chrome | linear chain → hidden room | four-gear clock-lock |
 | ch2 Apothecary's Ledger | weigh/brew/chemistry | frame-job; killer posed as a victim | dark, four murders | cold green gaslight pools (furnace the one warm note); labelled-jar motif; bubbling/flickering ambient motion; verdigris chrome | linear chain → hidden room | evidence-chemistry chain |
+| ch3 Botanist's Bequest | navigate/plot | crime-that-never-was; the "theft" was the will's own test | whimsical, sunny, no crime at all | first daylight chapter — green glass & dappled sun vs. moonlit phosphor night; butterfly/moth/firefly motion + Gladstone's blink; sky-blue chrome | hub-and-spoke, interviewable cast, finale in the hub | day/night lever (`night` flag re-renders scenes, gates hotspots) |
 
 Extend this table when a chapter ships.

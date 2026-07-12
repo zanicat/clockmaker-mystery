@@ -3,12 +3,14 @@
 Browser point-and-click mysteries in the style of mobile escape-room games.
 Plain HTML/CSS/JS — no build step, no dependencies.
 
-Two chapters, selectable from the title screen (each with its own save slot):
+Three chapters, selectable from the title screen (each with its own save slot):
 
 1. **The Clockmaker's Secret** — clockmaker Edmund Thornfield vanishes from a
    shop bolted from the inside, every clock stopped at 7:15.
 2. **The Apothecary's Ledger** — three customers of Blackwood & Daughter die
    of "weak hearts", and the prescription ledger blames a dead man.
+3. **The Botanist's Bequest** — the rarest orchid in England vanishes, pot
+   and all, with a fortune riding on its bloom. Nobody suspects the tortoise.
 
 ## Run it
 

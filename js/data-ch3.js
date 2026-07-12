@@ -920,7 +920,88 @@ CHAPTERS.ch3 = {
     { who: 'Quinn', text: 'A missing flower, a locked garden, and heirs in full cry. Very well, Mr. Prewitt — let\'s see what the beds have to say for themselves.' },
   ],
 
-  hints: [],
+  /* Ordered, two-tier hints: first entry whose when(g) is true wins. */
+  hints: [
+    {
+      when: g => !g.hasClue('bequest'),
+      nudge: 'Fifty years of this garden are standing right there in an apron, and gardeners notice everything.',
+      more: 'Talk to Hoskins before you touch a single leaf.',
+    },
+    {
+      when: g => !g.flag('secateursTaken') || !g.flag('winderTaken') || !g.flag('trowelTaken') || !g.flag('canTaken'),
+      nudge: 'A garden\'s work starts in the shed — and Digby\'s shed is racked like a ship\'s cabin.',
+      more: 'Take everything the tool rack offers: shears, that oversized brass key, the trowel — and the watering can by the door.',
+    },
+    {
+      when: g => !g.flag('ivyCut'),
+      nudge: 'One door in the glasshouse has grown a fortnight\'s beard of ivy.',
+      more: 'Secateurs on the orchid wing door. Consider it professional courtesy, one Ivy to another.',
+    },
+    {
+      when: g => !g.flag('cabinetOpen'),
+      nudge: 'The seed cabinet\'s long drawer is locked "to the seasons" — and Digby left his sowing notes lying right on the bench.',
+      more: g => g.hasClue('seedPackets')
+        ? 'Nasturtium in spring, foxglove in summer, sweet pea in autumn, hellebore in winter. Set each wheel to its sowing.'
+        : 'Read the four seed packets on the potting-shed bench first.',
+    },
+    {
+      when: g => !g.flag('journalTaken'),
+      nudge: 'The cabinet has opened its long drawer an inch, smug as its maker.',
+      more: 'Take the green journal from the drawer.',
+    },
+    {
+      when: g => !g.hasClue('bearings') || !g.hasClue('sunward'),
+      nudge: 'The journal is half riddle, half Latin — and you know one person who reads compasses and one who reads Latin.',
+      more: g => {
+        if (!g.hasClue('sunward')) return 'Ask Hoskins what "sunward" means to a gardener.';
+        return 'Show the journal to Petronella — she\'s been dying to be useful about the margins.';
+      },
+    },
+    {
+      when: g => !g.flag('clockFixed'),
+      nudge: 'That giant dial by the palm bed calls itself the NOCTURNE MECHANISM, and its winding socket is empty.',
+      more: 'The brass winder from the shed fits the bloom clock. Digby filed it under garden equipment for a reason.',
+    },
+    {
+      when: g => !g.flag('mazeSolved'),
+      nudge: '"Widdershins first at the laurel..." — the journal\'s riddle walks the hedge maze, if you walk it word by word.',
+      more: 'West at the laurel; north twice to midnight; south once at the yew; east toward the morning. Then tea with the gnomon.',
+    },
+    {
+      when: g => !g.flag('dugTin'),
+      nudge: 'At the maze\'s heart, someone dug by the sundial and patted the earth flat — tidily.',
+      more: 'The trowel, on the disturbed earth. Digby buried the missing corner of something.',
+    },
+    {
+      when: g => !g.flag('herbariumTaken'),
+      nudge: 'Before you hunt a disguised orchid, you\'d better know her face out of costume.',
+      more: 'The herbarium press in the garden office keeps a pressed specimen of the Empress herself.',
+    },
+    {
+      when: g => !g.hasClue('bedPlot'),
+      nudge: 'You carry the map\'s torn corner, the sundial\'s advice, and Petronella\'s Latin. The master map is waiting to be finished.',
+      more: 'Her Majesty is the REGINA row, read from the morning wall on the east — the third light in. Mark that bed.',
+    },
+    {
+      when: g => !g.flag('gladstoneMoved'),
+      nudge: 'Bed K holds one "quite ordinary" aspidistra — and one quite immovable guardian.',
+      more: 'Tortoises have exactly one price, and the cold frame in the orchid wing grows it. The sign says it\'s Gladstone\'s anyway.',
+    },
+    {
+      when: g => !g.flag('leafMatched'),
+      nudge: 'The pillow is vacant. Now prove the dull plant isn\'t.',
+      more: 'Hold the herbarium page against the aspidistra\'s leaves — strap leaves, silver midrib.',
+    },
+    {
+      when: () => true,
+      nudge: 'She\'s found, she\'s thirsty, and she\'s called the MIDNIGHT Empress for a reason.',
+      more: g => {
+        if (!g.flag('canFilled')) return 'Fill the watering can at the rain cistern — she\'ll take nothing less than rainwater.';
+        if (!g.flag('night')) return 'Throw the bloom clock to NIGHT. Digby built you a midnight; use it.';
+        return 'Water her, under the phosphor lamps, and watch.';
+      },
+    },
+  ],
 
   end: {
     kicker: 'Chapter Three Complete',

@@ -6,6 +6,13 @@ Game.init();
 chapterBtn("The Botanist's Bequest", 'New Game');
 adv(); // intro
 
+// hint ladder: first rung points at Hoskins
+__els['btn-hint'].click();
+assert(!isHidden('modal'), 'hint modal opens');
+assert(__els['modal-text'].textContent.indexOf('apron') >= 0,
+  'first hint points at the gardener, got: ' + __els['modal-text'].textContent);
+btnByText('modal-buttons', 'Close');
+
 // --- hub: meet Hoskins, find the clock stuck ---
 hotspot('Hoskins, the head gardener'); adv();      // clues: bequest + hoskinsTale
 hotspot('The bloom clock');
@@ -113,6 +120,13 @@ __els['btn-journal'].click();
 assert(__els['journal-body'].children.length === 15,
   'expected 15 casebook clues before the finale, got ' + __els['journal-body'].children.length);
 __els['journal-close'].click();
+
+// final hint rung: two-tier, context-sensitive
+__els['btn-hint'].click();
+btnByText('modal-buttons', 'Another nudge');
+assert(__els['modal-text'].textContent.indexOf('NIGHT') >= 0,
+  'final hint tier-2 says to throw the clock to night, got: ' + __els['modal-text'].textContent);
+btnByText('modal-buttons', 'Close');
 
 hotspot('The bloom clock');
 hotspot('The mechanism'); adv();                    // night
