@@ -1,5 +1,23 @@
 * { box-sizing: border-box; }
 
+/* Chapter chrome accent. The engine sets data-chapter on <body> while a
+   chapter is active; each chapter may override these to tint the UI frame.
+   Brass is the default (title screen and Chapter One). */
+:root {
+  --accent: #e6c568;
+  --accent-deep: #8a6a30;
+  --accent-rgb: 230, 197, 104;
+  --btn-bg: #2a2416;
+  --btn-bg-hover: #3a3220;
+}
+body[data-chapter="ch2"] {
+  --accent: #b8dca6;          /* verdigris — pharmacy greens */
+  --accent-deep: #557a4a;
+  --accent-rgb: 184, 220, 166;
+  --btn-bg: #1e2a1c;
+  --btn-bg-hover: #2a3a26;
+}
+
 html, body {
   margin: 0;
   height: 100%;
@@ -33,7 +51,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   font-size: clamp(30px, 5vw, 58px);
   font-weight: normal;
   letter-spacing: 1px;
-  color: #e6c568;
+  color: var(--accent);
   text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
 }
 .subtitle { margin: 0 0 30px; color: #b9ab8a; font-style: italic; }
@@ -49,9 +67,9 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   border-radius: 10px;
   text-align: left;
 }
-.chapter-card:hover { border-color: #8a6a30; }
+.chapter-card:hover { border-color: var(--accent-deep); }
 .chapter-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
-.chapter-title { color: #e6c568; font-size: 22px; letter-spacing: 0.5px; }
+.chapter-title { color: var(--accent); font-size: 22px; letter-spacing: 0.5px; }
 .chapter-badge {
   color: #9fbe8a;
   border: 1px solid #56693f;
@@ -71,13 +89,13 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   margin: 10px auto;
   padding: 12px 16px;
   font-size: 18px;
-  color: #e6c568;
-  background: #2a2416;
-  border: 1px solid #8a6a30;
+  color: var(--accent);
+  background: var(--btn-bg);
+  border: 1px solid var(--accent-deep);
   border-radius: 8px;
   transition: background 0.15s, box-shadow 0.15s;
 }
-.btn:hover { background: #3a3220; box-shadow: 0 0 14px rgba(230, 197, 104, 0.2); }
+.btn:hover { background: var(--btn-bg-hover); box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.2); }
 
 /* ---------- end screen ---------- */
 
@@ -98,7 +116,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   margin: 0 0 18px;
   font-size: clamp(26px, 4.4vw, 46px);
   font-weight: normal;
-  color: #e6c568;
+  color: var(--accent);
   letter-spacing: 1px;
 }
 .end-body { margin: 0 0 20px; line-height: 1.6; color: #d8cfae; }
@@ -109,8 +127,8 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .weight-chip { opacity: 0.75; }
 .weight-chip.on {
   opacity: 1;
-  border-color: #e6c568;
-  box-shadow: 0 0 10px rgba(230, 197, 104, 0.35);
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35);
 }
 
 /* ---------- safe dials ---------- */
@@ -121,9 +139,9 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   width: 54px;
   padding: 8px 0;
   font-size: 30px;
-  color: #e6c568;
+  color: var(--accent);
   background: #0d1017;
-  border: 1px solid #8a6a30;
+  border: 1px solid var(--accent-deep);
   border-radius: 8px;
 }
 .safe-dial .btn { padding: 4px 12px; min-width: 0; margin: 0; width: auto; font-size: 13px; }
@@ -150,7 +168,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   padding: 6px 14px;
   font-size: 15px;
 }
-.chip:hover { border-color: #8a6a30; color: #e6c568; }
+.chip:hover { border-color: var(--accent-deep); color: var(--accent); }
 
 #stage-outer {
   flex: 1;
@@ -185,18 +203,18 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .hotspot:hover,
 .hotspot:focus-visible {
   outline: none;
-  box-shadow: inset 0 0 0 2px rgba(230, 197, 104, 0.5), 0 0 18px rgba(230, 197, 104, 0.15);
-  background: radial-gradient(closest-side, rgba(230, 197, 104, 0.1), transparent);
+  box-shadow: inset 0 0 0 2px rgba(var(--accent-rgb), 0.5), 0 0 18px rgba(var(--accent-rgb), 0.15);
+  background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.1), transparent);
 }
 
 /* "Spots" button: briefly reveal every interactive area */
 .show-hotspots .hotspot {
-  box-shadow: inset 0 0 0 2px rgba(230, 197, 104, 0.55);
+  box-shadow: inset 0 0 0 2px rgba(var(--accent-rgb), 0.55);
   animation: spot-pulse 1.2s ease-in-out infinite;
 }
 @keyframes spot-pulse {
-  0%, 100% { background: radial-gradient(closest-side, rgba(230, 197, 104, 0.05), transparent); }
-  50% { background: radial-gradient(closest-side, rgba(230, 197, 104, 0.18), transparent); }
+  0%, 100% { background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.05), transparent); }
+  50% { background: radial-gradient(closest-side, rgba(var(--accent-rgb), 0.18), transparent); }
 }
 
 /* ---------- zoom view ---------- */
@@ -213,7 +231,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 #zoom-panel {
   width: 86%;
   background: #171a22;
-  border: 1px solid #8a6a30;
+  border: 1px solid var(--accent-deep);
   border-radius: 10px;
   padding: 10px;
   box-shadow: 0 14px 50px rgba(0, 0, 0, 0.6);
@@ -223,7 +241,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   justify-content: space-between;
   align-items: center;
   padding: 2px 6px 10px;
-  color: #e6c568;
+  color: var(--accent);
   letter-spacing: 1px;
 }
 #zoom-stage {
@@ -248,14 +266,14 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   width: min(88%, 900px);
   z-index: 21;
   background: rgba(16, 14, 10, 0.93);
-  border: 1px solid #8a6a30;
+  border: 1px solid var(--accent-deep);
   border-radius: 10px;
   padding: 14px 20px 8px;
   pointer-events: none;
 }
-#dialogue-who { color: #e6c568; font-weight: bold; letter-spacing: 1.5px; margin-bottom: 4px; text-transform: uppercase; font-size: 14px; }
+#dialogue-who { color: var(--accent); font-weight: bold; letter-spacing: 1.5px; margin-bottom: 4px; text-transform: uppercase; font-size: 14px; }
 #dialogue-text { font-size: clamp(14px, 1.9vw, 19px); line-height: 1.45; }
-#dialogue-more { text-align: right; color: #8a6a30; animation: bob 0.9s infinite alternate; }
+#dialogue-more { text-align: right; color: var(--accent-deep); animation: bob 0.9s infinite alternate; }
 @keyframes bob { from { transform: translateY(0); } to { transform: translateY(4px); } }
 
 /* ---------- puzzle overlay ---------- */
@@ -272,7 +290,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 #puzzle-panel {
   width: min(90%, 470px);
   background: #171a22;
-  border: 1px solid #8a6a30;
+  border: 1px solid var(--accent-deep);
   border-radius: 12px;
   padding: 14px 18px 18px;
 }
@@ -281,13 +299,13 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #e6c568;
+  color: var(--accent);
   padding-bottom: 8px;
   letter-spacing: 1px;
 }
 #puzzle-body { text-align: center; }
 .puzzle-clock svg { width: 190px; height: 190px; }
-.puzzle-time { font-size: 22px; color: #e6c568; letter-spacing: 2px; margin: 4px 0 8px; }
+.puzzle-time { font-size: 22px; color: var(--accent); letter-spacing: 2px; margin: 4px 0 8px; }
 .puzzle-controls { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin: 6px 0; }
 .puzzle-controls .btn { display: inline-block; width: auto; min-width: 0; margin: 0; padding: 8px 14px; font-size: 15px; }
 .puzzle-msg { min-height: 1.5em; color: #b9ab8a; font-style: italic; margin: 8px 0 6px; }
@@ -306,12 +324,12 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 #modal-panel {
   width: min(88%, 540px);
   background: #171a22;
-  border: 1px solid #8a6a30;
+  border: 1px solid var(--accent-deep);
   border-radius: 12px;
   padding: 24px 28px;
   text-align: center;
 }
-#modal-title { margin: 0 0 12px; color: #e6c568; font-weight: normal; letter-spacing: 1px; }
+#modal-title { margin: 0 0 12px; color: var(--accent); font-weight: normal; letter-spacing: 1px; }
 #modal-text { margin: 0 0 8px; line-height: 1.55; }
 #modal-buttons .btn { display: inline-block; width: auto; min-width: 170px; margin: 6px; padding: 10px 18px; font-size: 16px; }
 
@@ -335,15 +353,15 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   padding: 6px;
 }
 .inv-slot svg { width: 100%; height: 100%; display: block; }
-.inv-slot:hover { border-color: #8a6a30; }
-.inv-slot.selected { border-color: #e6c568; box-shadow: 0 0 12px rgba(230, 197, 104, 0.35); }
+.inv-slot:hover { border-color: var(--accent-deep); }
+.inv-slot.selected { border-color: var(--accent); box-shadow: 0 0 12px rgba(var(--accent-rgb), 0.35); }
 .inv-slot.inv-new { animation: inv-glow 1.2s ease-out; }
 @keyframes inv-glow {
-  0% { border-color: #e6c568; box-shadow: 0 0 16px rgba(230, 197, 104, 0.7); }
+  0% { border-color: var(--accent); box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.7); }
   100% { border-color: #3a4152; box-shadow: none; }
 }
 #inv-status { color: #b9ab8a; font-style: italic; font-size: 14px; }
-#inv-status.flash { color: #e6c568; }
+#inv-status.flash { color: var(--accent); }
 
 /* ---------- casebook / dialogue backlog ---------- */
 
@@ -362,7 +380,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   display: flex;
   flex-direction: column;
   background: #171a22;
-  border: 1px solid #8a6a30;
+  border: 1px solid var(--accent-deep);
   border-radius: 12px;
   padding: 12px 16px 16px;
 }
@@ -373,16 +391,16 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   padding-bottom: 10px;
 }
 #journal-tabs { display: flex; gap: 8px; }
-#journal-tabs .chip.active { border-color: #8a6a30; color: #e6c568; background: #2a2416; }
+#journal-tabs .chip.active { border-color: var(--accent-deep); color: var(--accent); background: var(--btn-bg); }
 #journal-body { overflow-y: auto; text-align: left; padding: 2px 6px; }
 .journal-empty { color: #8a7f66; font-style: italic; text-align: center; }
 .clue-entry { border-bottom: 1px solid #2a2f3c; padding: 10px 2px 12px; }
 .clue-entry:last-child { border-bottom: 0; }
-.clue-entry h3 { margin: 0 0 6px; color: #e6c568; font-weight: normal; font-size: 17px; letter-spacing: 0.5px; }
+.clue-entry h3 { margin: 0 0 6px; color: var(--accent); font-weight: normal; font-size: 17px; letter-spacing: 0.5px; }
 .clue-entry p { margin: 0 0 6px; line-height: 1.5; color: #d8cfae; font-size: 15px; }
 .log-line { padding: 5px 2px; line-height: 1.45; font-size: 15px; color: #d8cfae; }
 .log-line + .log-line { border-top: 1px solid #1e222c; }
-.log-who { color: #e6c568; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-right: 8px; }
+.log-who { color: var(--accent); font-size: 13px; letter-spacing: 1px; text-transform: uppercase; margin-right: 8px; }
 
 /* ---------- small screens ---------- */
 

@@ -560,6 +560,7 @@ const Game = (() => {
 
   function startChapter(chId, state) {
     C = CHAPTERS[chId];
+    document.body.dataset.chapter = chId;   // chapter-tinted UI chrome
     S = state;
     zoomId = null;
     puzzleId = null;
@@ -584,6 +585,7 @@ const Game = (() => {
   }
 
   function quitToTitle() {
+    delete document.body.dataset.chapter;   // back to neutral brass
     renderTitle();
     showScreen('title');
   }

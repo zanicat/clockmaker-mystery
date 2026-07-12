@@ -102,6 +102,7 @@ var document = {
   },
   createElement: function (tag) { return makeEl(tag); },
   addEventListener: function () {},
+  body: makeEl('body'),
 };
 window.document = document;
 
