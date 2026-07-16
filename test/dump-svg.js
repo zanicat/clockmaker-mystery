@@ -23,12 +23,20 @@ var fullS = {
     journalTaken: true, secateursTaken: true, winderTaken: true, trowelTaken: true,
     canTaken: true, lettuceTaken: true, mazeSolved: true, dugTin: true,
     fragmentUsed: true, herbariumTaken: true, leafMatched: true,
+    // ch4
+    oculusWound: true, winderTaken4: true, spectroTaken: true, saleTaken: true,
+    sourceTraced: true,
   },
 };
 
 var nightS = { flags: {} };
 Object.keys(fullS.flags).forEach(function (k) { nightS.flags[k] = fullS.flags[k]; });
 nightS.flags.night = true;
+
+// ch4 lit state: every floor's beam-gated art painted (for XML validation).
+var litS = { flags: {} };
+Object.keys(fullS.flags).forEach(function (k) { litS.flags[k] = fullS.flags[k]; });
+litS.flags.lit_dome = true; litS.flags.lit_workshop = true; litS.flags.lit_vault = true;
 
 var ch1Painters = ['title', 'shopfront', 'counterZoom', 'grandfatherZoom', 'workshop',
   'benchZoom', 'shelfZoom', 'clockLockZoom', 'office', 'cellar', 'hiddenRoom'];
@@ -52,9 +60,18 @@ for (var i = 0; i < ch3Painters.length; i++) {
   out.push({ name: 'ch3.' + n + '.full', svg: Art.ch3[n](fullS) });
   out.push({ name: 'ch3.' + n + '.night', svg: Art.ch3[n](nightS) });
 }
+var ch4Painters = ['domeLantern', 'heliostatZoom', 'gallery', 'logbookZoom',
+  'workshop', 'vault', 'corniceZoom'];
+for (var i = 0; i < ch4Painters.length; i++) {
+  var n = ch4Painters[i];
+  out.push({ name: 'ch4.' + n + '.empty', svg: Art.ch4[n](emptyS) });
+  out.push({ name: 'ch4.' + n + '.full', svg: Art.ch4[n](fullS) });
+  out.push({ name: 'ch4.' + n + '.lit', svg: Art.ch4[n](litS) });
+}
 Object.keys(Art.icons).forEach(function (k) { out.push({ name: 'icon.' + k, svg: Art.icons[k] }); });
 Object.keys(Art.ch2.icons).forEach(function (k) { out.push({ name: 'icon2.' + k, svg: Art.ch2.icons[k] }); });
 Object.keys(Art.ch3.icons).forEach(function (k) { out.push({ name: 'icon3.' + k, svg: Art.ch3.icons[k] }); });
+Object.keys(Art.ch4.icons).forEach(function (k) { out.push({ name: 'icon4.' + k, svg: Art.ch4.icons[k] }); });
 
 // puzzle renders (need a fake g)
 var flags = {};
@@ -64,7 +81,7 @@ var fakeG = {
   hasClue: function () { return true; },
   hasItem: function () { return true; },
 };
-['ch1', 'ch2', 'ch3'].forEach(function (ch) {
+['ch1', 'ch2', 'ch3', 'ch4'].forEach(function (ch) {
   var puzzles = CHAPTERS[ch].puzzles;
   Object.keys(puzzles).forEach(function (k) {
     out.push({ name: ch + '.puzzle.' + k, svg: '<div>' + puzzles[k].render(fakeG) + '</div>' });

@@ -1012,7 +1012,7 @@ CHAPTERS.ch3 = {
     body: 'No thief, no crime — only a gardener\'s last examination, passed. ' +
       'Petronella keeps the garden, Hoskins keeps the cottage and the tortoise, and Bertram keeps the cocktail cabinet, as foreseen. ' +
       'And every midnight under glass, for anyone who troubles to look, the Empress blooms.',
-    next: null,
+    next: 'ch4',
   },
 };
 

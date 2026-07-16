@@ -44,6 +44,13 @@ body[data-chapter="ch3"] {
   --btn-bg: #1a2430;
   --btn-bg-hover: #24344a;
 }
+body[data-chapter="ch4"] {
+  --accent: #c7b8ff;          /* pale amethyst starlight */
+  --accent-deep: #5b4b8f;
+  --accent-rgb: 199, 184, 255;
+  --btn-bg: #171528;
+  --btn-bg-hover: #241f3e;
+}
 
 html, body {
   margin: 0;
@@ -197,6 +204,20 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 .map-rowname { width: 84px; text-align: right; font-size: 13px; letter-spacing: 1px; color: #b9ab8a; margin-right: 6px; }
 .map-cell { display: inline-block; width: 52px; min-width: 0; margin: 0; padding: 7px 0; font-size: 14px; }
 .map-cell.on { border-color: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.35); }
+
+/* ---------- heliostat, bench hunt & drift (ch4) ---------- */
+
+.beam-board svg, .drift-caustic svg { width: min(94%, 400px); height: auto; display: block; margin: 4px auto; }
+.drift-pt { min-width: 0; width: 40px; margin: 2px; padding: 6px 0; }
+
+.hunt-scene { position: relative; width: min(96%, 640px); margin: 6px auto; line-height: 0; }
+.hunt-svg { width: 100%; height: auto; display: block; }
+.hunt-spot {
+  position: absolute; width: 56px; height: 56px; padding: 0; margin: 0; min-width: 0;
+  border: 1px solid transparent; border-radius: 8px; background: transparent; cursor: pointer;
+}
+.hunt-spot:hover { border-color: rgba(var(--accent-rgb), 0.4); }
+.hunt-spot.got { border-color: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4); }
 
 /* ---------- safe dials ---------- */
 

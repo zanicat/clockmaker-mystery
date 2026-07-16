@@ -74,6 +74,9 @@ const Sfx = (() => {
     chime:   () => [523, 659, 784, 1046].forEach((f, i) => tone(f, 0.7, 'sine', 0.05, i * 0.2)),
     page:    () => swish(0.18, 0.06, 1600),
     error:   () => tone(115, 0.13, 'square', 0.035),
+    beam:    () => { tone(880, 0.5, 'sine', 0.05, 0, 300); tone(1320, 0.4, 'sine', 0.03, 0.08); },
+    shutter: () => { tone(180, 0.08, 'square', 0.05); swish(0.12, 0.05, 900); },
+    prism:   () => [660, 830, 990].forEach((f, i) => tone(f, 0.22, 'sine', 0.03, i * 0.06)),
   };
 
   return {

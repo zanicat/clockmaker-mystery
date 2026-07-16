@@ -136,11 +136,20 @@ hotspot('A dull aspidistra'); adv();                // the Empress blooms -> end
 
 assert(!isHidden('screen-end'), 'end screen shown');
 assert(__els['end-title'].textContent === "The Botanist's Bequest", 'ch3 end title');
-assert(isHidden('btn-end-next'), 'no next chapter after ch3');
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch3 === true, 'ch3 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch3') === null, 'ch3 save cleared');
 assert(invNames().join(',') === 'Garden Journal',
   'only the journal remains, got: ' + invNames().join(','));
 
-'OK: ch3 walkthrough complete; inventory at end: ' + invNames().join(', ');
+// "Begin Chapter Four" flows straight into ch4
+assert(!isHidden('btn-end-next'), 'next-chapter button shown after ch3');
+assert(__els['btn-end-next'].textContent === 'Begin Chapter Four', 'button labelled from ch4 subtitle');
+var endInv = invNames().join(', ');
+__els['btn-end-next'].click();
+adv(); // ch4 intro
+assert(!isHidden('screen-game'), 'game screen active after next-chapter');
+assert(__els['scene-name'].textContent === 'The Instrument Gallery', 'ch4 opens in the gallery');
+assert(invNames().length === 0, 'ch4 starts with a fresh inventory');
+
+'OK: ch3 walkthrough complete (and flowed into ch4); ch3 end inventory: ' + endInv;
