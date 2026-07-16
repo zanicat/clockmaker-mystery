@@ -58,6 +58,12 @@ body[data-chapter="ch5"] {
   --btn-bg: #2a1518;
   --btn-bg-hover: #3a2022;
 }
+body[data-chapter="ch7"] {
+  --accent: #7fd8d0;          /* a signal showing clear, seen from a footplate */
+  --accent-deep: #2f6f6a;
+  --accent-rgb: 127, 216, 208;
+}
+
 body[data-chapter="ch6"] {
   --accent: #e8b06a;          /* conker-copper autumn */
   --accent-deep: #8a5a26;
@@ -274,13 +280,28 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 #topbar {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px;
   padding: 8px 14px;
   min-height: 48px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.04);
 }
 #scene-name { color: #b9ab8a; font-style: italic; letter-spacing: 0.5px; }
-#topbar-right { display: flex; gap: 8px; }
+
+/* Optional per-chapter state readout (a clock, a tide, a countdown).
+   Chapters without a status() leave it hidden and the bar looks as it
+   always did. */
+#scene-status {
+  color: var(--accent);
+  border: 1px solid var(--accent-deep);
+  background: rgba(var(--accent-rgb), 0.07);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 13px;
+  letter-spacing: 0.6px;
+  white-space: nowrap;
+}
+#topbar-right { display: flex; gap: 8px; margin-left: auto; }
 
 .chip {
   background: #1c2029;
@@ -621,6 +642,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   #topbar { padding: 6px 8px; min-height: 40px; flex-wrap: wrap; gap: 4px; }
   .chip { padding: 5px 10px; font-size: 13px; }
   #scene-name { font-size: 13px; }
+  #scene-status { font-size: 11px; padding: 2px 8px; }
   #inventory { padding: 6px 10px; min-height: 60px; gap: 8px; }
   #inv-label { display: none; }
   .inv-slot { width: 44px; height: 44px; }

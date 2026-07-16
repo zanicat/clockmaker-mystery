@@ -33,6 +33,11 @@ var fullS = {
     conkerTaken: true, vinegarTaken: true, pokerTaken: true, twineTaken: true,
     mouseFreed: true, hatchFound: true, boxOpen: true, noteExamined: true,
     marks1Done: true, marks2Done: true,
+    // ch7
+    journalTaken: true, padTaken: true, lanternTaken: true, strapTaken: true,
+    oilTaken: true, lanternLit: true, strongOpen: true, sealSeen: true,
+    ballastFound: true, caseOpen: true, armOut: true, pouchTaken: true,
+    reLettered: true, bulletinRead: true, corrected: true,
   },
 };
 
@@ -90,6 +95,36 @@ for (var i = 0; i < ch5Painters.length; i++) {
   out.push({ name: 'ch5.' + n + '.full', svg: Art.ch5[n](fullS) });
   out.push({ name: 'ch5.' + n + '.wind', svg: Art.ch5[n](windS) });
 }
+/* ch7: the journey IS the state. Paint every painter standing at the
+   first stop, running mid-journey with a reply waiting, and on the last
+   stage — the three worlds the window can be in. */
+var ch7RunS = { flags: {} };
+Object.keys(fullS.flags).forEach(function (k) { ch7RunS.flags[k] = fullS.flags[k]; });
+ch7RunS.flags.moving = true;
+ch7RunS.flags.leg = 2;
+ch7RunS.flags.wiredBoxLeg = 0;
+ch7RunS.flags.wiredOfficeLeg = 1;
+
+var ch7FinalS = { flags: {} };
+Object.keys(fullS.flags).forEach(function (k) { ch7FinalS.flags[k] = fullS.flags[k]; });
+ch7FinalS.flags.moving = true;
+ch7FinalS.flags.final = true;
+ch7FinalS.flags.leg = 4;
+
+var ch7Painters = ['guardsVan', 'sortingVan', 'corridor', 'footplate', 'platform',
+  'strongroomZoom', 'frameZoom', 'caseZoom', 'journalZoom'];
+for (var i = 0; i < ch7Painters.length; i++) {
+  var n = ch7Painters[i];
+  out.push({ name: 'ch7.' + n + '.empty', svg: Art.ch7[n](emptyS) });
+  out.push({ name: 'ch7.' + n + '.full', svg: Art.ch7[n](fullS) });
+  out.push({ name: 'ch7.' + n + '.running', svg: Art.ch7[n](ch7RunS) });
+  out.push({ name: 'ch7.' + n + '.final', svg: Art.ch7[n](ch7FinalS) });
+}
+// every station's name board and clock
+for (var L = 0; L < Art.ch7.stations.length; L++) {
+  out.push({ name: 'ch7.platform.leg' + L, svg: Art.ch7.platform({ flags: { leg: L } }) });
+}
+
 // ch6 painters: empty (no translations) and full (both pages pencilled in).
 var ch6Painters = ['quad', 'hall', 'caseZoom', 'studyZoom', 'bursaryZoom', 'attics', 'cellars'];
 for (var i = 0; i < ch6Painters.length; i++) {
@@ -104,16 +139,17 @@ Object.keys(Art.ch3.icons).forEach(function (k) { out.push({ name: 'icon3.' + k,
 Object.keys(Art.ch4.icons).forEach(function (k) { out.push({ name: 'icon4.' + k, svg: Art.ch4.icons[k] }); });
 Object.keys(Art.ch5.icons).forEach(function (k) { out.push({ name: 'icon5.' + k, svg: Art.ch5.icons[k] }); });
 Object.keys(Art.ch6.icons).forEach(function (k) { out.push({ name: 'icon6.' + k, svg: Art.ch6.icons[k] }); });
+Object.keys(Art.ch7.icons).forEach(function (k) { out.push({ name: 'icon7.' + k, svg: Art.ch7.icons[k] }); });
 
 // puzzle renders (need a fake g)
-var flags = {};
+var flags = { leg: 1 };
 var fakeG = {
   flag: function (k) { return !!flags[k]; },
   getFlag: function (k) { return flags[k]; },
   hasClue: function () { return true; },
   hasItem: function () { return true; },
 };
-['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6'].forEach(function (ch) {
+['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7'].forEach(function (ch) {
   var puzzles = CHAPTERS[ch].puzzles;
   Object.keys(puzzles).forEach(function (k) {
     out.push({ name: ch + '.puzzle.' + k, svg: '<div>' + puzzles[k].render(fakeG) + '</div>' });

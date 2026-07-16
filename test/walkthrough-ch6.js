@@ -180,7 +180,7 @@ puzzleAct('say-0'); puzzleAct('say-2'); puzzleAct('say-1'); adv(); // the line l
 
 assert(!isHidden('screen-end'), 'end screen shown');
 assert(__els['end-title'].textContent === "The Headmistress's Cup", 'ch6 end title');
-assert(isHidden('btn-end-next'), 'no next chapter after ch6');
+assert(!isHidden('btn-end-next'), 'ch6 offers the next chapter');
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch6 === true, 'ch6 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch6') === null, 'ch6 save cleared');

@@ -1121,7 +1121,7 @@ CHAPTERS.ch6 = {
     body: 'The Cup came home from Marley & Flint two days before the match — redeemed, Dr. Birch let it be known, "from cleaning." ' +
       'Pip Fairweather took seven wickets on Saturday and was carried to tea on the yard\'s shoulders. The Lantern Club\'s alphabet remains officially unreadable; ' +
       'unofficially, there is a new sign chalked very small on Ivy Quinn\'s train-window when she leaves — a magnifying glass, meaning FRIEND. It is not in any mark-book. It doesn\'t need to be.',
-    next: null,
+    next: 'ch7',
   },
 };
 

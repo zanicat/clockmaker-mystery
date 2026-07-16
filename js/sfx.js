@@ -88,6 +88,8 @@ const Sfx = (() => {
     chalk:   () => swish(0.12, 0.045, 3200),
     squeak:  () => { tone(2400, 0.07, 'sine', 0.035, 0, 500); tone(2900, 0.06, 'sine', 0.03, 0.09, 400); },
     splash:  () => { swish(0.3, 0.06, 500); tone(140, 0.25, 'sine', 0.05, 0.05, -60); },
+    whistle: () => { tone(1180, 0.5, 'triangle', 0.04, 0, -60); tone(1570, 0.5, 'triangle', 0.03, 0.02, -80); },
+    brake:   () => { swish(0.7, 0.05, 2600); tone(210, 0.6, 'sawtooth', 0.02, 0.05, -90); },
   };
 
   // The monochord's peg-scale: pitch1..pitch10, a semitone ladder with

@@ -222,9 +222,20 @@ const Game = (() => {
 
   // ---------- rendering ----------
 
+  /* A chapter may expose `status(g)` — one short line of state the
+     player should always be able to see (a clock, a tide, a countdown).
+     Chapters without one simply leave the slot empty. */
+  function renderStatus() {
+    const el = $('#scene-status');
+    const text = C.status ? (C.status(g) || '') : '';
+    el.textContent = text;
+    el.classList.toggle('hidden', !text);
+  }
+
   function renderScene() {
     const sc = C.scenes[S.scene];
     $('#scene-name').textContent = sc.name;
+    renderStatus();
     $('#scene-bg').innerHTML = sc.art(S);
     buildHotspots($('#scene-hotspots'), sc.hotspots, 1600, 1000);
   }

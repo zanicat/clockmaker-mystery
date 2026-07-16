@@ -54,9 +54,9 @@ python3 -m http.server 8000
 
 - `js/engine.js` — chapter-agnostic engine (state, saves, rendering,
   dialogue, inventory, casebook, hints, puzzles overlay).
-- `js/data-ch1.js` … `js/data-ch6.js` — one self-registering chapter each
+- `js/data-ch1.js` … `js/data-ch7.js` — one self-registering chapter each
   (`CHAPTERS.chN`): items, scenes, hotspots, puzzles, clues, hints.
-- `js/art.js`, `js/art-ch2.js` … `js/art-ch6.js` — SVG scene painters and
+- `js/art.js`, `js/art-ch2.js` … `js/art-ch7.js` — SVG scene painters and
   inventory icons.
 - `js/sfx.js` — Web Audio synthesized sound effects.
 
