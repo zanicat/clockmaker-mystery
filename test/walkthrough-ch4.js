@@ -143,7 +143,8 @@ puzzleAct('aim'); adv();                              // the Star wakes over not
 
 assert(!isHidden('screen-end'), 'end screen shown');
 assert(__els['end-title'].textContent === "The Astronomer's Star", 'ch4 end title');
-assert(isHidden('btn-end-next'), 'no next chapter after ch4');
+assert(!isHidden('btn-end-next'), 'ch4 offers the next chapter');
+assert(__els['btn-end-next'].textContent === 'Begin Chapter Five', 'next button names chapter five');
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch4 === true, 'ch4 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch4') === null, 'ch4 save cleared');

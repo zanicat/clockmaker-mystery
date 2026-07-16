@@ -2,7 +2,7 @@
 
 Browser point-and-click mystery series ("The Ivy Quinn Mysteries"). Plain
 HTML/CSS/JS globals — no build step, no dependencies, no npm. Script order in
-`index.html` matters: art.js → art-ch2.js → sfx.js → data-ch1.js → data-ch2.js
+`index.html` matters: art.js → art-chN.js (all) → sfx.js → data-chN.js (all)
 → engine.js → main.js.
 
 ## Architecture contract
@@ -87,10 +87,10 @@ Every new chapter must feel meaningfully different. Before writing
 no value may repeat the previous chapter's, and twist types never repeat at all:
 
 - **Verb** — the physical thing the player's hands do all chapter; every
-  set-piece puzzle speaks it. Unclaimed: align/aim (optics), listen/tune
-  (sound), trace/follow (tracks, wires).
+  set-piece puzzle speaks it. Unclaimed: trace/follow (tracks, wires).
+  (Claimed: align/aim optics — ch4; listen/tune — ch5.)
 - **Mystery shape** — the structural twist type, not the plot. Unclaimed:
-  impossible theft, alibi-breaking, guilty client.
+  alibi-breaking. (Claimed: impossible theft — ch4; guilty client — ch5.)
 - **Tone & stakes** — alternate the register between chapters.
 - **Art signature** — declare a palette structure, light source, line
   language, signature ambient motion, and chrome accent (`--accent`
@@ -108,5 +108,7 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
 | ch1 Clockmaker's Secret | wind/mechanism | staged disappearance, no real crime | cozy, warm | warm brass lamplight; stopped-clock motif; deliberate stillness — the ticking Meridian in the finale is the chapter's only motion; brass chrome | linear chain → hidden room | four-gear clock-lock |
 | ch2 Apothecary's Ledger | weigh/brew/chemistry | frame-job; killer posed as a victim | dark, four murders | cold green gaslight pools (furnace the one warm note); labelled-jar motif; bubbling/flickering ambient motion; verdigris chrome | linear chain → hidden room | evidence-chemistry chain |
 | ch3 Botanist's Bequest | navigate/plot | crime-that-never-was; the "theft" was the will's own test | whimsical, sunny, no crime at all | first daylight chapter — green glass & dappled sun vs. moonlit phosphor night; butterfly/moth/firefly motion + Gladstone's blink; sky-blue chrome | hub-and-spoke, interviewable cast, finale in the hub | day/night lever (`night` flag re-renders scenes, gates hotspots) |
+| ch4 Astronomer's Star | align/aim (optics) | impossible theft — a real theft made to look impossible; the watched "diamond" was a counterfeit of light | cold, hushed, wondrous — awe with an edge | deep indigo dome, one hard collimated beam through the oculus; thin-brass instrument diagrams; drifting dust-motes + a slowly rotating prismatic Star; amethyst chrome | vertical tower on a light-shaft, two-hander-with-witness cast | the beam — aiming the heliostat sets `lit_<floor>` flags that re-render that floor and gate its hotspots (multi-target, harder-difficulty: hints nudge the thinking, limited attempts, evidence synthesized across floors) |
+| ch5 Impresario's Ghost | listen/tune (sound) | guilty client — the manager who hired Quinn staged the haunting himself, buying her famous failure as certification | playful-eerie gaslit ghost story that resolves warm; stakes are livelihoods, no murder | crimson velvet & gilt lit FROM BELOW (footlights/limelight up-glow); duct-grille motif; guttering flames + visible sound-ripples + slow chandelier sway; rose-crimson chrome | a ring — front-of-house and backstage circling the proscenium wall; client + two allies | the wind — cranking the hidden bellows sets `windOn`: the house breathes, scenes re-render with ripples/stirring cloth and Box Five's proof hotspot appears |
 
 Extend this table when a chapter ships.

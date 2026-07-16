@@ -77,7 +77,20 @@ const Sfx = (() => {
     beam:    () => { tone(880, 0.5, 'sine', 0.05, 0, 300); tone(1320, 0.4, 'sine', 0.03, 0.08); },
     shutter: () => { tone(180, 0.08, 'square', 0.05); swish(0.12, 0.05, 900); },
     prism:   () => [660, 830, 990].forEach((f, i) => tone(f, 0.22, 'sine', 0.03, i * 0.06)),
+    knock:   () => { tone(190, 0.09, 'triangle', 0.09); tone(120, 0.12, 'sine', 0.05, 0.02); },
+    hollow:  () => { tone(140, 0.24, 'triangle', 0.1, 0, -40); swish(0.12, 0.04, 300); },
+    creak:   () => tone(240, 0.3, 'sawtooth', 0.02, 0, 90),
+    breath:  () => swish(0.5, 0.05, 240),
+    wind:    () => { swish(0.6, 0.05, 200); tone(90, 0.5, 'sine', 0.03, 0.1, 20); },
+    wail:    () => { tone(392, 1.1, 'sine', 0.055, 0, -18); tone(388, 1.1, 'sine', 0.04, 0.05, -18); },
+    hum:     () => { tone(392, 0.9, 'sine', 0.05, 0.45); tone(390, 0.9, 'sine', 0.02, 0.45); },
   };
+
+  // The monochord's peg-scale: pitch1..pitch10, a semitone ladder with
+  // the ghost's G (392 Hz) sitting at peg 7.
+  for (let i = 1; i <= 10; i++) {
+    voices['pitch' + i] = () => tone(392 * Math.pow(2, (i - 7) / 12), 0.45, 'triangle', 0.05);
+  }
 
   return {
     play(name) {

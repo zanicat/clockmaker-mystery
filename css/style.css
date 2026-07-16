@@ -51,6 +51,13 @@ body[data-chapter="ch4"] {
   --btn-bg: #171528;
   --btn-bg-hover: #241f3e;
 }
+body[data-chapter="ch5"] {
+  --accent: #eda99a;          /* footlit rose-crimson */
+  --accent-deep: #8f4038;
+  --accent-rgb: 237, 169, 154;
+  --btn-bg: #2a1518;
+  --btn-bg-hover: #3a2022;
+}
 
 html, body {
   margin: 0;
@@ -218,6 +225,15 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 }
 .hunt-spot:hover { border-color: rgba(var(--accent-rgb), 0.4); }
 .hunt-spot.got { border-color: var(--accent); box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.4); }
+
+/* ---------- monochord, ducts, panels & vigil (ch5) ---------- */
+
+.pitch-board svg, .duct-board svg, .vigil-board svg { width: min(94%, 400px); height: auto; display: block; margin: 4px auto; }
+.panel-grid {
+  display: grid; grid-template-columns: repeat(3, 92px);
+  gap: 8px; justify-content: center; margin: 10px 0 6px;
+}
+.panel-grid .btn { min-width: 0; width: auto; margin: 0; padding: 10px 0; font-size: 15px; }
 
 /* ---------- safe dials ---------- */
 

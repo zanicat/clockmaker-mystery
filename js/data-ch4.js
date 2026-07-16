@@ -994,7 +994,7 @@ CHAPTERS.ch4 = {
     body: 'A real theft, dressed as a wonder. Silvan Roke carried the Vesper out the afternoon before the seal, ' +
       'sold it to his collector, and left a lamp to keep its watch — trusting the whole town to believe its own eyes. ' +
       'The Star still wakes each night on the vault wall, for anyone who now knows to ask what casts it.',
-    next: null,
+    next: 'ch5',
   },
 };
 

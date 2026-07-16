@@ -26,6 +26,9 @@ var fullS = {
     // ch4
     oculusWound: true, winderTaken4: true, spectroTaken: true, saleTaken: true,
     sourceTraced: true,
+    // ch5
+    trumpetTaken: true, waxTaken: true, keyTaken: true, chapelOpen: true,
+    pipeTaken: true, pipeFitted: true,
   },
 };
 
@@ -68,10 +71,26 @@ for (var i = 0; i < ch4Painters.length; i++) {
   out.push({ name: 'ch4.' + n + '.full', svg: Art.ch4[n](fullS) });
   out.push({ name: 'ch4.' + n + '.lit', svg: Art.ch4[n](litS) });
 }
+
+// ch5 wind state: the bellows cranked, every breath-gated branch painted.
+var windS = { flags: {} };
+Object.keys(fullS.flags).forEach(function (k) { windS.flags[k] = fullS.flags[k]; });
+windS.flags.windOn = true;
+windS.flags.pipeTaken = false; // the pipe on its chest, rippling
+
+var ch5Painters = ['house', 'box5Zoom', 'stage', 'under', 'chapelZoom',
+  'foyer', 'officeZoom', 'facadeZoom'];
+for (var i = 0; i < ch5Painters.length; i++) {
+  var n = ch5Painters[i];
+  out.push({ name: 'ch5.' + n + '.empty', svg: Art.ch5[n](emptyS) });
+  out.push({ name: 'ch5.' + n + '.full', svg: Art.ch5[n](fullS) });
+  out.push({ name: 'ch5.' + n + '.wind', svg: Art.ch5[n](windS) });
+}
 Object.keys(Art.icons).forEach(function (k) { out.push({ name: 'icon.' + k, svg: Art.icons[k] }); });
 Object.keys(Art.ch2.icons).forEach(function (k) { out.push({ name: 'icon2.' + k, svg: Art.ch2.icons[k] }); });
 Object.keys(Art.ch3.icons).forEach(function (k) { out.push({ name: 'icon3.' + k, svg: Art.ch3.icons[k] }); });
 Object.keys(Art.ch4.icons).forEach(function (k) { out.push({ name: 'icon4.' + k, svg: Art.ch4.icons[k] }); });
+Object.keys(Art.ch5.icons).forEach(function (k) { out.push({ name: 'icon5.' + k, svg: Art.ch5.icons[k] }); });
 
 // puzzle renders (need a fake g)
 var flags = {};
@@ -81,7 +100,7 @@ var fakeG = {
   hasClue: function () { return true; },
   hasItem: function () { return true; },
 };
-['ch1', 'ch2', 'ch3', 'ch4'].forEach(function (ch) {
+['ch1', 'ch2', 'ch3', 'ch4', 'ch5'].forEach(function (ch) {
   var puzzles = CHAPTERS[ch].puzzles;
   Object.keys(puzzles).forEach(function (k) {
     out.push({ name: ch + '.puzzle.' + k, svg: '<div>' + puzzles[k].render(fakeG) + '</div>' });
