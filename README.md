@@ -3,7 +3,7 @@
 Browser point-and-click mysteries in the style of mobile escape-room games.
 Plain HTML/CSS/JS — no build step, no dependencies.
 
-Five chapters, selectable from the title screen (each with its own save slot):
+Six chapters, selectable from the title screen (each with its own save slot):
 
 1. **The Clockmaker's Secret** — clockmaker Edmund Thornfield vanishes from a
    shop bolted from the inside, every clock stopped at 7:15.
@@ -17,6 +17,10 @@ Five chapters, selectable from the title screen (each with its own save slot):
 5. **The Impresario's Ghost** — a wail out of empty, dust-sealed Box Five is
    emptying the Empress Music Hall, and the manager will pay Ivy Quinn to
    catch it — or to certify, in writing, that she can't.
+6. **The Headmistress's Cup** — the Aldergate Cup leaves a locked case three
+   days before Founders' Day, and the accused is twelve, silent, and
+   innocent. The school's walls know the truth — in an alphabet no
+   grown-up can read.
 
 ## Run it
 
@@ -50,9 +54,9 @@ python3 -m http.server 8000
 
 - `js/engine.js` — chapter-agnostic engine (state, saves, rendering,
   dialogue, inventory, casebook, hints, puzzles overlay).
-- `js/data-ch1.js` … `js/data-ch5.js` — one self-registering chapter each
+- `js/data-ch1.js` … `js/data-ch6.js` — one self-registering chapter each
   (`CHAPTERS.chN`): items, scenes, hotspots, puzzles, clues, hints.
-- `js/art.js`, `js/art-ch2.js` … `js/art-ch5.js` — SVG scene painters and
+- `js/art.js`, `js/art-ch2.js` … `js/art-ch6.js` — SVG scene painters and
   inventory icons.
 - `js/sfx.js` — Web Audio synthesized sound effects.
 

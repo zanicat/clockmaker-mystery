@@ -25,7 +25,7 @@ ENTITIES = {
 
 ctx = MiniRacer()
 ctx.eval(open(os.path.join(HERE, 'dom-stub.js')).read())
-for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'art-ch4.js', 'art-ch5.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'data-ch4.js', 'data-ch5.js']:
+for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'art-ch4.js', 'art-ch5.js', 'art-ch6.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'data-ch4.js', 'data-ch5.js', 'data-ch6.js']:
     ctx.eval(open(os.path.join(GAME, 'js', js)).read())
 items = json.loads(ctx.eval(open(os.path.join(HERE, 'dump-svg.js')).read()))
 

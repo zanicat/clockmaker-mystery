@@ -87,10 +87,13 @@ Every new chapter must feel meaningfully different. Before writing
 no value may repeat the previous chapter's, and twist types never repeat at all:
 
 - **Verb** — the physical thing the player's hands do all chapter; every
-  set-piece puzzle speaks it. Unclaimed: trace/follow (tracks, wires).
-  (Claimed: align/aim optics — ch4; listen/tune — ch5.)
-- **Mystery shape** — the structural twist type, not the plot. Unclaimed:
-  alibi-breaking. (Claimed: impossible theft — ch4; guilty client — ch5.)
+  set-piece puzzle speaks it. The original candidate list is now spent
+  (align/aim — ch4; listen/tune — ch5; trace/follow + read/decipher — ch6):
+  a new chapter must coin a fresh verb (e.g. weigh anchors? climb? barter?).
+- **Mystery shape** — the structural twist type, not the plot. All six
+  original types are spent (staged disappearance, frame-job,
+  crime-that-never-was, impossible theft, guilty client, alibi-breaking —
+  ch6 broke two, one to clear and one to catch): invent a new one.
 - **Tone & stakes** — alternate the register between chapters.
 - **Art signature** — declare a palette structure, light source, line
   language, signature ambient motion, and chrome accent (`--accent`
@@ -110,5 +113,6 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
 | ch3 Botanist's Bequest | navigate/plot | crime-that-never-was; the "theft" was the will's own test | whimsical, sunny, no crime at all | first daylight chapter — green glass & dappled sun vs. moonlit phosphor night; butterfly/moth/firefly motion + Gladstone's blink; sky-blue chrome | hub-and-spoke, interviewable cast, finale in the hub | day/night lever (`night` flag re-renders scenes, gates hotspots) |
 | ch4 Astronomer's Star | align/aim (optics) | impossible theft — a real theft made to look impossible; the watched "diamond" was a counterfeit of light | cold, hushed, wondrous — awe with an edge | deep indigo dome, one hard collimated beam through the oculus; thin-brass instrument diagrams; drifting dust-motes + a slowly rotating prismatic Star; amethyst chrome | vertical tower on a light-shaft, two-hander-with-witness cast | the beam — aiming the heliostat sets `lit_<floor>` flags that re-render that floor and gate its hotspots (multi-target, harder-difficulty: hints nudge the thinking, limited attempts, evidence synthesized across floors) |
 | ch5 Impresario's Ghost | listen/tune (sound) | guilty client — the manager who hired Quinn staged the haunting himself, buying her famous failure as certification | playful-eerie gaslit ghost story that resolves warm; stakes are livelihoods, no murder | crimson velvet & gilt lit FROM BELOW (footlights/limelight up-glow); duct-grille motif; guttering flames + visible sound-ripples + slow chandelier sway; rose-crimson chrome | a ring — front-of-house and backstage circling the proscenium wall; client + two allies | the wind — cranking the hidden bellows sets `windOn`: the house breathes, scenes re-render with ripples/stirring cloth and Box Five's proof hotspot appears |
+| ch6 Headmistress's Cup | trace/follow (trails, and reading a code by following context) | alibi-breaking, twice — the accused child's false alibi broken to CLEAR her; the bursar's lamp alibi broken to catch him | sunny-autumn school comedy; no murder — embezzlement, a staged theft, and a framed twelve-year-old | honey stone & slate in low gold afternoon light; chalk-glyph motif; falling leaves + circling rooks + guttering gas; conker-copper chrome | a warren — the official school plus the pupils' secret routes, unlocked by reading their signs; mixed-gender child cast + client | the glyph language — signs seen in context set `seen_*` flags, two mark-book validations (`marks1Done`/`marks2Done`) re-render every scene with pencilled translations, and the finale is read glyph by glyph |
 
 Extend this table when a chapter ships.

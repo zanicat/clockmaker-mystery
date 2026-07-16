@@ -946,7 +946,7 @@ CHAPTERS.ch5 = {
       'a manager who hired a detective to fail. The company keeps its lease; the railway keeps its money. ' +
       'And the Empress plays to full houses again, top of the bill: THE HAUNTED HALL — its ghost, under new management, ' +
       'singing one honest G at nine o\'clock sharp.',
-    next: null,
+    next: 'ch6',
   },
 };
 

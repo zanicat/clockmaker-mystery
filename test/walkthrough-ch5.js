@@ -144,7 +144,8 @@ puzzleAct('lanterns'); adv();                        // hand on the crank -> end
 
 assert(!isHidden('screen-end'), 'end screen shown');
 assert(__els['end-title'].textContent === "The Impresario's Ghost", 'ch5 end title');
-assert(isHidden('btn-end-next'), 'no next chapter after ch5');
+assert(!isHidden('btn-end-next'), 'ch5 offers the next chapter');
+assert(__els['btn-end-next'].textContent === 'Begin Chapter Six', 'next button names chapter six');
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch5 === true, 'ch5 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch5') === null, 'ch5 save cleared');

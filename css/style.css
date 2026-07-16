@@ -58,6 +58,13 @@ body[data-chapter="ch5"] {
   --btn-bg: #2a1518;
   --btn-bg-hover: #3a2022;
 }
+body[data-chapter="ch6"] {
+  --accent: #e8b06a;          /* conker-copper autumn */
+  --accent-deep: #8a5a26;
+  --accent-rgb: 232, 176, 106;
+  --btn-bg: #2a1e10;
+  --btn-bg-hover: #3a2c18;
+}
 
 html, body {
   margin: 0;
@@ -234,6 +241,15 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   gap: 8px; justify-content: center; margin: 10px 0 6px;
 }
 .panel-grid .btn { min-width: 0; width: auto; margin: 0; padding: 10px 0; font-size: 15px; }
+
+/* ---------- mark-book, trail & strongbox (ch6) ---------- */
+
+.mark-rows { display: flex; flex-direction: column; gap: 8px; align-items: center; margin: 8px 0; }
+.mark-row { display: flex; align-items: center; gap: 12px; }
+.mark-row svg { width: 64px; height: 52px; flex: none; background: #241a10; border-radius: 8px; }
+.mark-row .btn { min-width: 220px; margin: 0; padding: 8px 14px; font-size: 15px; }
+.mark-unseen { min-width: 220px; color: #8a7f66; font-style: italic; font-size: 15px; }
+.trail-board svg { width: min(80%, 300px); height: auto; display: block; margin: 6px auto; }
 
 /* ---------- safe dials ---------- */
 
