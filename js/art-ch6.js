@@ -160,9 +160,23 @@ Art.ch6 = (() => {
         <rect x="540" y="500" width="140" height="180" rx="8" fill="${C.wood}" stroke="${C.woodDark}" stroke-width="5"/>
         <line x1="610" y1="500" x2="610" y2="680" stroke="${C.woodDark}" stroke-width="4"/>
         <text x="610" y="490" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">THE GREAT HALL</text>
-        <!-- cellar steps beside the buttery -->
+        <!-- cellar steps beside the buttery, dropping out of the sun -->
         <rect x="860" y="580" width="120" height="100" fill="${C.stoneShadow}"/>
-        <g stroke="${C.inRoomDark}" stroke-width="4"><line x1="860" y1="610" x2="980" y2="610"/><line x1="860" y1="640" x2="980" y2="640"/><line x1="860" y1="668" x2="980" y2="668"/></g>
+        ${(() => {
+          let out = '', pitch = 26, edge = 580;
+          for (let i = 0; i < 3; i++) {
+            const t = i / 2;
+            const inset = t * 16;
+            const bx = 860 + inset, bw = 120 - 2 * inset;
+            out += `<rect x="${bx}" y="${edge}" width="${bw}" height="${pitch}" fill="${C.stoneDark}"/>
+              <rect x="${bx}" y="${edge}" width="${bw}" height="${pitch}" fill="${C.sun}" opacity="${(0.3 * (1 - t)).toFixed(2)}"/>
+              <rect x="${bx}" y="${edge + pitch - 3}" width="${bw}" height="3" fill="${C.inRoomDark}"/>
+              <rect x="${bx}" y="${edge}" width="${bw}" height="${pitch}" fill="${C.inRoomDark}" opacity="${(0.55 * t).toFixed(2)}"/>`;
+            edge += pitch;
+            pitch *= 0.72;
+          }
+          return out + `<rect x="860" y="${edge}" width="120" height="${680 - edge}" fill="${C.inRoomDark}" opacity="0.6"/>`;
+        })()}
         <text x="920" y="572" text-anchor="middle" font-size="12" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">CELLARS</text>
       </g>
 
@@ -312,7 +326,20 @@ Art.ch6 = (() => {
       <g>
         <rect x="1440" y="430" width="130" height="270" fill="${C.inRoomDark}"/>
         ${S.flags.hatchFound ? `
-          <g stroke="${C.woodDark}" stroke-width="5"><line x1="1440" y1="500" x2="1570" y2="490"/><line x1="1440" y1="560" x2="1570" y2="545"/><line x1="1440" y1="620" x2="1570" y2="600"/></g>
+          ${(() => {
+            let out = '', pitch = 57, edge = 700;
+            for (let i = 0; i < 4; i++) {
+              const t = i / 3;
+              const inset = t * 18;
+              const bx = 1440 + inset, bw = 130 - 2 * inset;
+              edge -= pitch;
+              out += `<rect x="${bx}" y="${edge}" width="${bw}" height="${pitch}" fill="${C.inWarm}" opacity="${(1 - 0.55 * t).toFixed(2)}"/>
+                <rect x="${bx}" y="${edge}" width="${bw}" height="5" fill="${C.inRoomDark}"/>
+                ${i < 2 ? `<rect x="${bx}" y="${edge + 5}" width="${bw}" height="2" fill="${C.flame}" opacity="${(0.3 - i * 0.15).toFixed(2)}"/>` : ''}`;
+              pitch *= 0.76;
+            }
+            return out;
+          })()}
           ${glyph('boltHole', 1505, 466, 13, S)}
           <text x="1505" y="716" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.textIn}" font-style="italic">the back stair, up</text>`
           : `<path d="M 1440 430 Q 1505 460 1570 430 L 1570 700 L 1440 700 Z" fill="#4a3020"/>
@@ -579,10 +606,25 @@ Art.ch6 = (() => {
       </g>
       <rect x="0" y="720" width="1600" height="280" fill="#1e150e"/>
 
-      <!-- steps up to the quad -->
+      <!-- steps up to the quad: the flight climbs OUT of the dark, so
+           the fade inverts — afternoon gold spills down from the door
+           above, and the top of the well glows instead of drowning -->
       <g>
         <rect x="60" y="280" width="180" height="440" fill="#3a2c22"/>
-        <g stroke="#1e150e" stroke-width="5"><line x1="60" y1="360" x2="240" y2="360"/><line x1="60" y1="450" x2="240" y2="450"/><line x1="60" y1="540" x2="240" y2="540"/><line x1="60" y1="630" x2="240" y2="630"/></g>
+        ${(() => {
+          let out = '', pitch = 88, edge = 720;
+          for (let i = 0; i < 5; i++) {
+            const t = i / 4;
+            const inset = t * 28;
+            const bx = 60 + inset, bw = 180 - 2 * inset;
+            edge -= pitch;
+            out += `<rect x="${bx}" y="${edge}" width="${bw}" height="${pitch}" fill="#2a2014"/>
+              <rect x="${bx}" y="${edge}" width="${bw}" height="6" fill="${C.stoneDark}"/>
+              <rect x="${bx}" y="${edge}" width="${bw}" height="${pitch}" fill="${C.sun}" opacity="${(0.06 + 0.3 * t).toFixed(2)}"/>`;
+            pitch *= 0.76;
+          }
+          return out + `<rect x="60" y="280" width="180" height="${edge - 280}" fill="${C.sun}" opacity="0.3"/>`;
+        })()}
         <text x="150" y="266" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.textIn}" letter-spacing="1">UP TO THE QUAD</text>
       </g>
 

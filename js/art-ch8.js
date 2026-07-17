@@ -349,9 +349,21 @@ Art.ch8 = (() => {
       <!-- Tansy, off the same packet, waiting to be believed -->
       ${F.tansyMet ? '' : figure(1385, 760, '#4a5a4e', '#e2c0a0', '#6a4a30', 0.9) + label(1385, 792, 'Tansy Pike')}
 
-      <!-- the Harbour Stairs, up into the town -->
+      <!-- the Harbour Stairs, up into the town.  Depth is occlusion and
+           fog, never cast shadow: treads see the whole sky, risers see
+           half of it, and the top of the flight drowns in the dawn haze. -->
       <g>
-        ${[0, 1, 2, 3, 4, 5, 6].map(i => `<rect x="${1445 + i * 8}" y="${720 - i * 62}" width="${150 - i * 8}" height="26" fill="${C.stoneLit}" stroke="${C.ink}" stroke-width="3" opacity="0.95"/>`).join('')}
+        ${[0, 1, 2, 3, 4, 5, 6].map(i => {
+          const t = i / 6;
+          const w = 150 - t * 52;
+          const x = 1445 + i * 8;
+          const y = 720 - i * 68 + 1.7 * i * i;
+          const tread = 10 - t * 3, riser = 15 - t * 5;
+          return `<rect x="${x}" y="${y + tread}" width="${w}" height="${riser}" fill="${C.stone}"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread}" fill="${C.stoneLit}"/>
+            <rect x="${x}" y="${y + tread}" width="${w}" height="3" fill="${C.ink}" opacity="0.4"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread + riser}" fill="${C.fog}" opacity="${(0.42 * t).toFixed(2)}"/>`;
+        }).join('')}
         <rect x="1436" y="300" width="12" height="440" fill="${C.rust}"/>
         <rect x="1520" y="330" width="70" height="44" rx="4" fill="${C.paper}" opacity="0.85" transform="rotate(-4 1555 352)"/>
         <text x="1555" y="350" text-anchor="middle" font-size="12" font-family="Georgia, serif" fill="#3a4048" transform="rotate(-4 1555 352)">TO THE</text>
@@ -383,7 +395,17 @@ Art.ch8 = (() => {
         <rect x="748" y="100" width="94" height="26" fill="#5a6874"/>
         <rect x="768" y="70" width="54" height="34" fill="#8c9aa4"/>
         <path d="M 700 260 L 890 260 L 940 240 L 660 240 Z" fill="#4e5c68"/>
-        ${[0, 1, 2, 3].map(i => `<rect x="${716 + i * 6}" y="${262 + i * 56}" width="${160 - i * 0}" height="22" fill="${C.stoneLit}" stroke="${C.ink}" stroke-width="3"/>`).join('')}
+        ${[0, 1, 2, 3].map(i => {
+          const t = i / 3;
+          const w = 118 + t * 62;
+          const x = 796 + i * 6 - w / 2;
+          const y = 262 + i * 50 + t * t * 18;
+          const tread = 7 + t * 3, riser = 10 + t * 5;
+          return `<rect x="${x}" y="${y + tread}" width="${w}" height="${riser}" fill="${C.stone}"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread}" fill="${C.stoneLit}"/>
+            <rect x="${x}" y="${y + tread}" width="${w}" height="2" fill="${C.ink}" opacity="0.4"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread + riser}" fill="${C.fog}" opacity="${(0.4 * (1 - t)).toFixed(2)}"/>`;
+        }).join('')}
         <rect x="700" y="212" width="60" height="34" rx="4" fill="${C.paper}" opacity="0.8" transform="rotate(3 730 229)"/>
         <text x="730" y="234" text-anchor="middle" font-size="11" font-family="Georgia, serif" fill="#3a4048" transform="rotate(3 730 229)">LIGHT</text>
         ${label(796, 300, 'the path up to the old light')}
@@ -418,10 +440,26 @@ Art.ch8 = (() => {
         </g>
       </g>
 
-      <!-- the stairs themselves, switchbacking down the picture -->
+      <!-- the stairs themselves, switchbacking down the picture.  The
+           flight sits on a slate ramp between converging parapet edges;
+           steps widen and their pitch opens as they near the viewer, and
+           the far flight drowns in fog.  Occlusion only — nothing casts. -->
       <g>
-        ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<rect x="${560 + (i % 2) * 14}" y="${420 + i * 58}" width="${230 - (i % 2) * 20}" height="26" fill="${C.stoneLit}" stroke="${C.ink}" stroke-width="3"/>`).join('')}
-        <ellipse cx="680" cy="700" rx="130" ry="16" fill="${C.skyLow}" opacity="0.10"/>
+        <path d="M 585 412 L 765 412 L 830 900 L 520 900 Z" fill="${C.slate}"/>
+        <path d="M 585 412 L 520 900" stroke="${C.ink}" stroke-width="3" opacity="0.5" fill="none"/>
+        <path d="M 765 412 L 830 900" stroke="${C.ink}" stroke-width="3" opacity="0.5" fill="none"/>
+        ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => {
+          const t = i / 7;
+          const w = 170 + t * 110;
+          const x = 675 - w / 2 + (i % 2) * 12;
+          const y = 420 + i * 46 + t * t * 96;
+          const tread = 10 + t * 8, riser = 13 + t * 9;
+          return `<rect x="${x}" y="${y + tread}" width="${w}" height="${riser}" fill="${C.stone}"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread}" fill="${C.stoneLit}"/>
+            <rect x="${x}" y="${y + tread}" width="${w}" height="3" fill="${C.ink}" opacity="0.45"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread + riser}" fill="${C.fog}" opacity="${(0.45 * (1 - t)).toFixed(2)}"/>`;
+        }).join('')}
+        <ellipse cx="675" cy="898" rx="150" ry="14" fill="${C.ink}" opacity="0.12"/>
         ${label(672, 940, 'down to the quay')}
       </g>
 
@@ -496,7 +534,7 @@ Art.ch8 = (() => {
       <rect width="1600" height="1000" fill="url(#l8wall)"/>
       ${[220, 480, 740, 1000, 1260].map(x => `<line x1="${x}" y1="0" x2="${x}" y2="820" stroke="${C.woodDark}" stroke-width="6" opacity="0.5"/>`).join('')}
       <rect x="0" y="820" width="1600" height="180" fill="${C.wood}"/>
-      ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<line x1="${i * 210}" y1="820" x2="${i * 210 + 60}" y2="1000" stroke="${C.woodDark}" stroke-width="4" opacity="0.6"/>`).join('')}
+      ${[0, 1, 2, 3, 4, 5, 6, 7].map(i => `<line x1="${i * 210}" y1="820" x2="${800 + (i * 210 - 800) * 1.22}" y2="1000" stroke="${C.woodDark}" stroke-width="4" opacity="0.6"/>`).join('')}
 
       <!-- the skylight: fog-light falling evenly, asking nothing -->
       <path d="M 620 0 L 980 0 L 940 60 L 660 60 Z" fill="#8fa0ae" opacity="0.5"/>
@@ -710,7 +748,17 @@ Art.ch8 = (() => {
         ${figure(680, 930, '#3e4650', '#d8b394', '#3a3226', 0.8)}
         ${label(920, 968, 'Gullscombe, answering its bell')}
       </g>` : `<g>
-        ${[0, 1, 2, 3, 4, 5, 6].map(i => `<rect x="${760 + i * 16}" y="${800 + i * 24}" width="${140 - i * 6}" height="18" fill="${C.stoneLit}" stroke="${C.ink}" stroke-width="3"/>`).join('')}
+        ${[0, 1, 2, 3, 4, 5, 6].map(i => {
+          const t = i / 6;
+          const w = 140 - t * 40;
+          const x = 760 + i * 16;
+          const y = 800 + i * 27 - 0.5 * i * i;
+          const tread = 7 - t * 2, riser = 11 - t * 3;
+          return `<rect x="${x}" y="${y + tread}" width="${w}" height="${riser}" fill="${C.stone}"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread}" fill="${C.stoneLit}"/>
+            <rect x="${x}" y="${y + tread}" width="${w}" height="2" fill="${C.ink}" opacity="0.4"/>
+            <rect x="${x}" y="${y}" width="${w}" height="${tread + riser}" fill="${C.fog}" opacity="${(0.45 * t).toFixed(2)}"/>`;
+        }).join('')}
         ${label(850, 980, 'down the cliff path')}
       </g>`}
 

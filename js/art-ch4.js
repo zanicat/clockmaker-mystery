@@ -49,6 +49,40 @@ Art.ch4 = (() => {
     </g>`;
   }
 
+  /* A stair flight receding into its well.  Depth is taper, pitch
+     compression and gloom under the top-down light: 'up' shows shadowed
+     riser faces marching away above the threshold, 'down' shows pale
+     tread tops sinking behind it, 'pit' descends from a threshold in
+     the floor.  The nearest nosings catch a thin line of brass. */
+  function stairFlight(x, y, w, h, mode) {
+    const n = h >= 400 ? 6 : 4;
+    let out = `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${C.ribDark}"/>`;
+    let pitch = (mode === 'up' ? 0.19 : mode === 'pit' ? 0.2 : 0.11) * h;
+    let edge = mode === 'pit' ? y : y + h;
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1);
+      const inset = t * w * 0.17;
+      const bx = x + inset, bw = w - 2 * inset;
+      let by;
+      if (mode === 'pit') { by = edge; edge += pitch; }
+      else { edge -= pitch; by = edge; }
+      out += mode === 'up'
+        ? `<rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.floorDark}"/>
+           <rect x="${bx}" y="${by}" width="${bw}" height="4" fill="${C.rib}"/>`
+        : `<rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.rib}"/>
+           <rect x="${bx}" y="${mode === 'pit' ? by + pitch - 4 : by}" width="${bw}" height="4" fill="${C.floorDark}"/>`;
+      if (i < 2) {
+        const ny = mode === 'up' ? by : mode === 'pit' ? by : by + pitch - 2;
+        out += `<rect x="${bx}" y="${ny}" width="${bw}" height="2" fill="${C.brassLit}" opacity="${(0.35 - i * 0.15).toFixed(2)}"/>`;
+      }
+      out += `<rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.ink}" opacity="${(0.55 * t).toFixed(2)}"/>`;
+      pitch *= 0.78;
+    }
+    return out + (mode === 'pit'
+      ? `<rect x="${x}" y="${edge}" width="${w}" height="${y + h - edge}" fill="${C.ink}" opacity="0.55"/>`
+      : `<rect x="${x}" y="${y}" width="${w}" height="${edge - y}" fill="${C.ink}" opacity="0.55"/>`);
+  }
+
   // The rotating prismatic Star — a caustic figure of light on a wall.
   function caustic(cx, cy, r) {
     let rays = '';
@@ -174,11 +208,7 @@ Art.ch4 = (() => {
 
       <!-- stair down to the gallery -->
       <g>
-        <rect x="60" y="760" width="240" height="220" fill="${C.ribDark}"/>
-        <g stroke="${C.floorDark}" stroke-width="6">
-          <line x1="60" y1="800" x2="300" y2="800"/><line x1="60" y1="850" x2="300" y2="850"/>
-          <line x1="60" y1="900" x2="300" y2="900"/><line x1="60" y1="950" x2="300" y2="950"/>
-        </g>
+        ${stairFlight(60, 760, 240, 220, 'pit')}
         <text x="180" y="748" text-anchor="middle" font-size="15" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">DOWN TO THE GALLERY</text>
       </g>
 
@@ -233,13 +263,11 @@ Art.ch4 = (() => {
 
       <!-- stair up (left) and stair down (right) -->
       <g>
-        <rect x="40" y="300" width="170" height="420" fill="${C.ribDark}"/>
-        <g stroke="${C.floorDark}" stroke-width="5"><line x1="40" y1="360" x2="210" y2="360"/><line x1="40" y1="440" x2="210" y2="440"/><line x1="40" y1="520" x2="210" y2="520"/><line x1="40" y1="600" x2="210" y2="600"/></g>
+        ${stairFlight(40, 300, 170, 420, 'up')}
         <text x="125" y="286" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">UP TO THE DOME</text>
       </g>
       <g>
-        <rect x="1390" y="300" width="170" height="420" fill="${C.ribDark}"/>
-        <g stroke="${C.floorDark}" stroke-width="5"><line x1="1390" y1="360" x2="1560" y2="360"/><line x1="1390" y1="440" x2="1560" y2="440"/><line x1="1390" y1="520" x2="1560" y2="520"/><line x1="1390" y1="600" x2="1560" y2="600"/></g>
+        ${stairFlight(1390, 300, 170, 420, 'down')}
         <text x="1475" y="286" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">DOWN TO THE WORKSHOP</text>
       </g>
 
@@ -344,13 +372,11 @@ Art.ch4 = (() => {
 
       <!-- stair up and stair down -->
       <g>
-        <rect x="40" y="300" width="170" height="420" fill="${C.ribDark}"/>
-        <g stroke="${C.floorDark}" stroke-width="5"><line x1="40" y1="380" x2="210" y2="380"/><line x1="40" y1="470" x2="210" y2="470"/><line x1="40" y1="560" x2="210" y2="560"/><line x1="40" y1="650" x2="210" y2="650"/></g>
+        ${stairFlight(40, 300, 170, 420, 'up')}
         <text x="125" y="286" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">UP TO THE GALLERY</text>
       </g>
       <g>
-        <rect x="1390" y="740" width="180" height="240" fill="${C.ribDark}"/>
-        <g stroke="${C.floorDark}" stroke-width="5"><line x1="1390" y1="800" x2="1570" y2="800"/><line x1="1390" y1="860" x2="1570" y2="860"/><line x1="1390" y1="920" x2="1570" y2="920"/></g>
+        ${stairFlight(1390, 740, 180, 240, 'pit')}
         <text x="1480" y="728" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">DOWN TO THE VAULT</text>
       </g>
 
@@ -459,8 +485,7 @@ Art.ch4 = (() => {
 
       <!-- stair up -->
       <g>
-        <rect x="120" y="770" width="180" height="210" fill="${C.ribDark}"/>
-        <g stroke="${C.floorDark}" stroke-width="5"><line x1="120" y1="830" x2="300" y2="830"/><line x1="120" y1="890" x2="300" y2="890"/><line x1="120" y1="950" x2="300" y2="950"/></g>
+        ${stairFlight(120, 770, 180, 210, 'up')}
         <text x="210" y="758" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">UP TO THE WORKSHOP</text>
       </g>
 

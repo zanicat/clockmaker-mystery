@@ -577,14 +577,23 @@ Art.ch2 = (() => {
       <!-- stairs up -->
       <g>
         <polygon points="140,0 330,0 390,740 80,740" fill="#ffdf9e" opacity="0.07"/>
-        <g fill="#4a3b2a" stroke="#2b2116" stroke-width="3">
-          <rect x="140" y="620" width="220" height="34"/>
-          <rect x="152" y="548" width="196" height="34"/>
-          <rect x="164" y="476" width="172" height="34"/>
-          <rect x="176" y="404" width="148" height="34"/>
-          <rect x="188" y="332" width="124" height="34"/>
-          <rect x="200" y="260" width="100" height="34"/>
-        </g>
+        <!-- risers face the room's shadow; tread tops catch the shaft
+             of shop-light from above, brighter the higher they climb,
+             and the pitch tightens as the flight recedes -->
+        <polygon points="188,248 316,248 372,668 128,668" fill="#241d18"/>
+        ${(() => {
+          const tops = [620, 536, 458, 386, 320, 260];
+          let out = '';
+          for (let i = 0; i < 6; i++) {
+            const t = i / 5;
+            const x = 140 + i * 12, w = 220 - i * 24, hh = 34 - i * 2;
+            out += `<rect x="${x}" y="${tops[i]}" width="${w}" height="${hh}" fill="#4a3b2a" stroke="#2b2116" stroke-width="3"/>
+              <rect x="${x}" y="${tops[i]}" width="${w}" height="8" fill="#7a5f3a"/>
+              <rect x="${x}" y="${tops[i]}" width="${w}" height="8" fill="#ffdf9e" opacity="${(0.10 + 0.22 * t).toFixed(2)}"/>
+              <rect x="${x}" y="${tops[i] + hh - 6}" width="${w}" height="6" fill="#1e1a15" opacity="0.35"/>`;
+          }
+          return out;
+        })()}
       </g>
 
       <!-- the alembic on its furnace -->

@@ -28,6 +28,50 @@ Art.ch5 = (() => {
     flame: '#ffca7a',
   };
 
+  /* Stair bands receding inside a stairwell box, lit from below like
+     everything in this house: riser faces catch the warm up-glow,
+     treads sit in their own shadow.  'up' climbs away above its
+     threshold (the lowest riser warmest), 'pit' falls away into the
+     dark, and 'glow' falls toward a light — the understage trap, whose
+     deepest steps burn brightest.  Draws bands only; the caller keeps
+     its own backing and frame. */
+  function stairSteps(x, y, w, h, mode, funnel) {
+    const n = h >= 300 ? 7 : 4;
+    let pitch = (mode === 'up' ? 0.17 : 0.22) * h;
+    let edge = mode === 'up' ? y + h : y;
+    let out = '';
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1);
+      const inset = t * w * (funnel || 0.10);
+      const bx = x + inset, bw = w - 2 * inset;
+      let by;
+      if (mode === 'up') { edge -= pitch; by = edge; }
+      else { by = edge; edge += pitch; }
+      if (mode === 'up') {
+        out += `<rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.stone}"/>
+          <rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.foot}" opacity="${(0.2 * (1 - t)).toFixed(2)}"/>
+          <rect x="${bx}" y="${by}" width="${bw}" height="5" fill="${C.dark}" opacity="0.7"/>
+          ${i < 3 ? `<rect x="${bx}" y="${by + 5}" width="${bw}" height="2" fill="${C.foot}" opacity="${(0.5 * (1 - t)).toFixed(2)}"/>` : ''}
+          <rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.dark}" opacity="${(0.5 * t).toFixed(2)}"/>`;
+      } else if (mode === 'pit') {
+        out += `<rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.stone}"/>
+          <rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.foot}" opacity="${(0.2 * (1 - t)).toFixed(2)}"/>
+          <rect x="${bx}" y="${by + pitch - 4}" width="${bw}" height="4" fill="#0f080c"/>
+          <rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.dark}" opacity="${(0.6 * t).toFixed(2)}"/>`;
+      } else {
+        const r = Math.max(5, pitch * 0.3);
+        out += `<rect x="${bx}" y="${by}" width="${bw}" height="${pitch}" fill="${C.stone}" opacity="0.35"/>
+          <rect x="${bx}" y="${by + pitch - r}" width="${bw}" height="${r}" fill="${C.foot}" opacity="${(0.14 + 0.3 * t).toFixed(2)}"/>
+          <rect x="${bx}" y="${by}" width="${bw}" height="2" fill="${C.dark}" opacity="0.6"/>`;
+      }
+      pitch *= 0.8;
+    }
+    if (mode === 'up') out += `<rect x="${x}" y="${y}" width="${w}" height="${edge - y}" fill="${C.dark}" opacity="0.55"/>`;
+    else if (mode === 'pit') out += `<rect x="${x}" y="${edge}" width="${w}" height="${y + h - edge}" fill="${C.dark}" opacity="0.55"/>`;
+    else out += `<ellipse cx="${x + w / 2}" cy="${y + h - 10}" rx="${w * 0.3}" ry="8" fill="${C.foot}" opacity="0.22"/>`;
+    return out;
+  }
+
   // A row of guttering footlight flames with an upward glow.
   function footlights(x, y, w, n, id) {
     let f = '';
@@ -312,9 +356,7 @@ Art.ch5 = (() => {
       <!-- the trap stairs, open in the boards -->
       <g>
         <rect x="990" y="800" width="220" height="160" rx="8" fill="${C.dark}" stroke="${C.woodDark}" stroke-width="6"/>
-        <g stroke="${C.stoneDark}" stroke-width="5">
-          <line x1="1010" y1="840" x2="1190" y2="840"/><line x1="1024" y1="880" x2="1176" y2="880"/><line x1="1038" y1="920" x2="1162" y2="920"/>
-        </g>
+        ${stairSteps(1000, 812, 200, 140, 'glow', 0.24)}
         <text x="1100" y="790" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">DOWN TO THE UNDERSTAGE</text>
       </g>
 
@@ -377,15 +419,15 @@ Art.ch5 = (() => {
 
       <!-- stairs up to the stage -->
       <g>
-        <rect x="60" y="300" width="180" height="440" fill="${C.stone}"/>
-        <g stroke="${C.stoneDark}" stroke-width="5"><line x1="60" y1="380" x2="240" y2="380"/><line x1="60" y1="470" x2="240" y2="470"/><line x1="60" y1="560" x2="240" y2="560"/><line x1="60" y1="650" x2="240" y2="650"/></g>
+        <rect x="60" y="300" width="180" height="440" fill="${C.stoneDark}"/>
+        ${stairSteps(60, 300, 180, 440, 'up')}
         <text x="150" y="286" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">UP TO THE STAGE</text>
       </g>
 
       <!-- cellar steps up to the foyer -->
       <g>
-        <rect x="280" y="600" width="160" height="140" fill="${C.stone}"/>
-        <g stroke="${C.stoneDark}" stroke-width="5"><line x1="280" y1="640" x2="440" y2="640"/><line x1="280" y1="680" x2="440" y2="680"/><line x1="280" y1="712" x2="440" y2="712"/></g>
+        <rect x="280" y="600" width="160" height="140" fill="${C.stoneDark}"/>
+        ${stairSteps(280, 600, 160, 140, 'up')}
         <text x="360" y="588" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">UP TO THE FOYER</text>
       </g>
 
@@ -575,7 +617,7 @@ Art.ch5 = (() => {
       <!-- cellar steps down -->
       <g>
         <rect x="1410" y="700" width="170" height="270" fill="${C.stoneDark}"/>
-        <g stroke="#0f080c" stroke-width="5"><line x1="1410" y1="760" x2="1580" y2="760"/><line x1="1410" y1="830" x2="1580" y2="830"/><line x1="1410" y1="900" x2="1580" y2="900"/></g>
+        ${stairSteps(1410, 700, 170, 270, 'pit')}
         <text x="1495" y="688" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">DOWN TO THE CELLARS</text>
       </g>
 
