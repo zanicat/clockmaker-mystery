@@ -72,6 +72,14 @@ body[data-chapter="ch6"] {
   --btn-bg-hover: #3a2c18;
 }
 
+body[data-chapter="ch8"] {
+  --accent: #cfdae2;          /* fog-pearl over the morning tide */
+  --accent-deep: #5c7284;
+  --accent-rgb: 207, 218, 226;
+  --btn-bg: #1c242c;
+  --btn-bg-hover: #28343e;
+}
+
 html, body {
   margin: 0;
   height: 100%;

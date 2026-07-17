@@ -1382,7 +1382,7 @@ CHAPTERS.ch7 = {
     body: 'Mordaunt Vane was taken at his desk at seven, under a regulator clock now keeping perfect time; the registered post of the north was recovered from a hayloft two fields from Cadger\'s Bank, less eleven pounds spent on a horse. ' +
       'Tench sorted the down mail that same night, per the notice. Sherrick lost four minutes at Cadger\'s Bank for permanent way and has never lost a minute since without getting out to look. ' +
       'Abel Hare had his watch back on the platform at Carlisle and would not take it — so Ivy Quinn wound it, set it by the station clock, and put it in his hand herself. "It never lied to you, Mr. Hare. It was simply asked the wrong question. So was everybody on that train." He kept it. He checks it against Greenwich every morning of his life, and has never once found it wrong.',
-    next: null,
+    next: 'ch8',
   },
 };
 

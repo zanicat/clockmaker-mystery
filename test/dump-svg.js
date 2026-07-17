@@ -38,6 +38,13 @@ var fullS = {
     oilTaken: true, lanternLit: true, strongOpen: true, sealSeen: true,
     ballastFound: true, caseOpen: true, armOut: true, pouchTaken: true,
     reLettered: true, bulletinRead: true, corrected: true,
+    // ch8
+    tansyMet: true, pilchardWon: true, tarWon: true, duchessWon: true,
+    hapennyWon: true, driftwoodTaken: true, boathouseOpen: true,
+    stoveLaid: true, stoveLit: true, scarfTaken: true, bellTaken: true,
+    ledgerTaken: true, passbookTaken: true, scrapTaken: true,
+    vestasTaken: true, wickMet: true, tagTaken: true, packetTaken: true,
+    roundsRead: true, gathered: true,
   },
 };
 
@@ -133,6 +140,27 @@ for (var i = 0; i < ch6Painters.length; i++) {
   out.push({ name: 'ch6.' + n + '.full', svg: Art.ch6[n](fullS) });
 }
 
+/* ch8: every painter empty and full, then once per companion — the
+   companion system re-renders every scene with a cat at heel, and each
+   withCat branch is its own art. Ha'penny's approach is painted too. */
+var ch8Painters = ['quay', 'stairs', 'loft', 'light', 'boathouseZoom', 'ledgerZoom'];
+var ch8Cats = ['pilchard', 'tar', 'duchess', 'hapenny'];
+for (var i = 0; i < ch8Painters.length; i++) {
+  var n = ch8Painters[i];
+  out.push({ name: 'ch8.' + n + '.empty', svg: Art.ch8[n](emptyS) });
+  out.push({ name: 'ch8.' + n + '.full', svg: Art.ch8[n](fullS) });
+  for (var c = 0; c < ch8Cats.length; c++) {
+    var heelS = { flags: {} };
+    Object.keys(fullS.flags).forEach(function (k) { heelS.flags[k] = fullS.flags[k]; });
+    heelS.flags.withCat = ch8Cats[c];
+    out.push({ name: 'ch8.' + n + '.' + ch8Cats[c], svg: Art.ch8[n](heelS) });
+  }
+}
+for (var hp = 0; hp <= 2; hp++) {
+  var hpS = { flags: { wickMet: true, hpStage: hp } };
+  out.push({ name: 'ch8.light.hpStage' + hp, svg: Art.ch8.light(hpS) });
+}
+
 Object.keys(Art.icons).forEach(function (k) { out.push({ name: 'icon.' + k, svg: Art.icons[k] }); });
 Object.keys(Art.ch2.icons).forEach(function (k) { out.push({ name: 'icon2.' + k, svg: Art.ch2.icons[k] }); });
 Object.keys(Art.ch3.icons).forEach(function (k) { out.push({ name: 'icon3.' + k, svg: Art.ch3.icons[k] }); });
@@ -140,6 +168,12 @@ Object.keys(Art.ch4.icons).forEach(function (k) { out.push({ name: 'icon4.' + k,
 Object.keys(Art.ch5.icons).forEach(function (k) { out.push({ name: 'icon5.' + k, svg: Art.ch5.icons[k] }); });
 Object.keys(Art.ch6.icons).forEach(function (k) { out.push({ name: 'icon6.' + k, svg: Art.ch6.icons[k] }); });
 Object.keys(Art.ch7.icons).forEach(function (k) { out.push({ name: 'icon7.' + k, svg: Art.ch7.icons[k] }); });
+Object.keys(Art.ch8.icons).forEach(function (k) { out.push({ name: 'icon8.' + k, svg: Art.ch8.icons[k] }); });
+
+// the ch8 puzzle boards' own states (the puzzles below render step 0)
+out.push({ name: 'ch8.board.pilchard2', svg: Art.ch8.pilchardBoard(2) });
+for (var m = 0; m <= 4; m++) out.push({ name: 'ch8.board.duchess' + m, svg: Art.ch8.duchessBoard(m) });
+out.push({ name: 'ch8.board.tags4', svg: Art.ch8.tagStrip(4) });
 
 // puzzle renders (need a fake g)
 var flags = { leg: 1 };
@@ -149,7 +183,7 @@ var fakeG = {
   hasClue: function () { return true; },
   hasItem: function () { return true; },
 };
-['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7'].forEach(function (ch) {
+['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'ch8'].forEach(function (ch) {
   var puzzles = CHAPTERS[ch].puzzles;
   Object.keys(puzzles).forEach(function (k) {
     out.push({ name: ch + '.puzzle.' + k, svg: '<div>' + puzzles[k].render(fakeG) + '</div>' });

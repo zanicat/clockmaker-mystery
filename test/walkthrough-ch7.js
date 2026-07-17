@@ -204,7 +204,9 @@ puzzleAct('say-1'); adv();                     // both at 2.26 -> the end
 
 assert(!isHidden('screen-end'), 'end screen shown');
 assert(__els['end-title'].textContent === "The Guard's Watch", 'ch7 end title');
-assert(isHidden('btn-end-next'), 'no next chapter after ch7');
+assert(!isHidden('btn-end-next'), 'ch8 is offered after ch7');
+assert(__els['btn-end-next'].textContent === 'Begin Chapter Eight',
+  'next button names chapter eight, got: ' + __els['btn-end-next'].textContent);
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch7 === true, 'ch7 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch7') === null, 'ch7 save cleared');

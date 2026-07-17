@@ -90,6 +90,12 @@ const Sfx = (() => {
     splash:  () => { swish(0.3, 0.06, 500); tone(140, 0.25, 'sine', 0.05, 0.05, -60); },
     whistle: () => { tone(1180, 0.5, 'triangle', 0.04, 0, -60); tone(1570, 0.5, 'triangle', 0.03, 0.02, -80); },
     brake:   () => { swish(0.7, 0.05, 2600); tone(210, 0.6, 'sawtooth', 0.02, 0.05, -90); },
+    // Gullscombe's voices: the cats, the gulls, and the Nine.
+    purr:    () => { tone(64, 0.9, 'sine', 0.05, 0, 8); tone(68, 0.9, 'sine', 0.03, 0.04, 8); },
+    meow:    () => { tone(520, 0.26, 'triangle', 0.045, 0, 280); tone(760, 0.2, 'triangle', 0.035, 0.15, -190); },
+    hiss:    () => swish(0.4, 0.06, 5200),
+    gull:    () => { tone(1350, 0.32, 'triangle', 0.035, 0, -520); tone(1480, 0.26, 'triangle', 0.028, 0.26, -600); },
+    toll:    () => { tone(196, 1.6, 'sine', 0.09, 0, -4); tone(392, 1.2, 'sine', 0.04, 0.02); tone(587, 0.5, 'sine', 0.022, 0.02); },
   };
 
   // The monochord's peg-scale: pitch1..pitch10, a semitone ladder with

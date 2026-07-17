@@ -16,13 +16,13 @@ from py_mini_racer import MiniRacer
 HERE = os.path.dirname(os.path.abspath(__file__))
 GAME = os.path.dirname(HERE)
 
-ALL_TESTS = ['walkthrough-ch1.js', 'walkthrough-ch2.js', 'walkthrough-ch3.js', 'walkthrough-ch4.js', 'walkthrough-ch5.js', 'walkthrough-ch6.js', 'walkthrough-ch7.js', 'test-ch7-journey.js', 'test-migration.js', 'test-cross-chapter.js', 'test-jar-labels.js']
+ALL_TESTS = ['walkthrough-ch1.js', 'walkthrough-ch2.js', 'walkthrough-ch3.js', 'walkthrough-ch4.js', 'walkthrough-ch5.js', 'walkthrough-ch6.js', 'walkthrough-ch7.js', 'walkthrough-ch8.js', 'test-ch7-journey.js', 'test-migration.js', 'test-cross-chapter.js', 'test-jar-labels.js']
 
 
 def run_one(name):
     ctx = MiniRacer()
     ctx.eval(open(os.path.join(HERE, 'dom-stub.js')).read())
-    for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'art-ch4.js', 'art-ch5.js', 'art-ch6.js', 'art-ch7.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'data-ch4.js', 'data-ch5.js', 'data-ch6.js', 'data-ch7.js', 'engine.js']:
+    for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'art-ch4.js', 'art-ch5.js', 'art-ch6.js', 'art-ch7.js', 'art-ch8.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'data-ch4.js', 'data-ch5.js', 'data-ch6.js', 'data-ch7.js', 'data-ch8.js', 'engine.js']:
         path = os.path.join(GAME, 'js', js)
         if os.path.exists(path):
             ctx.eval(open(path).read())

@@ -3,7 +3,7 @@
 Browser point-and-click mysteries in the style of mobile escape-room games.
 Plain HTML/CSS/JS — no build step, no dependencies.
 
-Six chapters, selectable from the title screen (each with its own save slot):
+Eight chapters, selectable from the title screen (each with its own save slot):
 
 1. **The Clockmaker's Secret** — clockmaker Edmund Thornfield vanishes from a
    shop bolted from the inside, every clock stopped at 7:15.
@@ -21,6 +21,14 @@ Six chapters, selectable from the title screen (each with its own save slot):
    days before Founders' Day, and the accused is twelve, silent, and
    innocent. The school's walls know the truth — in an alphabet no
    grown-up can read.
+7. **The Guard's Watch** — the Down Night Mail's registered sack comes out
+   of a sealed strongroom stuffed with yesterday's newspaper, and the
+   guard's own honest journal convicts him. Five stops to Carlisle, one
+   telegraph key, and a case built on two clocks called one.
+8. **The Ratcatcher's Nine** — old Pike dies "rich" and Gullscombe digs up
+   its own gardens hunting his hoard. Nine cats know where the fortune
+   went — and Ivy Quinn must earn their trust one cat at a time, because
+   the only doors that matter in this town open to whiskers, not keys.
 
 ## Run it
 
@@ -54,9 +62,9 @@ python3 -m http.server 8000
 
 - `js/engine.js` — chapter-agnostic engine (state, saves, rendering,
   dialogue, inventory, casebook, hints, puzzles overlay).
-- `js/data-ch1.js` … `js/data-ch7.js` — one self-registering chapter each
+- `js/data-ch1.js` … `js/data-ch8.js` — one self-registering chapter each
   (`CHAPTERS.chN`): items, scenes, hotspots, puzzles, clues, hints.
-- `js/art.js`, `js/art-ch2.js` … `js/art-ch7.js` — SVG scene painters and
+- `js/art.js`, `js/art-ch2.js` … `js/art-ch8.js` — SVG scene painters and
   inventory icons.
 - `js/sfx.js` — Web Audio synthesized sound effects.
 

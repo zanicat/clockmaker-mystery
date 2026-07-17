@@ -93,19 +93,22 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
 - **Verb** — the physical thing the player's hands do all chapter; every
   set-piece puzzle speaks it. The original candidate list is now spent
   (align/aim — ch4; listen/tune — ch5; trace/follow + read/decipher — ch6;
-  time/count — ch7): a new chapter must coin a fresh verb (e.g. weigh
-  anchors? climb? barter?).
+  time/count — ch7; coax/befriend, the first creature-verb — ch8): a new
+  chapter must coin a fresh verb (e.g. weigh anchors? climb? barter?).
 - **Mystery shape** — the structural twist type, not the plot. Spent:
   staged disappearance, frame-job, crime-that-never-was, impossible theft,
   guilty client, alibi-breaking (ch6 broke two, one to clear and one to
-  catch), and the distributed crime (ch7 — every hand innocent, the guilt
-  is in the arrangement): invent a new one.
+  catch), the distributed crime (ch7 — every hand innocent, the guilt
+  is in the arrangement), and the phantom hoard (ch8 — the hunted treasure
+  was spent in secret long ago; the hunter was its last beneficiary):
+  invent a new one.
 - **Tone & stakes** — alternate the register between chapters.
 - **Art signature** — declare a palette structure, light source, line
   language, signature ambient motion, and chrome accent (`--accent`
   override). Shape grammar & camera is now claimed (ch7: flat banded
   side-elevation cutaway, no vanishing point) — a further recomposition
-  must go somewhere else again. So is moving light (ch7). Still unclaimed:
+  must go somewhere else again. So is moving light (ch7), and so is
+  NO-source light (ch8: diffuse fog-dawn, nothing casts). Still unclaimed:
   feTurbulence paper-grain / hand-inked wobble (needs in-browser tuning
   before committing).
 - **Topology & cast** — vary the map shape and NPC presence against the
@@ -122,5 +125,6 @@ no value may repeat the previous chapter's, and twist types never repeat at all:
 | ch5 Impresario's Ghost | listen/tune (sound) | guilty client — the manager who hired Quinn staged the haunting himself, buying her famous failure as certification | playful-eerie gaslit ghost story that resolves warm; stakes are livelihoods, no murder | crimson velvet & gilt lit FROM BELOW (footlights/limelight up-glow); duct-grille motif; guttering flames + visible sound-ripples + slow chandelier sway; rose-crimson chrome | a ring — front-of-house and backstage circling the proscenium wall; client + two allies | the wind — cranking the hidden bellows sets `windOn`: the house breathes, scenes re-render with ripples/stirring cloth and Box Five's proof hotspot appears |
 | ch6 Headmistress's Cup | trace/follow (trails, and reading a code by following context) | alibi-breaking, twice — the accused child's false alibi broken to CLEAR her; the bursar's lamp alibi broken to catch him | sunny-autumn school comedy; no murder — embezzlement, a staged theft, and a framed twelve-year-old | honey stone & slate in low gold afternoon light; chalk-glyph motif; falling leaves + circling rooks + guttering gas; conker-copper chrome | a warren — the official school plus the pupils' secret routes, unlocked by reading their signs; mixed-gender child cast + client | the glyph language — signs seen in context set `seen_*` flags, two mark-book validations (`marks1Done`/`marks2Done`) re-render every scene with pencilled translations, and the finale is read glyph by glyph |
 | ch7 Guard's Watch | time/count (stopwatch, mileposts, timetables) | the distributed crime — every hand innocent; the architect never boarded and robbed a mail train by writing a schedule | taut nocturnal thriller with a real deadline and an adversary aboard; no murder — a man's liberty, and five good men used as tools | first shape-grammar break: flat banded side-elevation cutaway, no vanishing point; the light MOVES (signal lamps, station gas and sparks stream past the window strip; the one steady lamp sways); soot & steel-blue with sodium-amber, sky greying by leg; signal-green chrome | a moving corridor — four carriages linear in space, re-rendering by leg; adversary holds the evidence | the wire — an enquiry telegraphed from a platform is answered at the NEXT stop, so questions cost legs and there are five (Penrith is the last wire in England; the up-mail crossing there keeps asking late from ever being fatal) |
+| ch8 Ratcatcher's Nine | coax/befriend (lure, placement, manners, warmth, stillness — the locks are animals) | the phantom hoard — the treasure everyone hunts was given away in secret over thirty years; the break-ins are real but chase nothing, and the hunter turns out to be the ninth beneficiary | warm sea-fog elegy that resolves in communal grace; no murder — a dead man's name, a niece's home, and nine cats' futures | first NO-source light: diffuse fog-dawn, nothing casts, amber windows and the cats are the only saturated notes; wet-mirror motif (the harbour repeats everything upside-down, wobbling); motion = tail-flicks, slow blinks, drifting fog banks, bobbing hulls, wheeling gulls; fog-pearl chrome | a terraced climb (quay → stairs → loft → old light) with a second, feline map laid over it — perches, rat-runs, gutters, latches — opened cat by cat; client + fishwife + keeper + adversary-at-moorings | the companion — one befriended cat follows at heel (`withCat`), is painted into every scene, and gates the cat-only paths (ratter flushes the floor-void, climber robs the nest, latch-worker opens the boathouse); the status chip is who walks with you |
 
 Extend this table when a chapter ships.
