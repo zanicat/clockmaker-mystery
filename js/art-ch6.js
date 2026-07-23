@@ -379,6 +379,10 @@ Art.ch6 = (() => {
       <rect width="1200" height="800" fill="${C.inRoom}"/>
       <rect x="160" y="90" width="880" height="600" rx="14" fill="${C.wood}" stroke="${C.woodDark}" stroke-width="6"/>
       <rect x="200" y="130" width="800" height="440" fill="${C.inRoomDark}" stroke="${C.brassDeep}" stroke-width="4"/>
+      <!-- the hall's gas guttering in the case glass -->
+      <polygon points="280,130 440,130 760,570 600,570" fill="${C.flame}">
+        <animate attributeName="opacity" values="0.08;0.18;0.10;0.18;0.08" dur="2.8s" repeatCount="indefinite"/>
+      </polygon>
 
       <!-- the empty plinth, and the honest dust around a vanished stand -->
       <ellipse cx="600" cy="470" rx="160" ry="24" fill="#1a1008"/>
@@ -531,10 +535,30 @@ Art.ch6 = (() => {
       <rect x="0" y="720" width="1600" height="280" fill="#241a10"/>
       <g stroke="#180f08" stroke-width="3" opacity="0.7"><line x1="0" y1="790" x2="1600" y2="790"/><line x1="0" y1="880" x2="1600" y2="880"/></g>
 
-      <!-- dormer window and its dusty shaft -->
+      <!-- dormer window and its dusty shaft; a rook crosses the glass -->
       <g>
         <rect x="1050" y="180" width="110" height="150" rx="8" fill="${C.sky}" stroke="${C.woodDark}" stroke-width="5"/>
-        <polygon points="1050,330 1160,330 1340,720 1130,720" fill="url(#atshaft)"/>
+        <path d="M 1056 250 q 8 -8 16 0 q -8 -3 -16 0 Z" fill="${C.ink}" opacity="0">
+          <animate attributeName="opacity" values="0;0.7;0.7;0" dur="14s" repeatCount="indefinite"/>
+          <animateTransform attributeName="transform" type="translate" values="0 8; 86 -14" dur="14s" repeatCount="indefinite"/>
+        </path>
+        <polygon points="1050,330 1160,330 1340,720 1130,720" fill="url(#atshaft)">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="9s" repeatCount="indefinite"/>
+        </polygon>
+        <g fill="${C.sun}">
+          <circle cx="1160" cy="420" r="2.5" opacity="0.4">
+            <animate attributeName="cy" values="420;480;420" dur="8s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.5;0" dur="8s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="1220" cy="520" r="2.5" opacity="0.4">
+            <animate attributeName="cy" values="520;585;520" dur="9.5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.45;0" dur="9.5s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="1270" cy="600" r="2.5" opacity="0.4">
+            <animate attributeName="cy" values="600;670;600" dur="11s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;0.4;0" dur="11s" repeatCount="indefinite"/>
+          </circle>
+        </g>
       </g>
 
       <!-- the hatch down, chalked with the club's welcome -->

@@ -234,10 +234,19 @@ Art.ch4 = (() => {
 
       <g transform="rotate(-14 600 400)">
         <rect x="470" y="300" width="260" height="180" rx="10" fill="#dfe6ff" stroke="${C.brass}" stroke-width="6"/>
-        <line x1="486" y1="320" x2="714" y2="460" stroke="${C.beam}" stroke-width="3" opacity="0.8"/>
+        <line x1="486" y1="320" x2="714" y2="460" stroke="${C.beam}" stroke-width="3">
+          <animate attributeName="opacity" values="0.6;0.9;0.6" dur="5s" repeatCount="indefinite"/>
+        </line>
       </g>
-      ${gearGlyph(600, 560, 48, C.brass, '#5a4d28')}
-      ${gearGlyph(690, 580, 32, C.brass, '#5a4d28')}
+      <!-- the clockwork turns whether anyone watches or not -->
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="0 600 560; 360 600 560" dur="60s" repeatCount="indefinite"/>
+        ${gearGlyph(600, 560, 48, C.brass, '#5a4d28')}
+      </g>
+      <g>
+        <animateTransform attributeName="transform" type="rotate" values="360 690 580; 0 690 580" dur="90s" repeatCount="indefinite"/>
+        ${gearGlyph(690, 580, 32, C.brass, '#5a4d28')}
+      </g>
       ${wound
         ? `<circle cx="820" cy="520" r="20" fill="${C.brassLit}" stroke="#5a4d28" stroke-width="4"/><text x="820" y="576" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.text}" font-style="italic">wound &amp; willing</text>`
         : `<circle cx="820" cy="520" r="20" fill="${C.ink}" stroke="${C.brass}" stroke-width="4"/><text x="820" y="576" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.text}" font-style="italic">winding socket, empty</text>`}
@@ -258,6 +267,12 @@ Art.ch4 = (() => {
       <rect width="1600" height="1000" fill="${C.wall}"/>
       <rect x="0" y="0" width="1600" height="180" fill="${C.dome}"/>
       ${stars([[180, 90, 1.6], [520, 70, 1.4], [900, 100, 1.7], [1300, 80, 1.5], [1460, 130, 1.4]], C.caustic)}
+      <circle cx="700" cy="60" r="1.5" fill="${C.caustic}">
+        <animate attributeName="opacity" values="0.3;0.9;0.3" dur="4s" repeatCount="indefinite"/>
+      </circle>
+      <circle cx="1120" cy="120" r="1.5" fill="${C.caustic}">
+        <animate attributeName="opacity" values="0.9;0.3;0.9" dur="6s" repeatCount="indefinite"/>
+      </circle>
       <rect x="0" y="720" width="1600" height="280" fill="${C.floor}"/>
       <rect x="0" y="714" width="1600" height="10" fill="${C.floorDark}"/>
 
@@ -271,10 +286,13 @@ Art.ch4 = (() => {
         <text x="1475" y="286" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" letter-spacing="1">DOWN TO THE WORKSHOP</text>
       </g>
 
-      <!-- the great telescope -->
+      <!-- the great telescope, starlight idling in its objective -->
+      <g opacity="0.55">${motes(660, 260, 280, 320)}</g>
       <g transform="rotate(-24 820 520)">
         <rect x="700" y="470" width="360" height="70" rx="30" fill="${C.stone}" stroke="${C.brass}" stroke-width="5"/>
-        <ellipse cx="700" cy="505" rx="18" ry="35" fill="${C.glow}" stroke="${C.brass}" stroke-width="4"/>
+        <ellipse cx="700" cy="505" rx="18" ry="35" fill="${C.glow}" stroke="${C.brass}" stroke-width="4">
+          <animate attributeName="opacity" values="0.5;0.9;0.5" dur="7s" repeatCount="indefinite"/>
+        </ellipse>
         <ellipse cx="1060" cy="505" rx="14" ry="28" fill="${C.ink}" stroke="${C.brass}" stroke-width="4"/>
       </g>
       <rect x="800" y="560" width="30" height="150" fill="${C.ribDark}"/>
@@ -518,7 +536,9 @@ Art.ch4 = (() => {
       <g>
         <rect x="300" y="300" width="200" height="150" rx="10" fill="${C.wall}" stroke="${C.brass}" stroke-width="5"/>
         ${bottleGlyph(400, 420, 70, 120, '#c9a544', '#5a4d28')}
-        <circle cx="510" cy="376" r="26" fill="${C.beam}" opacity="0.85"/>
+        <circle cx="510" cy="376" r="26" fill="${C.beam}">
+          <animate attributeName="opacity" values="0.7;1;0.7" dur="3.4s" repeatCount="indefinite"/>
+        </circle>
         <text x="400" y="500" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" font-style="italic">a reservoir lamp, timed to the shutter</text>
       </g>
 
@@ -526,7 +546,9 @@ Art.ch4 = (() => {
       <g>
         <path d="M 640 340 l 70 -20 l 0 90 l -70 -20 Z" fill="${C.caustic}" opacity="0.85" stroke="${C.brass}" stroke-width="3"/>
         <line x1="510" y1="376" x2="640" y2="376" stroke="${C.beam}" stroke-width="3" opacity="0.8"/>
-        <line x1="710" y1="376" x2="880" y2="420" stroke="${C.caustic}" stroke-width="3" opacity="0.85"/>
+        <line x1="710" y1="376" x2="880" y2="420" stroke="${C.caustic}" stroke-width="3">
+          <animate attributeName="opacity" values="0.6;0.85;0.6" dur="5.5s" repeatCount="indefinite"/>
+        </line>
         ${[[820, 400], [900, 440], [980, 470]].map(([x, y]) => `<rect x="${x}" y="${y}" width="34" height="10" rx="3" fill="#dfe6ff" stroke="${C.brass}" stroke-width="2" transform="rotate(-30 ${x + 17} ${y + 5})"/>`).join('')}
         <text x="760" y="560" text-anchor="middle" font-size="14" font-family="Georgia, serif" fill="${C.text}" font-style="italic">a bevelled prism, and a train of little mirrors</text>
       </g>
