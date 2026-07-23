@@ -137,8 +137,14 @@ Art.ch7 = (() => {
       <rect x="0" y="126" width="1600" height="10" fill="${C.ink}" opacity="0.6"/>
       <!-- interior band -->
       <rect x="0" y="136" width="1600" height="614" fill="url(#${id}wall)"/>
-      <!-- floor band -->
+      <!-- floor band: planks worn flat by boots, soot pooling at the ends -->
       <rect x="0" y="750" width="1600" height="60" fill="${C.wood}"/>
+      ${[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map(i =>
+        `${i % 2 ? `<rect x="${i * 130}" y="758" width="130" height="52" fill="${C.ink}" opacity="0.08"/>` : ''}
+         <line x1="${i * 130}" y1="758" x2="${i * 130}" y2="810" stroke="${C.woodDark}" stroke-width="2" opacity="0.6"/>`).join('')}
+      <rect x="0" y="770" width="1600" height="22" fill="${C.cream}" opacity="0.06"/>
+      <rect x="0" y="750" width="90" height="60" fill="${C.ink}" opacity="0.35"/>
+      <rect x="1510" y="750" width="90" height="60" fill="${C.ink}" opacity="0.35"/>
       <rect x="0" y="750" width="1600" height="8" fill="${C.woodDark}"/>
       <!-- solebar and underframe: the draughtsman's cutaway -->
       <rect x="0" y="810" width="1600" height="34" fill="${C.steelHi}" opacity="0.5"/>
@@ -538,6 +544,16 @@ Art.ch7 = (() => {
       </defs>
       <rect width="1600" height="1000" fill="url(#plsky)"/>
       ${stars([[140, 90, 1.7], [520, 60, 1.3], [980, 100, 1.5], [1380, 70, 1.8]], '#c8d6ea')}
+
+      <!-- the platform itself: flagstones, a coping edge, gaslight pooling -->
+      <rect x="0" y="620" width="1600" height="80" fill="${C.soot}"/>
+      <rect x="0" y="620" width="1600" height="6" fill="${C.steelHi}" opacity="0.5"/>
+      <g stroke="${C.ink}" stroke-width="2" opacity="0.5">
+        ${[100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500].map(x =>
+          `<line x1="${x}" y1="626" x2="${x}" y2="700"/>`).join('')}
+      </g>
+      ${[220, 620, 1020, 1420].map(x =>
+        `<ellipse cx="${x}" cy="660" rx="120" ry="24" fill="${C.glow}" opacity="0.10"/>`).join('')}
 
       <!-- the station awning and its gas -->
       <rect x="0" y="180" width="1600" height="40" fill="${C.steel}"/>
