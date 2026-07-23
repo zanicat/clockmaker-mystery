@@ -23,27 +23,41 @@ ENTITIES = {
     '&#9660;': '▼', '&#9664;': '◀', '&#9654;': '▶',
 }
 
-ctx = MiniRacer()
-ctx.eval(open(os.path.join(HERE, 'dom-stub.js')).read())
-for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'art-ch4.js', 'art-ch5.js', 'art-ch6.js', 'art-ch7.js', 'art-ch8.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'data-ch4.js', 'data-ch5.js', 'data-ch6.js', 'data-ch7.js', 'data-ch8.js']:
-    ctx.eval(open(os.path.join(GAME, 'js', js)).read())
-items = json.loads(ctx.eval(open(os.path.join(HERE, 'dump-svg.js')).read()))
 
-bad = 0
-for it in items:
-    svg = it['svg']
+def dump_renders():
+    """Render every painter under representative flag states: [{name, svg}]."""
+    ctx = MiniRacer()
+    ctx.eval(open(os.path.join(HERE, 'dom-stub.js')).read())
+    for js in ['art.js', 'art-ch2.js', 'art-ch3.js', 'art-ch4.js', 'art-ch5.js', 'art-ch6.js', 'art-ch7.js', 'art-ch8.js', 'sfx.js', 'data-ch1.js', 'data-ch2.js', 'data-ch3.js', 'data-ch4.js', 'data-ch5.js', 'data-ch6.js', 'data-ch7.js', 'data-ch8.js']:
+        ctx.eval(open(os.path.join(GAME, 'js', js)).read())
+    return json.loads(ctx.eval(open(os.path.join(HERE, 'dump-svg.js')).read()))
+
+
+def substitute_entities(svg):
     for ent, ch in ENTITIES.items():
         svg = svg.replace(ent, ch)
-    leftover = re.findall(r'&(?!amp;|lt;|gt;|quot;|apos;|#)\w+;', svg)
-    if leftover:
-        print(f"ENTITY  {it['name']}: unknown entities {set(leftover)}")
-        bad += 1
-        continue
-    try:
-        ET.fromstring(svg)
-    except ET.ParseError as e:
-        print(f"MALFORMED  {it['name']}: {e}")
-        bad += 1
+    return svg
 
-print(f'{len(items)} renders checked, {bad} problems')
-sys.exit(1 if bad else 0)
+
+def main():
+    items = dump_renders()
+    bad = 0
+    for it in items:
+        svg = substitute_entities(it['svg'])
+        leftover = re.findall(r'&(?!amp;|lt;|gt;|quot;|apos;|#)\w+;', svg)
+        if leftover:
+            print(f"ENTITY  {it['name']}: unknown entities {set(leftover)}")
+            bad += 1
+            continue
+        try:
+            ET.fromstring(svg)
+        except ET.ParseError as e:
+            print(f"MALFORMED  {it['name']}: {e}")
+            bad += 1
+
+    print(f'{len(items)} renders checked, {bad} problems')
+    sys.exit(1 if bad else 0)
+
+
+if __name__ == '__main__':
+    main()
