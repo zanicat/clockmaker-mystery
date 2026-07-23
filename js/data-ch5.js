@@ -851,6 +851,7 @@ const PUZZLES = {
         g.setFlag('vigilStep', 0);
         g.sfx('success');
         g.retireItem('earTrumpet');
+        g.retireItem('railLetter');
         g.closePuzzle();
         g.say([
           { text: 'The lanterns unhood as one. And there — hand still on the crank, the bellows half-charged, the wail unborn in the chest — stands Mr. Aurelius Pettibone, impresario, in his shirt-sleeves.' },

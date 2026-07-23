@@ -171,10 +171,10 @@ assert(__els['scene-status'].textContent.indexOf('Penrith') >= 0,
 assert(labelsIn('scene-hotspots').indexOf('Tell Hare to give the right-away') === -1,
   'there is no ordinary next stop after Penrith');
 
-// casebook: fifteen clues stand before the last stage
+// casebook: sixteen clues stand before the last stage (the case itself opens it)
 __els['btn-journal'].click();
-assert(__els['journal-body'].children.length === 15,
-  'expected 15 casebook clues before the finale, got ' + __els['journal-body'].children.length);
+assert(__els['journal-body'].children.length === 16,
+  'expected 16 casebook clues before the finale, got ' + __els['journal-body'].children.length);
 __els['journal-close'].click();
 
 // final hint rung: two-tier, and tier-2 must NOT hand over the sum

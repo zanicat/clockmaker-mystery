@@ -653,7 +653,7 @@ const SCENES = {
               { who: 'Rooke', text: 'Four minutes. The sack was still aboard four minutes after its last chance to leave, and one man had the key. At Carlisle I put him in irons and go home to my breakfast.' },
               { who: 'Quinn', text: 'You have the guard\'s 2.30 from the guard\'s watch, and Cadger\'s Bank\'s 2.26 from a printed timetable. Those are two different clocks, Inspector, and you have added them together as though they were one.' },
               { who: 'Rooke', text: 'They are both CLOCKS, madam. Good night.' },
-            ], g2 => g2.addClue('rookeCase'));
+            ], g2 => { g2.addClue('theCase'); g2.addClue('rookeCase'); });
             return;
           }
           // Gate one: the watch is four minutes fast — so the log is worthless.

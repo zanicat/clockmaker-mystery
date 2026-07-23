@@ -148,7 +148,7 @@ assert(__els['btn-end-next'].textContent === 'Begin Chapter Five', 'next button 
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch4 === true, 'ch4 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch4') === null, 'ch4 save cleared');
-assert(invNames().join(',') === "Collector's Draft",
-  'only the collector\'s draft remains, got: ' + invNames().join(','));
+assert(invNames().join(',') === '',
+  'inventory empty at chapter end, got: ' + invNames().join(','));
 
 'OK: ch4 walkthrough complete; inventory at end: ' + invNames().join(', ');

@@ -184,7 +184,7 @@ assert(!isHidden('btn-end-next'), 'ch6 offers the next chapter');
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch6 === true, 'ch6 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch6') === null, 'ch6 save cleared');
-assert(invNames().join(',') === 'Pawn Ticket No. 88',
-  'only the pawn ticket remains, got: ' + invNames().join(','));
+assert(invNames().join(',') === '',
+  'inventory empty at chapter end, got: ' + invNames().join(','));
 
 'OK: ch6 walkthrough complete; inventory at end: ' + invNames().join(', ');

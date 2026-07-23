@@ -1027,6 +1027,7 @@ const PUZZLES = {
         g.setFlag('readStep', 0);
         g.sfx('success');
         g.retireItem('watchLog');
+        g.retireItem('pawnTicket');
         g.closePuzzle();
         g.say([
           { who: 'Quinn', text: 'Sentry post. A beak. Carrying a load. This way — toward the gates. At midnight. Danger; all hide. One line, written at her post by the child you were going to expel for it.' },

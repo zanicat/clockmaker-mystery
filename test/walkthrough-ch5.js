@@ -149,7 +149,7 @@ assert(__els['btn-end-next'].textContent === 'Begin Chapter Six', 'next button n
 var meta = JSON.parse(localStorage.getItem('clockmakers-secret-meta'));
 assert(meta.completed && meta.completed.ch5 === true, 'ch5 completion recorded');
 assert(localStorage.getItem('clockmakers-secret-save-ch5') === null, 'ch5 save cleared');
-assert(invNames().join(',') === 'Railway Letter',
-  'only the railway letter remains, got: ' + invNames().join(','));
+assert(invNames().join(',') === '',
+  'inventory empty at chapter end, got: ' + invNames().join(','));
 
 'OK: ch5 walkthrough complete; inventory at end: ' + invNames().join(', ');

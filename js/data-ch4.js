@@ -671,6 +671,7 @@ const PUZZLES = {
             g.setFlag('mounts', [0, 0, 0, 0]);
             g.retireItem('masterPrism');
             g.retireItem('pasteReplica');
+            g.retireItem('saleLetter');
             g.closePuzzle();
             g.say([
               { text: 'Before Ottoline, Crell, and Roke, I wind the dome and throw the mirror. The beam races down the tower, into the cornice — and the Star wakes on the wall, bright and steady and perfect, above a pedestal with NOTHING on it.' },
