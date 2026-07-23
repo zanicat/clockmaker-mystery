@@ -58,18 +58,19 @@ body[data-chapter="ch5"] {
   --btn-bg: #2a1518;
   --btn-bg-hover: #3a2022;
 }
-body[data-chapter="ch7"] {
-  --accent: #7fd8d0;          /* a signal showing clear, seen from a footplate */
-  --accent-deep: #2f6f6a;
-  --accent-rgb: 127, 216, 208;
-}
-
 body[data-chapter="ch6"] {
   --accent: #e8b06a;          /* conker-copper autumn */
   --accent-deep: #8a5a26;
   --accent-rgb: 232, 176, 106;
   --btn-bg: #2a1e10;
   --btn-bg-hover: #3a2c18;
+}
+body[data-chapter="ch7"] {
+  --accent: #7fd8d0;          /* a signal showing clear, seen from a footplate */
+  --accent-deep: #2f6f6a;
+  --accent-rgb: 127, 216, 208;
+  --btn-bg: #14211f;
+  --btn-bg-hover: #1e322e;
 }
 
 body[data-chapter="ch8"] {

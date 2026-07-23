@@ -361,7 +361,7 @@ Art.ch4 = (() => {
     const shaft = lit ? beamShaft(1470, 300, 1180, 620, 30, 'wsbeam') + motes(1180, 340, 300, 260) : '';
     return `<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="wsvig" cx="48%" cy="45%" r="80%">
+        <radialGradient id="ch4wsvig" cx="48%" cy="45%" r="80%">
           <stop offset="48%" stop-color="#000" stop-opacity="0"/>
           <stop offset="100%" stop-color="#000" stop-opacity="0.55"/>
         </radialGradient>
@@ -417,7 +417,7 @@ Art.ch4 = (() => {
       ${figure(1250, 560, '#2f3a4a', '#dcc0a2', '#6a6156')}
       <text x="1250" y="600" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.text}">Silvan Roke, optician</text>
 
-      <rect width="1600" height="1000" fill="url(#wsvig)"/>
+      <rect width="1600" height="1000" fill="url(#ch4wsvig)"/>
     </svg>`;
   }
 
@@ -505,7 +505,7 @@ Art.ch4 = (() => {
     const traced = !!S.flags.sourceTraced;
     return `<svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="czvig" cx="50%" cy="45%" r="75%">
+        <radialGradient id="ch4czvig" cx="50%" cy="45%" r="75%">
           <stop offset="56%" stop-color="#000" stop-opacity="0"/>
           <stop offset="100%" stop-color="#000" stop-opacity="0.5"/>
         </radialGradient>
@@ -532,7 +532,7 @@ Art.ch4 = (() => {
       </g>
 
       ${traced ? `<text x="600" y="660" text-anchor="middle" font-size="16" font-family="Georgia, serif" fill="${C.brassLit}" font-style="italic">the Star was born here &mdash; never on the pedestal</text>` : ''}
-      <rect width="1200" height="800" fill="url(#czvig)"/>
+      <rect width="1200" height="800" fill="url(#ch4czvig)"/>
     </svg>`;
   }
 

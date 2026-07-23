@@ -594,7 +594,7 @@ Art.ch6 = (() => {
   function cellars(S) {
     return `<svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="clvig" cx="46%" cy="50%" r="85%">
+        <radialGradient id="ch6clvig" cx="46%" cy="50%" r="85%">
           <stop offset="40%" stop-color="#000" stop-opacity="0"/>
           <stop offset="100%" stop-color="#000" stop-opacity="0.62"/>
         </radialGradient>
@@ -680,7 +680,7 @@ Art.ch6 = (() => {
         ${gasFlame(886, 584, 2.2)}
       </g>
 
-      <rect width="1600" height="1000" fill="url(#clvig)"/>
+      <rect width="1600" height="1000" fill="url(#ch6clvig)"/>
     </svg>`;
   }
 

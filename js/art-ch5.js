@@ -630,7 +630,7 @@ Art.ch5 = (() => {
   function officeZoom(S) {
     return `<svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <radialGradient id="ofvig" cx="50%" cy="52%" r="78%">
+        <radialGradient id="ch5ofvig" cx="50%" cy="52%" r="78%">
           <stop offset="50%" stop-color="#000" stop-opacity="0"/>
           <stop offset="100%" stop-color="#000" stop-opacity="0.52"/>
         </radialGradient>
@@ -685,7 +685,7 @@ Art.ch5 = (() => {
         <text x="1006" y="682" text-anchor="middle" font-size="13" font-family="Georgia, serif" fill="${C.text}" font-style="italic">nine smug oak panels</text>
       </g>
 
-      <rect width="1200" height="800" fill="url(#ofvig)"/>
+      <rect width="1200" height="800" fill="url(#ch5ofvig)"/>
     </svg>`;
   }
 
