@@ -67,9 +67,15 @@ HTML/CSS/JS globals — no build step, no dependencies, no npm. Script order in
 
 ```
 pip install mini-racer
-python3 test/run_test.py     # full walkthroughs, saves, sad paths
-python3 test/check_svg.py    # every render validated as XML
+python3 test/run_test.py             # full walkthroughs, saves, sad paths
+python3 test/check_svg.py            # every render validated as XML
+python3 test/audit_text.py --strict  # no painted text past its band/viewBox
 ```
+
+`audit_text.py` estimates text width (calibrated against the ch2 jar
+labels), so keep painted labels comfortably inside their boards; its
+`--geometry` crop check is a dev tool only — chapters bleed shapes past
+the viewBox by design.
 
 The DOM stub (`test/dom-stub.js`) plays the game by clicking hotspot
 aria-labels, inventory item names, and puzzle `data-act` buttons. Renaming any
