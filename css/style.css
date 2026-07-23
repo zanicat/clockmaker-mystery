@@ -109,6 +109,9 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
   border: 1px solid rgba(201, 165, 68, 0.4);
   border-radius: 14px;
   box-shadow: var(--panel-shadow);
+  display: flex;
+  flex-direction: column;
+  max-height: calc(100% - 32px);
 }
 #title-card h1 {
   margin: 0 0 6px;
@@ -135,7 +138,7 @@ button { font: inherit; cursor: pointer; touch-action: manipulation; }
 
 /* ---------- chapter select ---------- */
 
-#chapter-list { display: flex; flex-direction: column; gap: 14px; }
+#chapter-list { display: flex; flex-direction: column; gap: 14px; overflow-y: auto; min-height: 0; padding-right: 8px; margin-right: -8px; }
 .chapter-card {
   padding: 16px 22px;
   background: linear-gradient(180deg, rgba(30, 34, 44, 0.9), rgba(21, 24, 31, 0.88));
